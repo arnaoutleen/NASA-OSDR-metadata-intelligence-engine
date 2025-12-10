@@ -1,0 +1,141 @@
+{
+  "version": "1.0.0",
+  "description": "Flexible data schema configuration for researcher-defined input formats",
+  
+  "field_aliases": {
+    "osd_id": {
+      "canonical": "osd_id",
+      "aliases": ["OSD ID", "study_id", "OSD_ID", "accession", "Study ID", "study", "OSD_study", "osd_study"],
+      "required": true,
+      "description": "NASA OSDR study identifier (required for enrichment)"
+    },
+    "sample_id": {
+      "canonical": "sample_id",
+      "aliases": ["Sample Name", "sample_name", "source_name", "Sample ID", "SampleID", "sample", "mouse_uid"],
+      "required": true,
+      "description": "Unique sample identifier within the study"
+    },
+    "mouse_id": {
+      "canonical": "mouse_id",
+      "aliases": ["subject_id", "animal_id", "Mouse ID", "SubjectID", "animal", "subject", "mouse_uid"],
+      "required": false,
+      "description": "Individual animal/subject identifier"
+    },
+    "organism": {
+      "canonical": "organism",
+      "aliases": ["species", "Organism", "Species", "org"],
+      "required": false,
+      "description": "Species name (e.g., Mus musculus)"
+    },
+    "age": {
+      "canonical": "age",
+      "aliases": ["Age", "days_old", "weeks_old", "age_at_euthanasia", "animal_age"],
+      "required": false,
+      "description": "Age of the subject at sample collection"
+    },
+    "sex": {
+      "canonical": "sex",
+      "aliases": ["Sex", "gender", "Gender"],
+      "required": false,
+      "description": "Biological sex (Male/Female)"
+    },
+    "tissue": {
+      "canonical": "tissue",
+      "aliases": ["organ", "tissue_type", "Tissue", "Organ", "material_type", "sample_type"],
+      "required": false,
+      "description": "Tissue or organ sampled"
+    },
+    "strain": {
+      "canonical": "strain",
+      "aliases": ["mouse_strain", "Strain", "genotype", "background", "genetic_background"],
+      "required": false,
+      "description": "Genetic strain or background"
+    },
+    "condition": {
+      "canonical": "condition",
+      "aliases": ["treatment", "group", "experimental_group", "Treatment", "Group", "factor"],
+      "required": false,
+      "description": "Experimental condition or treatment group"
+    },
+    "timepoint": {
+      "canonical": "timepoint",
+      "aliases": ["time_point", "collection_time", "euthanasia_time", "Timepoint", "time", "duration"],
+      "required": false,
+      "description": "Time point of sample collection"
+    },
+    "replicate": {
+      "canonical": "replicate",
+      "aliases": ["Replicate", "rep", "biological_replicate", "tech_replicate"],
+      "required": false,
+      "description": "Replicate number or identifier"
+    }
+  },
+  
+  "supported_file_types": {
+    "csv": {
+      "extensions": [".csv"],
+      "delimiter": ",",
+      "encoding": "utf-8",
+      "description": "Comma-separated values"
+    },
+    "tsv": {
+      "extensions": [".tsv", ".txt"],
+      "delimiter": "\t",
+      "encoding": "utf-8",
+      "description": "Tab-separated values"
+    },
+    "xlsx": {
+      "extensions": [".xlsx", ".xls"],
+      "engine": "openpyxl",
+      "sheet": 0,
+      "description": "Microsoft Excel spreadsheet"
+    },
+    "json": {
+      "extensions": [".json"],
+      "orient": "records",
+      "description": "JSON array of record objects"
+    }
+  },
+  
+  "validation_rules": {
+    "osd_id_pattern": "^OSD-\\d+$",
+    "sample_id_min_length": 1,
+    "skip_empty_rows": true,
+    "trim_whitespace": true,
+    "case_insensitive_headers": true
+  },
+  
+  "graceful_handling": {
+    "missing_required_field": "skip_row_with_warning",
+    "unknown_columns": "preserve_as_is",
+    "empty_cells": "treat_as_blank_for_enrichment",
+    "malformed_osd_id": "skip_row_with_warning"
+  },
+  
+  "example_inputs": {
+    "minimal_valid": {
+      "osd_id": "OSD-242",
+      "sample_id": "Mmus_C57_BRN_FLT_7d_Rep1_M2"
+    },
+    "researcher_style": {
+      "Study ID": "OSD-242",
+      "Sample Name": "Mouse_Brain_Sample_1",
+      "Species": "Mus musculus",
+      "Tissue": "Brain",
+      "Treatment": "Spaceflight"
+    },
+    "full_metadata": {
+      "osd_id": "OSD-242",
+      "sample_id": "Mmus_C57_BRN_FLT_7d_Rep1_M2",
+      "organism": "Mus musculus",
+      "strain": "C57BL/6J",
+      "sex": "Male",
+      "age": "10 weeks",
+      "tissue": "Brain",
+      "condition": "Flight",
+      "timepoint": "7 days",
+      "replicate": "1"
+    }
+  }
+}
+

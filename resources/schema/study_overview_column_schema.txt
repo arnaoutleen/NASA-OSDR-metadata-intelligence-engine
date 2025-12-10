@@ -1,0 +1,26 @@
+Student: Name of the researcher responsible for the row.
+
+Basic Study / Mission Info: Name of the study or mission as listed in OSDR.
+OSDR ID: Study identifier (OSD-###).
+Study Location / Environment: Spaceflight, Ground Control, Irradiation, Hindlimb Unloading, etc.
+Groups Present: List experimental groups (FLT, GC, IR, SHAM, HLU, etc.).
+Total Number of Mice (Group Breakdown): Counts of mice per group.
+
+Sex: Sex of the mice (Male/Female/Mixed).
+Strain: Mouse strain (e.g., C57BL/6J).
+Genotype: Genotype or transgenic status.
+
+Days Sampled / Timepoints: List days or timepoints of sampling.
+Technical Replicates: Whether technical replicates exist (Y/N or number).
+Longitudinal Study: Whether samples were collected longitudinally (Y/N).
+Associated Sample Names: Comma-separated list of sample IDs.
+
+Organ Sampled: Tissue(s) collected.
+Assay on Organ: Type of assay (RNA-Seq, Microarray, Proteomics).
+Number of Assays: Number of assays run on the organ.
+Number of Samples per Organ: Count of samples linked to the organ.
+Organ/Anatomy Notes: Any special notes for anatomical subsets.
+
+Mission / Project Links: Missions relevant to the dataset.
+Related Missions or Datasets: Other datasets referenced in metadata.
+Additional Notes / Summary: Optional notes or special conditions.

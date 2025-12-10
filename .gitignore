@@ -1,0 +1,118 @@
+# ============================================
+# NASA OSDR Metadata Intelligence Engine
+# .gitignore
+# ============================================
+
+# --------------------------------------
+# Python
+# --------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# --------------------------------------
+# Virtual Environments
+# --------------------------------------
+venv/
+ENV/
+env/
+.venv/
+
+# --------------------------------------
+# IDE / Editor
+# --------------------------------------
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+
+# --------------------------------------
+# OS Generated
+# --------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# --------------------------------------
+# Logs
+# --------------------------------------
+*.log
+logs/
+
+# --------------------------------------
+# Pipeline Outputs (Regenerable)
+# --------------------------------------
+outputs/enriched_csv/*
+outputs/provenance_logs/*
+outputs/validation_reports/*
+outputs/ml_json/*
+!outputs/**/.gitkeep
+
+# --------------------------------------
+# Cached Source Data (Re-downloadable)
+# --------------------------------------
+resources/osdr_api/raw/*
+resources/isa_tab/*
+!resources/osdr_api/raw/.gitkeep
+!resources/isa_tab/.gitkeep
+
+# --------------------------------------
+# Test Output Artifacts
+# --------------------------------------
+resources/test_inputs/**/results/
+
+# --------------------------------------
+# Jupyter Notebooks
+# --------------------------------------
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# --------------------------------------
+# Testing
+# --------------------------------------
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# --------------------------------------
+# Type Checking
+# --------------------------------------
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# --------------------------------------
+# Secrets (if any)
+# --------------------------------------
+.env
+.env.local
+*.pem
+*.key
+

@@ -1,0 +1,12 @@
+osd_id,sample_id,mouse_strain,mouse_sex,age,organ_sampled,space_or_ground
+OSD-102,Mmus_C57-6J_KDN_FLT_Rep1_M23,BALB/c,Male,12 weeks,Heart,Ground Control
+OSD-102,Mmus_C57-6J_KDN_FLT_Rep2_M24,C57BL/6J,Male,20 weeks,Kidney,Space Flight
+OSD-102,Mmus_C57-6J_KDN_GC_Rep1_M33,DBA/2J,Female,16 weeks,Left kidney,Ground Control
+OSD-102,Mmus_C57-6J_KDN_FLT_Rep1_M23,C57BL/6NTac,Female,16 weeks,Kidney,Space Flight
+OSD-479,Mmus_C57-6J_LVR_FLT_C1_Rep1_F1,BALB/c,Female,5 weeks,Spleen,Ground Control
+OSD-479,Mmus_C57-6J_LVR_FLT_C1_Rep2_F2,C57BL/6J,Female,10 weeks,Liver,Space Flight
+OSD-479,Mmus_C57-6J_LVR_GC_C2_Rep1_G1,C57BL/6J,Female,15 weeks,Heart,Ground Control
+OSD-479,Mmus_C57-6J_LVR_FLT_C1_Rep1_F1,129S/J,Male,10 weeks,Liver,Space Flight
+OSD-661,1_Flox_HLS,BALB/c,Female,1 week,Brain,Space Flight
+OSD-661,2_Flox_HLS,C57BL/6J,Male,4-6 months,Lumbar Spine,Hindlimb Unloaded
+
