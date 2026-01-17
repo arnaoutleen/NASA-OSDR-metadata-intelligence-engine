@@ -451,7 +451,11 @@ class Pipeline:
         
         # Extend headers with any new fields from enrichment
         # New fields to add if they were enriched but not in original headers
-        potential_new_fields = ["age", "mouse_id"]
+        potential_new_fields = [
+            "age", "mouse_id", "n_mice_total", "Has_RNAseq", 
+            "mouse_genetic_variant", "mouse_source", "time_in_space",
+            "study purpose", "n_RNAseq_mice", "age_when_sent_to_space"
+        ]
         extended_headers = list(headers)
         
         for new_field in potential_new_fields:

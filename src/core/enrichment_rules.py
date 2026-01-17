@@ -540,6 +540,16 @@ def enrich_row(
     _enrich_timepoint(result, osd_id, sample_id, matching_sample, tracker)
     _enrich_assay_type(result, osd_id, osdr_study_json, tracker)
     
+    # New study-level enrichments
+    _enrich_n_mice_total(result, osd_id, samples, osdr_study_json, tracker)
+    _enrich_has_rnaseq(result, osd_id, osdr_study_json, tracker)
+    _enrich_genetic_variant(result, osd_id, samples, tracker)
+    _enrich_mouse_source(result, osd_id, samples, tracker)
+    _enrich_time_in_space(result, osd_id, samples, osdr_study_json, tracker)
+    _enrich_study_purpose(result, osd_id, osdr_study_json, tracker)
+    _enrich_n_rnaseq_mice(result, osd_id, samples, osdr_study_json, tracker)
+    _enrich_age_when_sent_to_space(result, osd_id, samples, tracker)
+    
     return result
 
 
@@ -1081,6 +1091,408 @@ def _enrich_assay_type(
                 field_name=field_name,
                 value=assay_types,
                 source=ProvenanceSource.OSDR_API_METADATA,
+                confidence=ConfidenceLevel.HIGH,
+            )
+
+
+def _enrich_n_mice_total(
+    result: EnrichmentResult,
+    osd_id: str,
+    samples: List[Dict[str, Any]],
+    metadata: Dict[str, Any],
+    tracker: Optional[ProvenanceTracker],
+) -> None:
+    """Enrich n_mice_total field by counting unique source_names (animals)."""
+    field_name = "n_mice_total"
+    
+    if not _should_enrich(result.enriched_row, field_name):
+        return
+    
+    if not samples:
+        return
+    
+    # Count unique source_names (each represents one animal)
+    source_names = set()
+    for sample in samples:
+        sn = sample.get("source_name", "")
+        if sn:
+            source_names.add(sn)
+    
+    if source_names:
+        value = str(len(source_names))
+        result.enriched_row[field_name] = value
+        
+        entry = ProvenanceEntry(
+            osd_id=osd_id,
+            sample_id="_study_level_",
+            field_name=field_name,
+            value=value,
+            source=ProvenanceSource.OSDR_API_METADATA,
+            confidence=ConfidenceLevel.HIGH,
+            evidence_path="samples[].source_name (unique count)",
+        )
+        result.provenance_entries.append(entry)
+        
+        if tracker:
+            tracker.record(
+                osd_id=osd_id,
+                field_name=field_name,
+                value=value,
+                source=ProvenanceSource.OSDR_API_METADATA,
+                confidence=ConfidenceLevel.HIGH,
+                evidence_path="samples[].source_name (unique count)",
+            )
+
+
+def _enrich_has_rnaseq(
+    result: EnrichmentResult,
+    osd_id: str,
+    metadata: Dict[str, Any],
+    tracker: Optional[ProvenanceTracker],
+) -> None:
+    """Enrich Has_RNAseq field by checking assay types."""
+    field_name = "Has_RNAseq"
+    
+    if not _should_enrich(result.enriched_row, field_name):
+        return
+    
+    # Check assays for RNA-seq
+    has_rnaseq = "No"
+    assays = metadata.get("assays", [])
+    for assay in assays:
+        filename = assay.get("filename", "")
+        if "rna-seq" in filename.lower() or "rnaseq" in filename.lower() or "rna seq" in filename.lower():
+            has_rnaseq = "Yes"
+            break
+    
+    # Also check assay_types field
+    if has_rnaseq == "No":
+        assay_types = metadata.get("assay_types", "").lower()
+        if "rna-seq" in assay_types or "rnaseq" in assay_types:
+            has_rnaseq = "Yes"
+    
+    result.enriched_row[field_name] = has_rnaseq
+    
+    entry = ProvenanceEntry(
+        osd_id=osd_id,
+        sample_id="_study_level_",
+        field_name=field_name,
+        value=has_rnaseq,
+        source=ProvenanceSource.OSDR_API_METADATA,
+        confidence=ConfidenceLevel.HIGH,
+        evidence_path="assays[].filename",
+    )
+    result.provenance_entries.append(entry)
+    
+    if tracker:
+        tracker.record(
+            osd_id=osd_id,
+            field_name=field_name,
+            value=has_rnaseq,
+            source=ProvenanceSource.OSDR_API_METADATA,
+            confidence=ConfidenceLevel.HIGH,
+        )
+
+
+def _enrich_genetic_variant(
+    result: EnrichmentResult,
+    osd_id: str,
+    samples: List[Dict[str, Any]],
+    tracker: Optional[ProvenanceTracker],
+) -> None:
+    """Enrich mouse_genetic_variant field from Genotype characteristic."""
+    field_name = "mouse_genetic_variant"
+    
+    if not _should_enrich(result.enriched_row, field_name):
+        return
+    
+    genotype = None
+    for sample in samples[:10]:  # Check first 10 samples
+        chars = sample.get("characteristics", [])
+        for char in chars:
+            cat = str(char.get("category", "")).lower()
+            val = str(char.get("value", "")).strip()
+            if "genotype" in cat and val and val.lower() not in ["n/a", "na", ""]:
+                genotype = val
+                break
+        if genotype:
+            break
+    
+    if genotype:
+        result.enriched_row[field_name] = genotype
+        
+        entry = ProvenanceEntry(
+            osd_id=osd_id,
+            sample_id="_study_level_",
+            field_name=field_name,
+            value=genotype,
+            source=ProvenanceSource.ISA_CHARACTERISTICS,
+            confidence=ConfidenceLevel.HIGH,
+            evidence_path="characteristics[].Genotype",
+        )
+        result.provenance_entries.append(entry)
+        
+        if tracker:
+            tracker.record(
+                osd_id=osd_id,
+                field_name=field_name,
+                value=genotype,
+                source=ProvenanceSource.ISA_CHARACTERISTICS,
+                confidence=ConfidenceLevel.HIGH,
+            )
+
+
+def _enrich_mouse_source(
+    result: EnrichmentResult,
+    osd_id: str,
+    samples: List[Dict[str, Any]],
+    tracker: Optional[ProvenanceTracker],
+) -> None:
+    """Enrich mouse_source field from Animal Source characteristic."""
+    field_name = "mouse_source"
+    
+    if not _should_enrich(result.enriched_row, field_name):
+        return
+    
+    source = None
+    for sample in samples[:10]:  # Check first 10 samples
+        chars = sample.get("characteristics", [])
+        for char in chars:
+            cat = str(char.get("category", "")).lower()
+            val = str(char.get("value", "")).strip()
+            if "animal source" in cat and val and val.lower() not in ["n/a", "na", ""]:
+                source = val
+                break
+        if source:
+            break
+    
+    if source:
+        result.enriched_row[field_name] = source
+        
+        entry = ProvenanceEntry(
+            osd_id=osd_id,
+            sample_id="_study_level_",
+            field_name=field_name,
+            value=source,
+            source=ProvenanceSource.ISA_CHARACTERISTICS,
+            confidence=ConfidenceLevel.HIGH,
+            evidence_path="characteristics[].Animal Source",
+        )
+        result.provenance_entries.append(entry)
+        
+        if tracker:
+            tracker.record(
+                osd_id=osd_id,
+                field_name=field_name,
+                value=source,
+                source=ProvenanceSource.ISA_CHARACTERISTICS,
+                confidence=ConfidenceLevel.HIGH,
+            )
+
+
+def _enrich_time_in_space(
+    result: EnrichmentResult,
+    osd_id: str,
+    samples: List[Dict[str, Any]],
+    metadata: Dict[str, Any],
+    tracker: Optional[ProvenanceTracker],
+) -> None:
+    """Enrich time_in_space field from Duration factor or description."""
+    field_name = "time_in_space"
+    
+    if not _should_enrich(result.enriched_row, field_name):
+        return
+    
+    duration = None
+    
+    # Check factor values for Duration
+    for sample in samples[:10]:
+        fv = sample.get("factor_values", {})
+        if isinstance(fv, dict):
+            for key, val in fv.items():
+                if "duration" in key.lower() and val:
+                    duration = str(val).strip()
+                    break
+        if duration:
+            break
+    
+    # Try to extract from description if not found
+    if not duration:
+        description = metadata.get("description", "")
+        # Look for patterns like "33 days", "35 days in space"
+        match = re.search(r'(\d+)\s*days?\s*(?:in\s+space|on\s+the?\s+ISS|mission)', description, re.IGNORECASE)
+        if match:
+            duration = f"{match.group(1)} days"
+    
+    if duration:
+        result.enriched_row[field_name] = duration
+        
+        entry = ProvenanceEntry(
+            osd_id=osd_id,
+            sample_id="_study_level_",
+            field_name=field_name,
+            value=duration,
+            source=ProvenanceSource.OSDR_API_METADATA,
+            confidence=ConfidenceLevel.MEDIUM if "description" in str(duration) else ConfidenceLevel.HIGH,
+            evidence_path="factor_values[].Duration or description",
+        )
+        result.provenance_entries.append(entry)
+        
+        if tracker:
+            tracker.record(
+                osd_id=osd_id,
+                field_name=field_name,
+                value=duration,
+                source=ProvenanceSource.OSDR_API_METADATA,
+                confidence=ConfidenceLevel.MEDIUM,
+            )
+
+
+def _enrich_study_purpose(
+    result: EnrichmentResult,
+    osd_id: str,
+    metadata: Dict[str, Any],
+    tracker: Optional[ProvenanceTracker],
+) -> None:
+    """Enrich study_purpose field from description."""
+    field_name = "study purpose"
+    
+    if not _should_enrich(result.enriched_row, field_name):
+        return
+    
+    description = metadata.get("description", "")
+    if description:
+        # Truncate to first 200 chars for summary
+        if len(description) > 200:
+            # Find a good break point
+            value = description[:200].rsplit(" ", 1)[0] + "..."
+        else:
+            value = description
+        
+        result.enriched_row[field_name] = value
+        
+        entry = ProvenanceEntry(
+            osd_id=osd_id,
+            sample_id="_study_level_",
+            field_name=field_name,
+            value=value,
+            source=ProvenanceSource.OSDR_API_METADATA,
+            confidence=ConfidenceLevel.HIGH,
+            evidence_path="description",
+        )
+        result.provenance_entries.append(entry)
+        
+        if tracker:
+            tracker.record(
+                osd_id=osd_id,
+                field_name=field_name,
+                value=value,
+                source=ProvenanceSource.OSDR_API_METADATA,
+                confidence=ConfidenceLevel.HIGH,
+            )
+
+
+def _enrich_n_rnaseq_mice(
+    result: EnrichmentResult,
+    osd_id: str,
+    samples: List[Dict[str, Any]],
+    metadata: Dict[str, Any],
+    tracker: Optional[ProvenanceTracker],
+) -> None:
+    """Enrich n_RNAseq_mice field - count of samples with RNA-seq data."""
+    field_name = "n_RNAseq_mice"
+    
+    if not _should_enrich(result.enriched_row, field_name):
+        return
+    
+    # Check if study has RNA-seq
+    has_rnaseq = False
+    assays = metadata.get("assays", [])
+    for assay in assays:
+        filename = assay.get("filename", "")
+        if "rna-seq" in filename.lower() or "rnaseq" in filename.lower():
+            has_rnaseq = True
+            break
+    
+    if has_rnaseq:
+        # Count unique source_names (animals)
+        source_names = set()
+        for sample in samples:
+            sn = sample.get("source_name", "")
+            if sn:
+                source_names.add(sn)
+        
+        value = str(len(source_names))
+        result.enriched_row[field_name] = value
+        
+        entry = ProvenanceEntry(
+            osd_id=osd_id,
+            sample_id="_study_level_",
+            field_name=field_name,
+            value=value,
+            source=ProvenanceSource.OSDR_API_METADATA,
+            confidence=ConfidenceLevel.MEDIUM,
+            evidence_path="samples with RNA-seq assay",
+        )
+        result.provenance_entries.append(entry)
+        
+        if tracker:
+            tracker.record(
+                osd_id=osd_id,
+                field_name=field_name,
+                value=value,
+                source=ProvenanceSource.OSDR_API_METADATA,
+                confidence=ConfidenceLevel.MEDIUM,
+            )
+
+
+def _enrich_age_when_sent_to_space(
+    result: EnrichmentResult,
+    osd_id: str,
+    samples: List[Dict[str, Any]],
+    tracker: Optional[ProvenanceTracker],
+) -> None:
+    """Enrich age_when_sent_to_space field from Age at Launch characteristic."""
+    field_name = "age_when_sent_to_space"
+    
+    if not _should_enrich(result.enriched_row, field_name):
+        return
+    
+    age_at_launch = None
+    for sample in samples[:10]:
+        chars = sample.get("characteristics", [])
+        for char in chars:
+            cat = str(char.get("category", "")).lower()
+            val = str(char.get("value", "")).strip()
+            if "age at launch" in cat and val:
+                age_at_launch = val
+                break
+            # Also check for just "age" if no launch-specific found
+            if cat == "age" and val and not age_at_launch:
+                age_at_launch = val
+        if age_at_launch and "launch" in cat:
+            break
+    
+    if age_at_launch:
+        result.enriched_row[field_name] = age_at_launch
+        
+        entry = ProvenanceEntry(
+            osd_id=osd_id,
+            sample_id="_study_level_",
+            field_name=field_name,
+            value=age_at_launch,
+            source=ProvenanceSource.ISA_CHARACTERISTICS,
+            confidence=ConfidenceLevel.HIGH,
+            evidence_path="characteristics[].Age at Launch",
+        )
+        result.provenance_entries.append(entry)
+        
+        if tracker:
+            tracker.record(
+                osd_id=osd_id,
+                field_name=field_name,
+                value=age_at_launch,
+                source=ProvenanceSource.ISA_CHARACTERISTICS,
                 confidence=ConfidenceLevel.HIGH,
             )
 

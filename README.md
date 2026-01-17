@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 > **Author:** Yeshasvi Kamma  
-> **Version:** 1.0.0
+> **Version:** 1.1.0
 
 ---
 
@@ -157,6 +157,35 @@ The engine normalizes values to canonical forms:
 | **Sex** | `M` / `male` → `Male` · `F` / `female` → `Female` |
 | **Groups** | `Flight` / `FLT` → `space` · `Ground Control` / `GC` → `ground` |
 | **Tissues** | Standard anatomical nomenclature with abbreviation support |
+
+---
+
+## Enriched Fields
+
+The pipeline can automatically populate the following fields:
+
+### Sample-Level Fields
+| Field | Source | Confidence |
+|-------|--------|------------|
+| `mouse_strain` | ISA-Tab characteristics | High |
+| `mouse_sex` | ISA-Tab characteristics | High |
+| `age` | ISA-Tab characteristics | High |
+| `mouse_id` | Source name or sample ID patterns | High/Medium |
+| `organ_sampled` | Material Type characteristic | High |
+| `space_or_ground` | Factor values | High |
+
+### Study-Level Fields
+| Field | Source | Confidence |
+|-------|--------|------------|
+| `Has_RNAseq` | Assay filenames | High |
+| `n_mice_total` | Unique source_name count | High |
+| `n_RNAseq_mice` | Sample count with RNA-seq | Medium |
+| `mouse_genetic_variant` | Genotype characteristic | High |
+| `mouse_source` | Animal Source characteristic | High |
+| `time_in_space` | Duration factor or description | Medium |
+| `study purpose` | Study description | High |
+| `age_when_sent_to_space` | Age at Launch characteristic | High |
+| `assay_on_organ` | Assay types metadata | High |
 
 ---
 
