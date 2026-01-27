@@ -23,6 +23,7 @@ NASA_discovery/
 │   │   ├── provenance.py        # ProvenanceEntry, ConflictEntry tracking
 │   │   ├── osdr_client.py       # OSDR API client + ISA-Tab download
 │   │   ├── isa_parser.py        # ISA-Tab Study/Assay file parsing
+│   │   ├── sample_expander.py   # OSD → sample-level expansion (NEW)
 │   │   ├── enrichment_rules.py  # Deterministic enrichment logic
 │   │   └── pipeline.py          # Main pipeline orchestrator
 │   ├── intelligence/            # AI/reasoning layer (suggestions only)
@@ -42,13 +43,17 @@ NASA_discovery/
 │   ├── ml_builder/              # ML-ready exports (future)
 │   └── dashboard/               # Visualization (future)
 ├── cli/                         # Command-line interface
+│   ├── expand_samples.py        # OSD → sample expansion CLI (NEW)
 │   ├── process_csv.py           # Main CSV enrichment CLI
+│   ├── init_cache.py            # Pre-download cache for studies
 │   └── process_osd_study.py     # Single study processing
 ├── resources/                   # Raw data (preserved)
-│   ├── osdr_api/raw/            # Cached OSDR JSON (33 studies)
+│   ├── osdr_api/raw/            # Cached OSDR JSON
 │   ├── isa_tab/                 # Downloaded ISA-Tab bundles
-│   ├── study_overview_examples/ # Example CSVs and outputs
-│   └── study_overiew_work_needed/
+│   ├── input_study_summary/     # Input OSD lists for expansion
+│   ├── example_study_summary/   # Example expanded outputs
+│   ├── test_inputs/demo/        # Demo test files
+│   └── schema/                  # Column schemas
 ├── outputs/                     # Pipeline outputs
 │   ├── enriched_csv/
 │   ├── provenance_logs/
@@ -170,11 +175,18 @@ ProvenanceEntry(
 
 ## Common Tasks
 
+### Expand OSD IDs to Sample Rows (NEW)
+
+```bash
+python -m cli.expand_samples resources/input_study_summary/study_list.csv \
+    -o outputs/enriched_csv/expanded_samples.csv
+```
+
 ### Run Full Enrichment Pipeline
 
 ```bash
-python -m cli.process_csv resources/study_overview_examples/Yeshasvi_2.csv \
-    -o outputs/enriched_csv/Yeshasvi_2_enriched.csv
+python -m cli.process_csv resources/test_inputs/demo/realworld_rodent_research.csv \
+    -o outputs/enriched_csv/enriched_output.csv --validate
 ```
 
 ### Process Single Study
@@ -215,6 +227,40 @@ When asked for code:
 - Docstrings for public APIs
 - No unnecessary explanations
 - Follow existing patterns in codebase
+
+## Sample Expander Module (NEW)
+
+The `src/core/sample_expander.py` module provides OSD → sample-level expansion:
+
+### Key Classes
+
+- **SampleRow**: Dataclass representing one output row
+- **SampleExpander**: Main class for parsing ISA-Tab and generating sample rows
+
+### Key Functions
+
+- `expand_osd_to_samples(osd_id, rr_mission)` - Expand one OSD to samples
+- `expand_multiple_osds(osd_ids)` - Batch expansion
+- `expand_samples_from_csv(input_path, output_path)` - Full CSV workflow
+
+### Output Columns
+
+The expander generates these columns:
+- `RR_mission` - Mission name (RR-1, MHU-3, Hindlimb_Unloading, etc.)
+- `OSD_study` - OSD identifier
+- `mouse_uid` - Animal/subject ID (from source_name)
+- `sample_name` - Sample identifier
+- `extract_name` - Extract identifier
+- `space_or_ground` - `spaceflight` or `ground`
+- `when_was_the_sample_collected` - Collection timepoint
+- `mouse_sex` - Male/Female
+- `mouse_strain` - Strain name
+- `mouse_genetic_variant` - Genotype (Wild, KO, Het, etc.)
+- `mouse_source` - Vendor/source
+- `organ_sampled` - Tissue type
+- `assay_on_organ` - Assay type (rna-seq, proteomics, etc.)
+- `RNA_seq_method` - Library selection method
+- `RNA_seq_paired` - PAIRED or SINGLE
 
 ---
 

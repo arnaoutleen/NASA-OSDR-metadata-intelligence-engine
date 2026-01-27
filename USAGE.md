@@ -9,6 +9,9 @@
 1. [Installation](#1-installation)
 2. [Quick Start](#2-quick-start)
 3. [CLI Reference](#3-cli-reference)
+   - [expand_samples](#expand_samples-osd--sample-expansion)
+   - [process_csv](#process_csv-metadata-enrichment)
+   - [process_osd_study](#process_osd_study-single-study)
 4. [Input File Formats](#4-input-file-formats)
 5. [Output Files](#5-output-files)
 6. [Understanding Provenance](#6-understanding-provenance)
@@ -53,9 +56,24 @@ python -c "import requests, pandas; print('Dependencies OK')"
 
 ## 2. Quick Start
 
+### Sample Expansion (New!)
+
+Expand a list of OSD IDs into detailed sample-level rows. This is the recommended starting point when you have a list of OSD studies and need to generate a complete sample summary:
+
+```bash
+# Expand OSD IDs to sample-level rows
+python -m cli.expand_samples resources/input_study_summary/study_list.csv -o outputs/enriched_csv/expanded.csv
+```
+
+The expander will automatically:
+1. Download ISA-Tab archives from NASA for each study
+2. Parse sample metadata from the ISA-Tab Study and Assay files
+3. Generate one row per sample with all available metadata
+4. Cache results locally for faster subsequent runs
+
 ### Basic Enrichment
 
-Process a CSV file and generate enriched outputs. Data is fetched automatically on-demand:
+Process a CSV file with existing samples and generate enriched outputs:
 
 ```bash
 python -m cli.process_csv resources/test_inputs/demo/realworld_rodent_research.csv --validate
@@ -100,19 +118,86 @@ python -m cli.process_csv input.csv -o outputs/enriched_csv/custom_output.csv
 
 ## 3. CLI Reference
 
-### Main Command: `process_csv`
+### `expand_samples`: OSD → Sample Expansion
+
+Expand a list of OSD IDs into detailed sample-level rows by parsing ISA-Tab files.
+
+```bash
+python -m cli.expand_samples <input_csv> [OPTIONS]
+```
+
+#### Required Arguments
+
+| Argument | Description |
+|----------|-------------|
+| `input_csv` | Path to CSV file containing OSD IDs |
+
+#### Optional Arguments
+
+| Flag | Description | Default |
+|------|-------------|---------|
+| `-o, --output` | Output CSV path | `outputs/enriched_csv/<input>_expanded.csv` |
+| `--osd-column` | Name of column containing OSD IDs | `OSD_study` |
+| `--mission-column` | Name of column containing mission names | `RR_mission` |
+| `--no-grouping` | Show mission/study on every row | `False` |
+| `-v, --verbose` | Enable verbose output | `False` |
+| `-q, --quiet` | Suppress non-error output | `False` |
+
+#### Examples
+
+```bash
+# Basic expansion
+python -m cli.expand_samples resources/input_study_summary/rishal_table.csv
+
+# Specify output file
+python -m cli.expand_samples input.csv -o outputs/expanded_samples.csv
+
+# Show all values on every row (no grouping)
+python -m cli.expand_samples input.csv --no-grouping
+
+# Specify custom column names
+python -m cli.expand_samples input.csv --osd-column OSD --mission-column Mission
+```
+
+#### Output Columns
+
+The sample expansion generates these columns:
+
+| Column | Description | Source |
+|--------|-------------|--------|
+| `RR_mission` | Mission name (RR-1, MHU-3, etc.) | Inferred from study metadata |
+| `OSD_study` | OSD identifier | Input CSV |
+| `mouse_uid` | Animal/subject ID | ISA source_name |
+| `sample_name` | Sample identifier | ISA sample_name |
+| `extract_name` | Extract identifier | ISA assay data |
+| `space_or_ground` | `spaceflight` / `ground` | Factor values |
+| `when_was_the_sample_collected` | Collection timepoint | Factor values |
+| `mouse_sex` | `Male` / `Female` | Characteristics |
+| `mouse_strain` | Strain name | Characteristics |
+| `mouse_genetic_variant` | Genotype (Wild, KO, etc.) | Characteristics |
+| `mouse_source` | Vendor/source | Characteristics |
+| `organ_sampled` | Tissue type | Characteristics |
+| `assay_on_organ` | Assay type | Assay filenames |
+| `RNA_seq_method` | Library selection | Assay parameters |
+| `RNA_seq_paired` | PAIRED / SINGLE | Assay parameters |
+
+---
+
+### `process_csv`: Metadata Enrichment
+
+Enrich existing sample data with additional metadata from NASA APIs.
 
 ```bash
 python -m cli.process_csv <input_csv> [OPTIONS]
 ```
 
-### Required Arguments
+#### Required Arguments
 
 | Argument | Description |
 |----------|-------------|
 | `input_csv` | Path to input CSV file |
 
-### Optional Arguments
+#### Optional Arguments
 
 | Flag | Description | Default |
 |------|-------------|---------|
@@ -128,7 +213,7 @@ python -m cli.process_csv <input_csv> [OPTIONS]
 | `-v, --verbose` | Enable verbose output | `False` |
 | `-q, --quiet` | Suppress non-error output | `False` |
 
-### Examples
+#### Examples
 
 ```bash
 # Standard enrichment with validation
@@ -150,7 +235,9 @@ python -m cli.process_csv data.csv --validate -v
 python -m cli.process_csv data.csv -q
 ```
 
-### Single Study Processing
+---
+
+### `process_osd_study`: Single Study
 
 Process a single OSDR study:
 
@@ -352,9 +439,25 @@ CONFLICTS DETECTED: 0
 
 ## 8. Common Workflows
 
-### Workflow 1: New Study Batch
+### Workflow 1: New Study List Expansion
 
-Processing a new batch of assigned studies:
+When you have a list of OSD IDs and need to generate sample-level data:
+
+```bash
+# 1. Create input CSV with OSD IDs (one per row)
+# Example: resources/input_study_summary/my_studies.csv with columns: OSD_study, RR_mission
+
+# 2. Run sample expansion
+python -m cli.expand_samples resources/input_study_summary/my_studies.csv \
+    -o outputs/enriched_csv/my_studies_expanded.csv
+
+# 3. Review output - each OSD is expanded to individual sample rows
+head -50 outputs/enriched_csv/my_studies_expanded.csv
+```
+
+### Workflow 2: New Study Batch Enrichment
+
+Processing a new batch of assigned studies with existing sample data:
 
 ```bash
 # 1. Prepare input CSV with OSD IDs and sample IDs
@@ -368,7 +471,7 @@ cat outputs/validation_reports/new_studies_validation_*.txt
 cat outputs/validation_reports/new_studies_conflicts.txt
 ```
 
-### Workflow 2: Re-enrichment After Updates
+### Workflow 3: Re-enrichment After Updates
 
 When OSDR data has been updated:
 
@@ -377,7 +480,7 @@ When OSDR data has been updated:
 python -m cli.process_csv studies.csv --clear-cache --validate
 ```
 
-### Workflow 3: Quick Iteration
+### Workflow 4: Quick Iteration
 
 For rapid testing without network calls:
 
@@ -386,7 +489,7 @@ For rapid testing without network calls:
 python -m cli.process_csv studies.csv
 ```
 
-### Workflow 4: ML Dataset Preparation
+### Workflow 5: ML Dataset Preparation
 
 Generate clean datasets for machine learning:
 

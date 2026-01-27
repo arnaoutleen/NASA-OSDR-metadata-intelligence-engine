@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 > **Author:** Yeshasvi Kamma  
-> **Version:** 1.1.0
+> **Version:** 1.2.0
 
 ---
 
@@ -18,6 +18,7 @@ The OSDR Metadata Intelligence Engine automates the extraction, normalization, a
 
 - **Zero-hallucination enrichment** — Only fills values from verified NASA data sources
 - **Full provenance tracking** — Every enriched value is traceable to its origin
+- **Sample expansion** — Automatically expands OSD IDs into detailed sample-level rows
 - **Organism-aware processing** — Correctly handles rodent vs. cell line studies
 - **FAIR-compliant outputs** — Standardized CSVs with complete audit trails
 - **Automatic data fetching** — Downloads and parses ISA-Tab on demand
@@ -52,10 +53,13 @@ git clone https://github.com/yeshasvikamma/NASA-OSDR-metadata-intelligence-engin
 cd NASA-OSDR-metadata-intelligence-engine
 pip install -r requirements.txt
 
-# 2. Run enrichment (data is fetched automatically)
+# 2. Expand OSD IDs to sample-level rows (new!)
+python -m cli.expand_samples resources/input_study_summary/study_list.csv -o outputs/enriched_csv/expanded.csv
+
+# 3. Run enrichment on existing samples (data is fetched automatically)
 python -m cli.process_csv resources/test_inputs/demo/realworld_rodent_research.csv --validate
 
-# 3. Review outputs
+# 4. Review outputs
 ls outputs/enriched_csv/       # Enriched CSV
 ls outputs/provenance_logs/    # Provenance JSON
 ls outputs/validation_reports/ # Validation report
@@ -70,12 +74,14 @@ ls outputs/validation_reports/ # Validation report
 ```
 nasa-osdr-metadata-engine/
 ├── cli/                          # Command-line interface
+│   ├── expand_samples.py         # OSD → sample expansion CLI (new!)
 │   ├── process_csv.py            # Main enrichment CLI
 │   ├── process_osd_study.py      # Single-study processing
 │   └── init_cache.py             # Optional pre-fetching
 ├── src/
 │   ├── core/                     # Core enrichment engine
 │   │   ├── pipeline.py           # Pipeline orchestrator
+│   │   ├── sample_expander.py    # OSD → sample-level expansion (new!)
 │   │   ├── osdr_client.py        # NASA API client + ISA-Tab fetcher
 │   │   ├── isa_parser.py         # ISA-Tab metadata parser
 │   │   ├── enrichment_rules.py   # Enrichment logic
@@ -92,6 +98,8 @@ nasa-osdr-metadata-engine/
 │       ├── flexible_loader.py    # Flexible CSV loading
 │       └── config.py             # Configuration
 ├── resources/
+│   ├── input_study_summary/      # Input OSD lists for expansion
+│   ├── example_study_summary/    # Example expanded outputs
 │   ├── test_inputs/demo/         # Demo test files
 │   └── schema/                   # Column schemas
 └── outputs/                      # Generated outputs
@@ -233,7 +241,7 @@ When using outputs from this pipeline in publications:
 
 ### Suggested Citation
 
-> Metadata were compiled from NASA's Open Science Data Repository (OSDR) using the OSDR Metadata Intelligence Engine v1.0 (Kamma, Y., December 2025). Original study data available at https://osdr.nasa.gov/.
+> Metadata were compiled from NASA's Open Science Data Repository (OSDR) using the OSDR Metadata Intelligence Engine v1.2 (Kamma, Y., January 2026). Original study data available at https://osdr.nasa.gov/.
 
 ---
 

@@ -30,6 +30,7 @@ class APIConfig:
     developer_api_base: str = "https://osdr.nasa.gov/osdr/data"
     genelab_files_api: str = "https://genelab-data.ndc.nasa.gov/genelab/data/glds/files"
     osdr_download_base: str = "https://osdr.nasa.gov"
+    osdr_repo_base: str = "https://osdr.nasa.gov/bio/repo/data/studies"
     request_timeout: int = 60
 
 
@@ -256,6 +257,86 @@ class OSDRClient:
             pass
         
         return None
+    
+    def fetch_study_factors(self, osd_id: str) -> Dict[str, Any]:
+        """
+        Fetch study factor information from multiple sources.
+        
+        This method attempts to get factor data from:
+        1. Developer API study metadata
+        2. ISA-Tab investigation file
+        
+        Args:
+            osd_id: The OSD identifier
+            
+        Returns:
+            Dictionary with factor names, types, and study info
+        """
+        osd_id = self.normalize_osd_id(osd_id)
+        result = {
+            "factor_names": [],
+            "factor_types": [],
+            "study_type": "",  # spaceflight, ground_radiation, ground_hlu, etc.
+            "mission_name": "",
+            "organism": "",
+        }
+        
+        # Try Developer API first
+        dev_meta = self._fetch_developer_metadata(osd_id)
+        if dev_meta:
+            study = dev_meta.get("study", {}).get(osd_id, {})
+            if not study:
+                study = dev_meta.get("study", {})
+            
+            # Extract study info
+            studies = study.get("studies", [])
+            if studies:
+                first_study = studies[0]
+                
+                # Get factors
+                factors = first_study.get("factors", [])
+                for factor in factors:
+                    if isinstance(factor, dict):
+                        name = factor.get("factorName", "")
+                        ftype = factor.get("factorType", {})
+                        if name:
+                            result["factor_names"].append(name)
+                        if isinstance(ftype, dict):
+                            result["factor_types"].append(ftype.get("annotationValue", ""))
+                
+                # Get description for study type inference
+                desc = first_study.get("description", "").lower()
+                title = first_study.get("title", "").lower()
+                
+                # Infer study type
+                result["study_type"] = self._infer_study_type(title, desc, result["factor_names"])
+        
+        return result
+    
+    def _infer_study_type(
+        self,
+        title: str,
+        description: str,
+        factor_names: List[str],
+    ) -> str:
+        """Infer study type from metadata."""
+        combined = f"{title} {description} {' '.join(factor_names)}".lower()
+        
+        # Check for spaceflight
+        if any(kw in combined for kw in ["spaceflight", "space flight", "iss", "rodent research", "rr-"]):
+            return "spaceflight"
+        
+        # Check for ground analogs
+        if any(kw in combined for kw in ["hindlimb unloading", "hlu", "hind limb"]):
+            return "ground_hlu"
+        
+        if any(kw in combined for kw in ["radiation", "irradiation", "ionizing"]):
+            return "ground_radiation"
+        
+        if any(kw in combined for kw in ["simulated microgravity", "simulated weightlessness"]):
+            return "ground_analog"
+        
+        return "ground"
     
     # =========================================================================
     # ISA-Tab Download

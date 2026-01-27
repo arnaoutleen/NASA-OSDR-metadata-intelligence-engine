@@ -116,3 +116,11 @@ dmypy.json
 *.pem
 *.key
 
+# --------------------------------------
+# Input Data Directories (User Data)
+# --------------------------------------
+# Keep example files but ignore user uploads
+resources/input_study_summary/*
+resources/example_study_summary/*
+!resources/input_study_summary/.gitkeep
+!resources/example_study_summary/.gitkeep

@@ -1,0 +1,2 @@
+# This directory contains input CSV files with OSD IDs for sample expansion.
+# Place your study lists here for processing with expand_samples CLI.

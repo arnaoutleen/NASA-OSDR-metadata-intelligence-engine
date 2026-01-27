@@ -70,6 +70,8 @@ class ISASample:
             "sex": self._get_characteristic("sex"),
             "age": self._get_characteristic("age"),
             "material_type": self._get_characteristic("organism part") or self._get_characteristic("material type"),
+            "genotype": self._get_characteristic("genotype") or self._get_characteristic("genetic background"),
+            "animal_source": self._get_characteristic("animal source") or self._get_characteristic("organism source"),
         }
     
     def _get_characteristic(self, category: str) -> str:
@@ -82,6 +84,26 @@ class ISASample:
 
 
 @dataclass
+class ISAAssaySample:
+    """Per-sample data from ISA-Tab Assay file."""
+    sample_name: str
+    extract_name: str = ""
+    library_selection: str = ""  # polyA enrichment, ribo-depletion
+    library_layout: str = ""     # PAIRED, SINGLE
+    parameter_values: Dict[str, str] = field(default_factory=dict)
+    
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert to dictionary for JSON serialization."""
+        return {
+            "sample_name": self.sample_name,
+            "extract_name": self.extract_name,
+            "library_selection": self.library_selection,
+            "library_layout": self.library_layout,
+            "parameter_values": self.parameter_values,
+        }
+
+
+@dataclass
 class ISAAssay:
     """Parsed assay from ISA-Tab Assay file."""
     filename: str
@@ -89,6 +111,7 @@ class ISAAssay:
     technology_type: str
     technology_platform: str
     samples: List[str] = field(default_factory=list)
+    sample_details: List[ISAAssaySample] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for JSON serialization."""
@@ -98,7 +121,15 @@ class ISAAssay:
             "platform": self.technology_platform,
             "measurement_type": self.measurement_type,
             "sample_count": len(self.samples),
+            "sample_details": [s.to_dict() for s in self.sample_details],
         }
+    
+    def get_sample_data(self, sample_name: str) -> Optional[ISAAssaySample]:
+        """Get detailed data for a specific sample."""
+        for sd in self.sample_details:
+            if sd.sample_name == sample_name:
+                return sd
+        return None
 
 
 @dataclass
@@ -123,6 +154,24 @@ class ISAStudyMetadata:
             "assays": [a.to_dict() for a in self.assays],
             "factor_names": "     ".join(self.factors),
         }
+    
+    def get_assay_data_for_sample(self, sample_name: str) -> Optional[ISAAssaySample]:
+        """
+        Get assay data for a specific sample.
+        
+        Searches all assays for the given sample name.
+        
+        Args:
+            sample_name: The sample name to look up
+            
+        Returns:
+            ISAAssaySample if found, None otherwise
+        """
+        for assay in self.assays:
+            sample_data = assay.get_sample_data(sample_name)
+            if sample_data:
+                return sample_data
+        return None
 
 
 class ISAParser:
@@ -266,11 +315,12 @@ class ISAParser:
         col_map: Dict[str, int] = {}
         
         for i, h in enumerate(headers):
-            h_lower = h.lower()
+            h_lower = h.lower().strip()
             
-            if "sample name" in h_lower:
+            # Use exact match for core columns to avoid matching Comment columns
+            if h_lower == "sample name":
                 col_map["sample_name"] = i
-            elif "source name" in h_lower:
+            elif h_lower == "source name":
                 col_map["source_name"] = i
         
         return col_map
@@ -319,6 +369,18 @@ class ISAParser:
                 ))
                 continue
             
+            # Parse Comment[*] - treat as additional characteristics
+            comment_match = re.match(r"Comment\[([^\]]+)\]", header, re.IGNORECASE)
+            if comment_match:
+                category = comment_match.group(1)
+                # Store useful comments as characteristics
+                if any(kw in category.lower() for kw in ["animal source", "organism source", "sample name"]):
+                    sample.characteristics.append(ISACharacteristic(
+                        category=category,
+                        value=value,
+                    ))
+                continue
+            
             # Parse Factor Value[*]
             factor_match = re.match(r"Factor Value\[([^\]]+)\]", header, re.IGNORECASE)
             if factor_match:
@@ -338,7 +400,10 @@ class ISAParser:
         """
         Parse Assay file (a_*.txt).
         
-        Extracts assay type, platform, and sample list.
+        Extracts assay type, platform, sample list, and per-sample data including:
+        - Extract Name
+        - Parameter Value[Library Selection]
+        - Parameter Value[Library Layout]
         """
         try:
             filename = file_path.name
@@ -358,25 +423,42 @@ class ISAParser:
             if len(parts) >= 5:
                 platform = parts[-1]
             
-            # Count samples
+            # Parse file with full sample details
             with open(file_path, "r", encoding="utf-8") as f:
                 reader = csv.reader(f, delimiter="\t")
                 headers = next(reader, [])
+            
+            if not headers:
+                return
+            
+            # Find column indices
+            col_indices = self._build_assay_column_map(headers)
+            
+            samples = []
+            sample_details = []
+            
+            with open(file_path, "r", encoding="utf-8") as f:
+                reader = csv.reader(f, delimiter="\t")
+                next(reader)  # Skip header
                 
-                # Find Sample Name column
-                sample_col = -1
-                for i, h in enumerate(headers):
-                    if "sample name" in h.lower():
-                        sample_col = i
-                        break
-                
-                samples = []
-                if sample_col >= 0:
-                    for row in reader:
-                        if sample_col < len(row):
-                            sample_name = row[sample_col].strip()
-                            if sample_name:
-                                samples.append(sample_name)
+                for row in reader:
+                    if not row or not any(row):
+                        continue
+                    
+                    # Get sample name
+                    sample_name = ""
+                    if "sample_name" in col_indices and col_indices["sample_name"] < len(row):
+                        sample_name = row[col_indices["sample_name"]].strip()
+                    
+                    if not sample_name:
+                        continue
+                    
+                    samples.append(sample_name)
+                    
+                    # Extract per-sample assay data
+                    assay_sample = self._parse_assay_row(row, col_indices, headers)
+                    if assay_sample:
+                        sample_details.append(assay_sample)
             
             assay = ISAAssay(
                 filename=filename,
@@ -384,12 +466,80 @@ class ISAParser:
                 technology_type=technology_type,
                 technology_platform=platform,
                 samples=samples,
+                sample_details=sample_details,
             )
             
             metadata.assays.append(assay)
             
         except Exception:
             pass
+    
+    def _build_assay_column_map(self, headers: List[str]) -> Dict[str, int]:
+        """Build a map of assay column types to indices."""
+        col_indices: Dict[str, int] = {}
+        
+        for i, h in enumerate(headers):
+            h_lower = h.lower().strip()
+            
+            # Use exact match for core columns to avoid matching Comment columns
+            if h_lower == "sample name":
+                col_indices["sample_name"] = i
+            elif h_lower == "extract name":
+                col_indices["extract_name"] = i
+            elif "parameter value[library selection]" in h_lower or \
+                 "library selection" in h_lower:
+                col_indices["library_selection"] = i
+            elif "parameter value[library layout]" in h_lower or \
+                 "library layout" in h_lower:
+                col_indices["library_layout"] = i
+        
+        return col_indices
+    
+    def _parse_assay_row(
+        self,
+        row: List[str],
+        col_indices: Dict[str, int],
+        headers: List[str],
+    ) -> Optional[ISAAssaySample]:
+        """Parse a single row from Assay file to extract per-sample data."""
+        # Get sample name
+        sample_name = ""
+        if "sample_name" in col_indices and col_indices["sample_name"] < len(row):
+            sample_name = row[col_indices["sample_name"]].strip()
+        
+        if not sample_name:
+            return None
+        
+        assay_sample = ISAAssaySample(sample_name=sample_name)
+        
+        # Extract extract name
+        if "extract_name" in col_indices and col_indices["extract_name"] < len(row):
+            assay_sample.extract_name = row[col_indices["extract_name"]].strip()
+        
+        # Extract library selection
+        if "library_selection" in col_indices and col_indices["library_selection"] < len(row):
+            assay_sample.library_selection = row[col_indices["library_selection"]].strip()
+        
+        # Extract library layout
+        if "library_layout" in col_indices and col_indices["library_layout"] < len(row):
+            assay_sample.library_layout = row[col_indices["library_layout"]].strip()
+        
+        # Extract all Parameter Value columns
+        for i, header in enumerate(headers):
+            if i >= len(row):
+                continue
+            
+            value = row[i].strip()
+            if not value:
+                continue
+            
+            # Parse Parameter Value[*]
+            param_match = re.match(r"Parameter Value\[([^\]]+)\]", header, re.IGNORECASE)
+            if param_match:
+                param_name = param_match.group(1)
+                assay_sample.parameter_values[param_name] = value
+        
+        return assay_sample
     
     def get_samples_as_dicts(self, osd_id: str) -> List[Dict[str, Any]]:
         """

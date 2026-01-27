@@ -8,7 +8,7 @@ All values are based on NASA OSDR conventions and standard biological nomenclatu
 """
 
 from enum import Enum
-from typing import FrozenSet, Dict
+from typing import FrozenSet, Dict, Tuple
 
 
 # =============================================================================
@@ -324,5 +324,72 @@ MISSION_DURATION_PATTERNS: Dict[str, str] = {
     "bion-m1": "30 days",
     "sts-131": "15 days",
     "sts-135": "13 days",
+}
+
+
+# =============================================================================
+# Sample Expansion Output Columns
+# =============================================================================
+
+SAMPLE_OUTPUT_COLUMNS: Tuple[str, ...] = (
+    "RR_mission", "OSD_study", "mouse_uid", "sample_name", "extract_name",
+    "space_or_ground", "when_was_the_sample_collected", "mouse_sex",
+    "mouse_strain", "mouse_genetic_variant", "mouse_source", "organ_sampled",
+    "assay_on_organ", "number_of_tech_replicates", "part_of_a_longitudinal_sample_series",
+    "notes", "RNA_seq_method", "RNA_seq_paired", "days_in_space_rr3"
+)
+
+
+# =============================================================================
+# ISA-Tab Field Mappings for Sample Expansion
+# =============================================================================
+
+ISA_TAB_FIELD_MAPPINGS: Dict[str, Tuple[str, ...]] = {
+    # Output column -> ISA-Tab source fields (in priority order)
+    "mouse_uid": ("Source Name",),
+    "sample_name": ("Sample Name",),
+    "mouse_sex": ("Characteristics[Sex]", "Characteristics[sex]"),
+    "mouse_strain": ("Characteristics[Strain]", "Characteristics[strain]"),
+    "organ_sampled": ("Characteristics[Organism Part]", "Characteristics[Material Type]", 
+                      "Characteristics[organism part]", "Characteristics[material type]"),
+    "mouse_source": ("Characteristics[Animal Source]", "Characteristics[Organism Source]",
+                     "Characteristics[animal source]", "Characteristics[organism source]"),
+    "mouse_genetic_variant": ("Characteristics[Genotype]", "Characteristics[genotype]"),
+    "space_or_ground": ("Factor Value[Spaceflight]", "Factor Value[spaceflight]",
+                        "Factor Value[Group]", "Factor Value[Treatment]"),
+    "extract_name": ("Extract Name",),
+    "RNA_seq_method": ("Parameter Value[Library Selection]", "Parameter Value[library selection]"),
+    "RNA_seq_paired": ("Parameter Value[Library Layout]", "Parameter Value[library layout]"),
+}
+
+
+# =============================================================================
+# Genetic Variant Normalizations
+# =============================================================================
+
+GENETIC_VARIANT_NORMALIZATIONS: Dict[str, str] = {
+    "wild type": "Wild",
+    "wt": "Wild",
+    "wildtype": "Wild",
+    "wild-type": "Wild",
+    "wt/wt": "Wild",
+}
+
+
+# =============================================================================
+# Library Selection Normalizations
+# =============================================================================
+
+LIBRARY_SELECTION_NORMALIZATIONS: Dict[str, str] = {
+    "polya": "polyA enrichment",
+    "poly-a": "polyA enrichment",
+    "poly a": "polyA enrichment",
+    "polya enrichment": "polyA enrichment",
+    "poly-a enrichment": "polyA enrichment",
+    "mrna enrichment": "polyA enrichment",
+    "ribo-zero": "ribo-depletion",
+    "ribozero": "ribo-depletion",
+    "ribo depletion": "ribo-depletion",
+    "ribosomal depletion": "ribo-depletion",
 }
 
