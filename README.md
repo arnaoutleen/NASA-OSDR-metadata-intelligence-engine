@@ -1,268 +1,262 @@
 # NASA OSDR Metadata Intelligence Engine
 
-**A science-grade metadata enrichment pipeline for NASA's Open Science Data Repository**
+**Version 2.0.0** | Python 3.11+ | MIT License
 
-[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-
-> **Author:** Yeshasvi Kamma  
-> **Version:** 1.2.0
+**Author:** Yeshasvi Kamma
 
 ---
 
-## Overview
+Automated retrieval, enrichment, and informativeness ranking of metadata from NASA's Open Science Data Repository (OSDR). This engine pulls sample-level data from 622+ OSD studies across 12 space biology missions, ranks samples and animals by data availability, and enriches researcher-provided CSV files with provenance-tracked metadata — all from the command line.
 
-The OSDR Metadata Intelligence Engine automates the extraction, normalization, and validation of multi-omics study metadata from NASA's Open Science Data Repository. It transforms fragmented, heterogeneous metadata into clean, consistent, fully traceable datasets—ready for meta-analysis and machine learning applications.
+## Key Features
 
-### Key Features
-
-- **Zero-hallucination enrichment** — Only fills values from verified NASA data sources
-- **Full provenance tracking** — Every enriched value is traceable to its origin
-- **Sample expansion** — Automatically expands OSD IDs into detailed sample-level rows
-- **Organism-aware processing** — Correctly handles rodent vs. cell line studies
-- **FAIR-compliant outputs** — Standardized CSVs with complete audit trails
-- **Automatic data fetching** — Downloads and parses ISA-Tab on demand
-- **Deterministic & reproducible** — Same input always produces same output
-
-### The Problem
-
-Space biology researchers face significant barriers when working with OSDR metadata:
-
-| Challenge | Impact |
-|-----------|--------|
-| **Inconsistent terminology** | "Flight" vs. "Space Flight" vs. "Spaceflight" |
-| **Missing sample attributes** | Strain, sex, timepoints buried in free text |
-| **Complex ISA-Tab hierarchy** | Nested Investigation → Study → Assay structure |
-| **Manual curation burden** | Hours spent before analysis can begin |
-
-### The Solution
-
-This pipeline provides automated, ethical metadata enrichment:
-
-```
-Input CSV → API/ISA-Tab Retrieval → Enrichment → Validation → Enriched CSV + Provenance Log
-```
-
----
+- **Automated data retrieval** — fetch unified sample records for a single OSD, an entire mission, or all 622+ studies in the repository
+- **Sample informativeness ranking** — Table 1: per-OSD ranking of samples by assay count and data file availability
+- **Mouse informativeness ranking** — Table 2: cross-OSD mission-level ranking of animals by organ x assay coverage
+- **Mission resolution** — automatic mission-to-OSD mapping with 12 seed missions, 35 aliases, and dynamic discovery from ISA-Tab titles
+- **Metadata enrichment** — fill missing fields in researcher CSVs using a zero-hallucination policy (only real API/ISA-Tab data)
+- **Full provenance tracking** — every enriched value is tagged with its source, confidence level, and evidence path
+- **Sample expansion** — expand a list of OSD IDs into detailed sample-level rows with characteristics and factor values
+- **ISA-Tab auto-download and parsing** — automatically fetches and parses Investigation, Study, and Assay files
+- **Controlled vocabulary normalization** — standardizes strains, tissues, assay types, and sex values across studies
+- **CSV and JSON output** — all commands support `--format csv` (default) and `--format json`
+- **Local caching** — API responses and ISA-Tab archives are cached for fast re-runs
 
 ## Quick Start
 
 ```bash
-# 1. Clone and install
+# 1. Install
 git clone https://github.com/yeshasvikamma/NASA-OSDR-metadata-intelligence-engine.git
 cd NASA-OSDR-metadata-intelligence-engine
 pip install -r requirements.txt
 
-# 2. Expand OSD IDs to sample-level rows (new!)
-python -m cli.expand_samples resources/input_study_summary/study_list.csv -o outputs/enriched_csv/expanded.csv
+# 2. Retrieve data for a mission
+python -m cli.retrieve_data --mission RR-3 -o outputs/retrieval/rr3_data.csv
 
-# 3. Run enrichment on existing samples (data is fetched automatically)
-python -m cli.process_csv resources/test_inputs/demo/realworld_rodent_research.csv --validate
+# 3. Rank samples by data availability
+python -m cli.rank_samples --mission RR-3 -o outputs/rankings/rr3_samples.csv
 
-# 4. Review outputs
-ls outputs/enriched_csv/       # Enriched CSV
-ls outputs/provenance_logs/    # Provenance JSON
-ls outputs/validation_reports/ # Validation report
+# 4. Rank mice by cross-OSD informativeness
+python -m cli.rank_mice --mission RR-3 -o outputs/rankings/rr3_mice.csv
+
+# 5. Generate both tables at once
+python -m cli.rank_all --mission RR-3 -o outputs/rankings/
 ```
 
-📖 **See [USAGE.md](USAGE.md) for complete documentation.**
+## Core Concepts
 
----
+### OSD = One Organ Study
+
+Each OSD (Open Science Data) study corresponds to one organ from a set of animals. Within that OSD, there are multiple samples (from different mice), and each sample can have multiple assay types run on it (RNA-Seq, DNA methylation, proteomics, etc.).
+
+### Mission = One Set of Animals
+
+A mission (e.g., RR-1, RR-3, MHU-2) is a spaceflight or ground study that uses a shared cohort of animals. The same mouse can appear in **multiple OSD studies** because different organs from that mouse are processed in different studies. For example, RR-3 has 3 OSDs covering Liver (OSD-137), Eye (OSD-162), and Retina (OSD-194).
+
+### source_name = The Animal Identifier
+
+`source_name` is the field that links a single mouse across OSDs. If mouse `RR3_BSL_B7` appears in OSD-137 (liver), OSD-162 (eye), and OSD-194 (retina), those records are linked through the shared `source_name`.
+
+### Informativeness = Data Richness Ranking
+
+The informativeness score answers: "How much data does this animal provide?" A mouse studied across more organs with more assay types scores higher. This helps researchers identify which animals have the richest multi-omics data for integrative analysis.
+
+## Output Tables
+
+### Table 1: Sample Informativeness
+
+Generated by `rank_samples`. One row per sample, ranked by data availability within each OSD.
+
+| Column | Description | Example |
+|---|---|---|
+| `OSD` | Study accession | OSD-102 |
+| `source_name` | Animal identifier | RR1_FLT_M23 |
+| `sample_name` | Sample identifier | Mmus_C57-6J_KDN_FLT_Rep1_M23 |
+| `organ` | Normalized tissue/organ | Left kidney |
+| `assay_types` | Pipe-separated assay list | Dna Methylation Profiling \| RNA-Seq |
+| `num_assays` | Count of distinct assay types | 4 |
+| `data_files_count` | Number of associated data files | 3 |
+| `measurement_types` | Pipe-separated measurement types | Dna Methylation Profiling \| RNA-Seq |
+| `technology_types` | Pipe-separated technology types | Mass Spectrometry \| Rna Sequencing (Rna Seq) |
+| `device_platforms` | Pipe-separated platforms | Illumina HiSeq 4000 |
+| `informativeness_rank` | Rank within OSD (1 = most data) | 1 |
+
+Sorted by: `num_assays` descending, then `data_files_count` descending.
+
+### Table 2: Mouse Informativeness
+
+Generated by `rank_mice`. One row per animal across an entire mission.
+
+| Column | Description | Example |
+|---|---|---|
+| `mission` | Mission name | RR-3 |
+| `source_name` | Animal identifier | RR3_BSL_B7 |
+| `osds` | Pipe-separated OSD list | OSD-137 \| OSD-162 \| OSD-194 |
+| `num_organs` | Number of distinct organs | 3 |
+| `organs_list` | Pipe-separated organ names | Eye \| Left retina \| Liver |
+| `num_total_assays` | Number of distinct assay types | 4 |
+| `assays_per_organ` | JSON dict: organ -> assay list | {"Eye": ["RNA-Seq"], "Liver": ["RNA-Seq", ...]} |
+| `total_data_files` | Total data files across all OSDs | 5 |
+| `informativeness_score` | Computed score (see formula below) | 14.58 |
+
+Sorted by: `informativeness_score` descending.
+
+## Informativeness Score Formula
+
+```
+score = num_organs × num_distinct_assay_types + log₂(1 + total_data_files)
+```
+
+**Worked example** — Mouse `RR3_BSL_B7` in mission RR-3:
+
+| Component | Value |
+|---|---|
+| `num_organs` | 3 (Eye, Left retina, Liver) |
+| `num_distinct_assay_types` | 4 (DNA Methylation, Imaging, Proteomics, RNA-Seq) |
+| `total_data_files` | 5 |
+| **Score** | 3 × 4 + log₂(1 + 5) = 12 + 2.58 = **14.58** |
+
+The multiplicative `num_organs × num_assays` term rewards breadth — an animal studied across many organs with many assay types is more informative for multi-omics integration. The logarithmic file count term provides a small bonus for data volume without dominating the score.
 
 ## Architecture
 
 ```
-nasa-osdr-metadata-engine/
-├── cli/                          # Command-line interface
-│   ├── expand_samples.py         # OSD → sample expansion CLI (new!)
-│   ├── process_csv.py            # Main enrichment CLI
-│   ├── process_osd_study.py      # Single-study processing
-│   └── init_cache.py             # Optional pre-fetching
+NASA_discovery/
+├── cli/                              # Command-line entry points
+│   ├── retrieve_data.py              #   Fetch unified sample records
+│   ├── rank_samples.py               #   Table 1: sample informativeness
+│   ├── rank_mice.py                  #   Table 2: mouse informativeness
+│   ├── rank_all.py                   #   Both tables at once
+│   ├── expand_samples.py             #   OSD IDs → sample-level rows
+│   ├── process_csv.py                #   Metadata enrichment pipeline
+│   ├── process_osd_study.py          #   Single study inspection
+│   └── init_cache.py                 #   Pre-download ISA-Tab cache
+│
 ├── src/
-│   ├── core/                     # Core enrichment engine
-│   │   ├── pipeline.py           # Pipeline orchestrator
-│   │   ├── sample_expander.py    # OSD → sample-level expansion (new!)
-│   │   ├── osdr_client.py        # NASA API client + ISA-Tab fetcher
-│   │   ├── isa_parser.py         # ISA-Tab metadata parser
-│   │   ├── enrichment_rules.py   # Enrichment logic
-│   │   ├── provenance.py         # Audit trail system
-│   │   └── constants.py          # Controlled vocabularies
-│   ├── intelligence/             # Pattern recognition
-│   │   ├── pattern_extractor.py  # Sample ID parsing
-│   │   ├── biological_rules.py   # Organism-specific logic
-│   │   └── unit_inference.py     # Time/dose extraction
-│   ├── validation/               # Quality control
-│   │   ├── conflict_checker.py   # Cross-source conflicts
-│   │   └── schema_validator.py   # Schema validation
-│   └── utils/                    # Shared utilities
-│       ├── flexible_loader.py    # Flexible CSV loading
-│       └── config.py             # Configuration
+│   ├── core/                         # Core processing modules
+│   │   ├── data_retriever.py         #   SampleRecord + DataRetriever
+│   │   ├── mission_resolver.py       #   MissionResolver (mission ↔ OSD)
+│   │   ├── informativeness_scorer.py #   Sample + Mouse scorers
+│   │   ├── osdr_client.py            #   OSDRClient (API + caching)
+│   │   ├── isa_parser.py             #   ISAParser (ISA-Tab parsing)
+│   │   ├── pipeline.py               #   Pipeline + PipelineConfig
+│   │   ├── sample_expander.py        #   SampleExpander
+│   │   ├── enrichment_rules.py       #   Enrichment logic
+│   │   ├── provenance.py             #   ProvenanceTracker
+│   │   └── constants.py              #   Controlled vocabularies + missions
+│   │
+│   ├── intelligence/                 # Pattern recognition modules
+│   │   ├── pattern_extractor.py
+│   │   ├── biological_rules.py
+│   │   ├── unit_inference.py
+│   │   └── ...
+│   │
+│   ├── validation/                   # Data validation
+│   │   ├── conflict_checker.py
+│   │   ├── schema_validator.py
+│   │   └── ...
+│   │
+│   └── utils/                        # Utilities
+│       ├── config.py                 #   Path + API configuration
+│       ├── flexible_loader.py        #   CSV/TSV/JSON loader with aliases
+│       └── ...
+│
 ├── resources/
-│   ├── input_study_summary/      # Input OSD lists for expansion
-│   ├── example_study_summary/    # Example expanded outputs
-│   ├── test_inputs/demo/         # Demo test files
-│   └── schema/                   # Column schemas
-└── outputs/                      # Generated outputs
-    ├── enriched_csv/
-    ├── provenance_logs/
-    └── validation_reports/
+│   ├── osdr_api/raw/                 # Cached API responses (auto-created)
+│   ├── isa_tab/                      # Downloaded ISA-Tab archives (auto-created)
+│   ├── test_inputs/demo/             # Example input CSVs
+│   └── schema/                       # Column schemas
+│
+├── outputs/
+│   ├── retrieval/                    # retrieve_data output
+│   ├── rankings/                     # rank_samples / rank_mice / rank_all output
+│   ├── enriched_csv/                 # process_csv output
+│   ├── provenance_logs/              # Provenance JSON logs
+│   └── validation_reports/           # Validation reports
+│
+├── requirements.txt                  # Python dependencies
+├── README.md                         # This file
+├── USAGE.md                          # Detailed reference manual
+└── SETUP.md                          # Installation and setup guide
 ```
-
----
 
 ## Data Sources
 
-The pipeline retrieves metadata from official NASA endpoints with intelligent fallback:
+The engine fetches from three NASA API tiers, falling back automatically:
 
-| Priority | Source | Description |
-|----------|--------|-------------|
-| 1 | **Biodata API** | `visualization.osdr.nasa.gov/biodata/api/v2/` |
-| 2 | **Developer API** | `osdr.nasa.gov/osdr/data/` |
-| 3 | **ISA-Tab Files** | `genelab-data.ndc.nasa.gov/` (automatically downloaded) |
+| Priority | API | Base URL | Provides |
+|---|---|---|---|
+| 1 (Primary) | OSDR Biodata API | `https://visualization.osdr.nasa.gov/biodata/api/v2` | Structured sample metadata, characteristics, factor values |
+| 2 (Fallback) | OSDR Developer API | `https://osdr.nasa.gov/osdr/data` | Study-level metadata, titles, descriptions |
+| 3 (Last resort) | GeneLab Files API | `https://genelab-data.ndc.nasa.gov/genelab/data/glds/files` | File listings, ISA-Tab zip downloads |
 
-All successful retrievals are cached locally to minimize API load.
-
----
+ISA-Tab archives are downloaded from the GeneLab Files API and extracted locally. They contain:
+- `i_*.txt` — Investigation file (project-level metadata)
+- `s_*.txt` — Study file (sample characteristics, source-sample mappings)
+- `a_*.txt` — Assay files (technology-specific sample info, data file references)
 
 ## Provenance System
 
-Every enriched value includes complete provenance:
+Every field filled by the enrichment pipeline is tagged with:
 
-```json
-{
-  "OSD-242": {
-    "sample_001": {
-      "mouse_strain": {
-        "value": "C57BL/6J",
-        "source": "from_isa_characteristics",
-        "confidence": "high",
-        "evidence_path": "characteristics[].Strain",
-        "timestamp": "2025-12-09T22:12:07"
-      }
-    }
-  }
-}
-```
+- **Source** — where the value came from (e.g., `from_isa_characteristics`, `from_osdr_metadata`, `inferred_from_sample_name_structure`)
+- **Confidence** — `high` (direct structured field), `medium` (pattern-based inference), `low` (grouping-based), `suggestion` (requires human review), `n/a` (not applicable)
+- **Evidence path** — JSON path or file reference to the source data
+- **Original value** — raw value before normalization
 
-### Confidence Levels
-
-| Level | Meaning | Example |
-|-------|---------|---------|
-| **high** | Direct extraction from structured fields | Strain from ISA characteristics |
-| **medium** | Pattern-based inference | Timepoint from sample ID |
-| **low** | Grouping-based inference | Replicate prefix matching |
-| **n/a** | Explicitly not applicable | Mouse fields for cell lines |
-
----
+Provenance logs are exported as structured JSON with per-study, per-sample, per-field entries.
 
 ## Controlled Vocabularies
 
-The engine normalizes values to canonical forms:
+Values are normalized to canonical forms using curated dictionaries in `src/core/constants.py`:
 
-| Category | Normalization Examples |
-|----------|------------------------|
-| **Strains** | `c57bl/6j` → `C57BL/6J` · `balb/c` → `BALB/c` |
-| **Sex** | `M` / `male` → `Male` · `F` / `female` → `Female` |
-| **Groups** | `Flight` / `FLT` → `space` · `Ground Control` / `GC` → `ground` |
-| **Tissues** | Standard anatomical nomenclature with abbreviation support |
+| Category | Examples |
+|---|---|
+| **Strains** | `c57bl/6j` → `C57BL/6J`, `balb/c` → `BALB/c` (26 entries) |
+| **Tissues** | `liver` → `Liver`, `skeletal muscle` → `Skeletal Muscle` (45+ entries) |
+| **Assay types** | `rna sequencing` → `RNA-Seq`, `mass spectrometry` → `Mass Spectrometry` (20+ entries) |
+| **Sex** | `m` → `Male`, `f` → `Female` (10 entries) |
 
----
+## Known Missions
 
-## Enriched Fields
+| Mission | OSDs | Description |
+|---|---|---|
+| RR-1 | 10 OSDs | Rodent Research 1 |
+| RR-3 | 3 OSDs | Rodent Research 3 |
+| RR-5 | 2 OSDs | Rodent Research 5 |
+| RR-6 | 7 OSDs | Rodent Research 6 |
+| RR-7 | 2 OSDs | Rodent Research 7 |
+| RR-9 | 2 OSDs | Rodent Research 9 |
+| RR-10 | 4 OSDs | Rodent Research 10 |
+| RR-23 | 5 OSDs | Rodent Research 23 |
+| RRRM-1 | 6 OSDs | Rodent Research Reference Mission 1 |
+| MHU-2 | 2 OSDs | Mouse Habitat Unit 2 |
+| BION-M1 | 1 OSD | BION-M1 |
+| STS-135 | 1 OSD | Space Shuttle STS-135 |
 
-The pipeline can automatically populate the following fields:
-
-### Sample-Level Fields
-| Field | Source | Confidence |
-|-------|--------|------------|
-| `mouse_strain` | ISA-Tab characteristics | High |
-| `mouse_sex` | ISA-Tab characteristics | High |
-| `age` | ISA-Tab characteristics | High |
-| `mouse_id` | Source name or sample ID patterns | High/Medium |
-| `organ_sampled` | Material Type characteristic | High |
-| `space_or_ground` | Factor values | High |
-
-### Study-Level Fields
-| Field | Source | Confidence |
-|-------|--------|------------|
-| `Has_RNAseq` | Assay filenames | High |
-| `n_mice_total` | Unique source_name count | High |
-| `n_RNAseq_mice` | Sample count with RNA-seq | Medium |
-| `mouse_genetic_variant` | Genotype characteristic | High |
-| `mouse_source` | Animal Source characteristic | High |
-| `time_in_space` | Duration factor or description | Medium |
-| `study purpose` | Study description | High |
-| `age_when_sent_to_space` | Age at Launch characteristic | High |
-| `assay_on_organ` | Assay types metadata | High |
-
----
-
-## Validation
-
-The pipeline performs non-blocking validation checks:
-
-- **Cross-source conflict detection** — API vs. ISA-Tab discrepancies
-- **Biological consistency checks** — Strain-organism matching, age plausibility
-- **Completeness statistics** — Per-field fill rates with organism context
-- **Confidence breakdown** — Distribution of enrichment reliability
-
----
-
-## FAIR Data Compliance
-
-| Principle | Implementation |
-|-----------|----------------|
-| **Findable** | OSD identifiers link to source studies |
-| **Accessible** | All data from public NASA APIs |
-| **Interoperable** | Standardized schemas, normalized terminology |
-| **Reusable** | Full provenance enables reproducibility |
-
----
+Aliases are accepted: `rr-3`, `rr3`, `RR-3`, and `Rodent Research 3` all resolve to `RR-3`.
 
 ## Requirements
 
-- Python 3.11+ (3.12 recommended)
-- `requests>=2.28.0`
-- `pandas>=1.5.0`
+- Python 3.11 or higher (3.12 recommended)
+- `requests >= 2.28.0`
+- `pandas >= 1.5.0`
+- Internet access to NASA OSDR APIs (first run only; subsequent runs use cache)
 
-```bash
-pip install -r requirements.txt
-```
-
----
+See [SETUP.md](SETUP.md) for detailed installation instructions.
 
 ## Citation
 
-When using outputs from this pipeline in publications:
-
-1. **Cite original OSDR studies** using their accession numbers (OSD-XXX)
-2. **Acknowledge NASA GeneLab** as the data source
-3. **Reference this pipeline** with version and retrieval date
-
-### Suggested Citation
-
-> Metadata were compiled from NASA's Open Science Data Repository (OSDR) using the OSDR Metadata Intelligence Engine v1.2 (Kamma, Y., January 2026). Original study data available at https://osdr.nasa.gov/.
-
----
+```
+Kamma, Y. (2026). NASA OSDR Metadata Intelligence Engine v2.0.0.
+Automated retrieval, enrichment, and informativeness ranking of
+space biology metadata from NASA's Open Science Data Repository.
+```
 
 ## License
 
-MIT License. See [LICENSE](LICENSE) for details.
-
-Users are responsible for complying with NASA's data use policies and appropriately citing source datasets.
-
----
+MIT License. See LICENSE for details.
 
 ## Contributing
 
-This is a solo project by Yeshasvi Kamma. For questions, issues, or collaboration inquiries, please open an issue in this repository.
-
----
-
-<div align="center">
-
-**Built for NASA Space Biology Research**
-
-*Enabling reproducible, traceable metadata for the space biology community*
-
-</div>
+Contributions are welcome. Please ensure all enrichment rules maintain the zero-hallucination policy: only report data that exists in NASA APIs or ISA-Tab files.

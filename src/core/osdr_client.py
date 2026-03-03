@@ -339,11 +339,50 @@ class OSDRClient:
         return "ground"
     
     # =========================================================================
+    # Study Search
+    # =========================================================================
+    
+    def list_all_study_ids(self) -> List[str]:
+        """
+        List all OSD study IDs available in the Biodata API.
+        
+        Returns:
+            Sorted list of OSD IDs (e.g., ['OSD-1', 'OSD-2', ...]).
+            Returns empty list on failure.
+        """
+        url = f"{self.config.biodata_api_base}/datasets/?format=json"
+        
+        try:
+            response = requests.get(url, timeout=self.config.request_timeout * 2)
+            if response.status_code != 200:
+                return []
+            
+            data = response.json()
+            if not isinstance(data, dict):
+                return []
+            
+            osd_ids = [k for k in data if k.startswith("OSD-")]
+            osd_ids.sort(key=lambda x: int(x.replace("OSD-", "")))
+            return osd_ids
+        except Exception:
+            pass
+        
+        return []
+    
+    # =========================================================================
     # ISA-Tab Download
     # =========================================================================
     
-    def _fetch_files_list(self, osd_id: str) -> Optional[List[Dict[str, Any]]]:
-        """Fetch list of files for a study from GeneLab API."""
+    def fetch_files_list(self, osd_id: str) -> Optional[List[Dict[str, Any]]]:
+        """
+        Fetch list of files for a study from GeneLab API.
+        
+        Args:
+            osd_id: The OSD identifier
+            
+        Returns:
+            List of file metadata dicts, or None on failure
+        """
         try:
             num_id = self.get_numeric_id(osd_id)
             url = f"{self.config.genelab_files_api}/{num_id}"
@@ -360,6 +399,9 @@ class OSDRClient:
             pass
         
         return None
+    
+    # Backward-compatible alias
+    _fetch_files_list = fetch_files_list
     
     def download_isa_tab(self, osd_id: str) -> Optional[Path]:
         """

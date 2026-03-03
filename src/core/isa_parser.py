@@ -91,6 +91,7 @@ class ISAAssaySample:
     library_selection: str = ""  # polyA enrichment, ribo-depletion
     library_layout: str = ""     # PAIRED, SINGLE
     parameter_values: Dict[str, str] = field(default_factory=dict)
+    data_files: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for JSON serialization."""
@@ -100,6 +101,7 @@ class ISAAssaySample:
             "library_selection": self.library_selection,
             "library_layout": self.library_layout,
             "parameter_values": self.parameter_values,
+            "data_files": self.data_files,
         }
 
 
@@ -474,14 +476,23 @@ class ISAParser:
         except Exception:
             pass
     
-    def _build_assay_column_map(self, headers: List[str]) -> Dict[str, int]:
+    _DATA_FILE_COLUMN_PATTERNS = frozenset([
+        "raw data file",
+        "derived data file",
+        "array data file",
+        "derived array data file",
+        "array data matrix file",
+        "image file",
+    ])
+
+    def _build_assay_column_map(self, headers: List[str]) -> Dict[str, Any]:
         """Build a map of assay column types to indices."""
-        col_indices: Dict[str, int] = {}
+        col_indices: Dict[str, Any] = {}
+        data_file_columns: List[int] = []
         
         for i, h in enumerate(headers):
             h_lower = h.lower().strip()
             
-            # Use exact match for core columns to avoid matching Comment columns
             if h_lower == "sample name":
                 col_indices["sample_name"] = i
             elif h_lower == "extract name":
@@ -492,13 +503,16 @@ class ISAParser:
             elif "parameter value[library layout]" in h_lower or \
                  "library layout" in h_lower:
                 col_indices["library_layout"] = i
+            elif h_lower in self._DATA_FILE_COLUMN_PATTERNS:
+                data_file_columns.append(i)
         
+        col_indices["data_file_columns"] = data_file_columns
         return col_indices
     
     def _parse_assay_row(
         self,
         row: List[str],
-        col_indices: Dict[str, int],
+        col_indices: Dict[str, Any],
         headers: List[str],
     ) -> Optional[ISAAssaySample]:
         """Parse a single row from Assay file to extract per-sample data."""
@@ -538,6 +552,20 @@ class ISAParser:
             if param_match:
                 param_name = param_match.group(1)
                 assay_sample.parameter_values[param_name] = value
+        
+        # Extract data file references from detected data file columns
+        # Cells may contain comma-separated lists of filenames
+        seen_files: set = set()
+        for col_idx in col_indices.get("data_file_columns", []):
+            if col_idx < len(row):
+                cell = row[col_idx].strip()
+                if not cell:
+                    continue
+                for fname in cell.split(","):
+                    fname = fname.strip()
+                    if fname and fname not in seen_files:
+                        assay_sample.data_files.append(fname)
+                        seen_files.add(fname)
         
         return assay_sample
     

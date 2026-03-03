@@ -393,3 +393,48 @@ LIBRARY_SELECTION_NORMALIZATIONS: Dict[str, str] = {
     "ribosomal depletion": "ribo-depletion",
 }
 
+
+# =============================================================================
+# Known Mission-to-OSD Mappings (Seed Registry)
+#
+# This is a manually curated seed that the MissionResolver extends dynamically
+# by parsing ISA-Tab investigation titles and study descriptions.
+# =============================================================================
+
+KNOWN_MISSIONS: Dict[str, Tuple[str, ...]] = {
+    "RR-1": (
+        "OSD-48", "OSD-100", "OSD-101", "OSD-102", "OSD-103",
+        "OSD-104", "OSD-105", "OSD-168", "OSD-488", "OSD-489",
+    ),
+    "RR-3": ("OSD-137", "OSD-162", "OSD-194"),
+    "RR-5": ("OSD-240", "OSD-241"),
+    "RR-6": (
+        "OSD-243", "OSD-244", "OSD-245", "OSD-246",
+        "OSD-247", "OSD-248", "OSD-249",
+    ),
+    "RR-7": ("OSD-253", "OSD-254"),
+    "RR-9": ("OSD-242", "OSD-557"),
+    "RR-10": ("OSD-462", "OSD-466", "OSD-563", "OSD-564"),
+    "RR-23": ("OSD-463", "OSD-464", "OSD-465", "OSD-665", "OSD-666"),
+    "RRRM-1": ("OSD-379", "OSD-380", "OSD-381", "OSD-382", "OSD-383", "OSD-384"),
+    "MHU-2": ("OSD-238", "OSD-239"),
+    "BION-M1": ("OSD-471",),
+    "STS-135": ("OSD-173",),
+}
+
+# Normalized aliases for mission name lookups
+MISSION_ALIASES: Dict[str, str] = {
+    "rr1": "RR-1", "rr-1": "RR-1", "rodent research-1": "RR-1", "rodent research 1": "RR-1",
+    "rr3": "RR-3", "rr-3": "RR-3", "rodent research-3": "RR-3", "rodent research 3": "RR-3",
+    "rr5": "RR-5", "rr-5": "RR-5", "rodent research-5": "RR-5",
+    "rr6": "RR-6", "rr-6": "RR-6", "rodent research-6": "RR-6",
+    "rr7": "RR-7", "rr-7": "RR-7", "rodent research-7": "RR-7",
+    "rr9": "RR-9", "rr-9": "RR-9", "rodent research-9": "RR-9",
+    "rr10": "RR-10", "rr-10": "RR-10", "rodent research-10": "RR-10",
+    "rr23": "RR-23", "rr-23": "RR-23", "rodent research-23": "RR-23",
+    "rrrm1": "RRRM-1", "rrrm-1": "RRRM-1",
+    "mhu2": "MHU-2", "mhu-2": "MHU-2", "mouse habitat unit-2": "MHU-2",
+    "bion-m1": "BION-M1", "bionm1": "BION-M1",
+    "sts135": "STS-135", "sts-135": "STS-135",
+}
+
