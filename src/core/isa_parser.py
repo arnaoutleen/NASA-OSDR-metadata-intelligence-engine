@@ -16,7 +16,7 @@ import csv
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
 
 
 @dataclass
@@ -90,9 +90,12 @@ class ISAAssaySample:
     extract_name: str = ""
     library_selection: str = ""  # polyA enrichment, ribo-depletion
     library_layout: str = ""     # PAIRED, SINGLE
+    assay_name: str = ""
+    ms_assay_name: str = ""
     parameter_values: Dict[str, str] = field(default_factory=dict)
+    comment_values: Dict[str, str] = field(default_factory=dict)
     data_files: List[str] = field(default_factory=list)
-    
+
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for JSON serialization."""
         return {
@@ -100,7 +103,10 @@ class ISAAssaySample:
             "extract_name": self.extract_name,
             "library_selection": self.library_selection,
             "library_layout": self.library_layout,
+            "assay_name": self.assay_name,
+            "ms_assay_name": self.ms_assay_name,
             "parameter_values": self.parameter_values,
+            "comment_values": self.comment_values,
             "data_files": self.data_files,
         }
 
@@ -489,10 +495,10 @@ class ISAParser:
         """Build a map of assay column types to indices."""
         col_indices: Dict[str, Any] = {}
         data_file_columns: List[int] = []
-        
+
         for i, h in enumerate(headers):
             h_lower = h.lower().strip()
-            
+
             if h_lower == "sample name":
                 col_indices["sample_name"] = i
             elif h_lower == "extract name":
@@ -503,9 +509,13 @@ class ISAParser:
             elif "parameter value[library layout]" in h_lower or \
                  "library layout" in h_lower:
                 col_indices["library_layout"] = i
+            elif h_lower == "assay name":
+                col_indices["assay_name"] = i
+            elif h_lower == "ms assay name":
+                col_indices["ms_assay_name"] = i
             elif h_lower in self._DATA_FILE_COLUMN_PATTERNS:
                 data_file_columns.append(i)
-        
+
         col_indices["data_file_columns"] = data_file_columns
         return col_indices
     
@@ -538,20 +548,29 @@ class ISAParser:
         if "library_layout" in col_indices and col_indices["library_layout"] < len(row):
             assay_sample.library_layout = row[col_indices["library_layout"]].strip()
         
-        # Extract all Parameter Value columns
+        # Extract assay name / ms assay name
+        if "assay_name" in col_indices and col_indices["assay_name"] < len(row):
+            assay_sample.assay_name = row[col_indices["assay_name"]].strip()
+        if "ms_assay_name" in col_indices and col_indices["ms_assay_name"] < len(row):
+            assay_sample.ms_assay_name = row[col_indices["ms_assay_name"]].strip()
+
+        # Extract all Parameter Value[*] and Comment[*] columns
         for i, header in enumerate(headers):
             if i >= len(row):
                 continue
-            
+
             value = row[i].strip()
             if not value:
                 continue
-            
-            # Parse Parameter Value[*]
+
             param_match = re.match(r"Parameter Value\[([^\]]+)\]", header, re.IGNORECASE)
             if param_match:
-                param_name = param_match.group(1)
-                assay_sample.parameter_values[param_name] = value
+                assay_sample.parameter_values[param_match.group(1)] = value
+                continue
+
+            comment_match = re.match(r"Comment\[([^\]]+)\]", header, re.IGNORECASE)
+            if comment_match:
+                assay_sample.comment_values[comment_match.group(1)] = value
         
         # Extract data file references from detected data file columns
         # Cells may contain comma-separated lists of filenames
