@@ -7,12 +7,12 @@ GeneLab files API.
 
 Each sample is represented as a :class:`SampleRecord` that captures the
 full picture of available data: organism, organ, all assay types, platforms,
-and associated data files.
+and associated data files, along with detailed assay Parameter Value[*]
+and Comment[*] metadata extracted from ISA-Tab assay files.
 """
 
 from dataclasses import dataclass, field
-from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 from src.core.constants import CONTROLLED_ASSAY_TYPES, CONTROLLED_TISSUES
 from src.core.isa_parser import ISAParser, ISAStudyMetadata
@@ -29,13 +29,21 @@ class SampleRecord:
     sample_name: str
     organism: str = ""
     material_type: str = ""
+
     measurement_types: List[str] = field(default_factory=list)
     technology_types: List[str] = field(default_factory=list)
     device_platforms: List[str] = field(default_factory=list)
     data_files: List[str] = field(default_factory=list)
 
+    assay_names: List[str] = field(default_factory=list)
+    ms_assay_names: List[str] = field(default_factory=list)
+    extract_names: List[str] = field(default_factory=list)
+
+    parameter_values: Dict[str, List[str]] = field(default_factory=dict)
+    comment_values: Dict[str, List[str]] = field(default_factory=dict)
+
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        row: Dict[str, Any] = {
             "osd": self.osd,
             "source_name": self.source_name,
             "sample_name": self.sample_name,
@@ -45,7 +53,19 @@ class SampleRecord:
             "technology_types": self.technology_types,
             "device_platforms": self.device_platforms,
             "data_files": self.data_files,
+            "assay_names": self.assay_names,
+            "ms_assay_names": self.ms_assay_names,
+            "extract_names": self.extract_names,
         }
+
+        # Flatten detailed assay metadata so downstream exports can access
+        # canonical ISA-style names directly.
+        for key, values in self.parameter_values.items():
+            row[f"Parameter Value[{key}]"] = values
+        for key, values in self.comment_values.items():
+            row[f"Comment[{key}]"] = values
+
+        return row
 
 
 def _normalize_tissue(value: str) -> str:
@@ -84,10 +104,6 @@ class DataRetriever:
         self._parser = parser
         self._resolver = resolver
 
-    # ------------------------------------------------------------------
-    # Public API
-    # ------------------------------------------------------------------
-
     def retrieve_osd(self, osd_id: str) -> List[SampleRecord]:
         """
         Retrieve all sample records for a single OSD study.
@@ -98,7 +114,6 @@ class DataRetriever:
         """
         osd_id = OSDRClient.normalize_osd_id(osd_id)
 
-        # Fetch study-level metadata via the API
         study_json = self._client.fetch_study_json(osd_id)
         organism = ""
         study_material_type = ""
@@ -106,18 +121,13 @@ class DataRetriever:
             organism = study_json.get("organism", "")
             study_material_type = study_json.get("material_type", "")
 
-        # Download and parse ISA-Tab
         self._client.download_isa_tab(osd_id)
         isa_metadata = self._parser.parse(osd_id)
 
         if not isa_metadata or not isa_metadata.samples:
             return []
 
-        # Build per-sample assay aggregation from ISA-Tab assays
         sample_assay_info = self._aggregate_assay_info(isa_metadata)
-
-        # Build a secondary file-to-sample map from the GeneLab files API
-        # in case ISA-Tab data_file columns are empty
         secondary_files = self._build_secondary_file_map(osd_id, isa_metadata)
 
         records: List[SampleRecord] = []
@@ -125,19 +135,14 @@ class DataRetriever:
             name = isa_sample.sample_name
             info = sample_assay_info.get(name, {})
 
-            # Determine material_type (organ) from sample characteristics first
             material = _normalize_tissue(
                 isa_sample._get_characteristic("organism part")
                 or isa_sample._get_characteristic("material type")
                 or study_material_type
             )
 
-            # Determine organism from sample characteristics, fall back to study-level
-            sample_organism = (
-                isa_sample._get_characteristic("organism") or organism
-            )
+            sample_organism = isa_sample._get_characteristic("organism") or organism
 
-            # Collect data files: primary from ISA-Tab, secondary from file listing
             all_files = list(info.get("data_files", []))
             if not all_files:
                 all_files = secondary_files.get(name, [])
@@ -151,7 +156,12 @@ class DataRetriever:
                 measurement_types=sorted(set(info.get("measurement_types", []))),
                 technology_types=sorted(set(info.get("technology_types", []))),
                 device_platforms=sorted(set(info.get("device_platforms", []))),
-                data_files=all_files,
+                data_files=sorted(set(all_files)),
+                assay_names=sorted(set(info.get("assay_names", []))),
+                ms_assay_names=sorted(set(info.get("ms_assay_names", []))),
+                extract_names=sorted(set(info.get("extract_names", []))),
+                parameter_values=info.get("parameter_values", {}),
+                comment_values=info.get("comment_values", {}),
             )
             records.append(record)
 
@@ -176,17 +186,29 @@ class DataRetriever:
         osd_ids = self._client.list_all_study_ids()
         return self.retrieve_osds(osd_ids)
 
-    # ------------------------------------------------------------------
-    # Internal helpers
-    # ------------------------------------------------------------------
-
     @staticmethod
+    def _append_unique(entry: Dict[str, Any], key: str, value: str) -> None:
+        if not value:
+            return
+        if key not in entry:
+            entry[key] = []
+        if value not in entry[key]:
+            entry[key].append(value)
+
+    @classmethod
     def _aggregate_assay_info(
+        cls,
         isa_metadata: ISAStudyMetadata,
     ) -> Dict[str, Dict[str, Any]]:
         """
-        For each sample, collect measurement_types, technology_types,
-        device_platforms, and data_files across ALL assays it appears in.
+        For each sample, collect:
+        - measurement_types
+        - technology_types
+        - device_platforms
+        - data_files
+        - assay_names / ms_assay_names / extract_names
+        - all Parameter Value[*]
+        - all Comment[*]
         """
         info: Dict[str, Dict[str, Any]] = {}
 
@@ -203,19 +225,47 @@ class DataRetriever:
                         "technology_types": [],
                         "device_platforms": [],
                         "data_files": [],
+                        "assay_names": [],
+                        "ms_assay_names": [],
+                        "extract_names": [],
+                        "parameter_values": {},
+                        "comment_values": {},
                     }
 
                 entry = info[name]
-                if m_type and m_type not in entry["measurement_types"]:
-                    entry["measurement_types"].append(m_type)
-                if t_type and t_type not in entry["technology_types"]:
-                    entry["technology_types"].append(t_type)
-                if platform and platform not in entry["device_platforms"]:
-                    entry["device_platforms"].append(platform)
+
+                cls._append_unique(entry, "measurement_types", m_type)
+                cls._append_unique(entry, "technology_types", t_type)
+                cls._append_unique(entry, "device_platforms", platform)
+                cls._append_unique(entry, "assay_names", sample_detail.assay_name)
+                cls._append_unique(entry, "ms_assay_names", sample_detail.ms_assay_name)
+                cls._append_unique(entry, "extract_names", sample_detail.extract_name)
 
                 for f in sample_detail.data_files:
-                    if f not in entry["data_files"]:
-                        entry["data_files"].append(f)
+                    cls._append_unique(entry, "data_files", f)
+
+                for param_name, param_value in sample_detail.parameter_values.items():
+                    if param_name not in entry["parameter_values"]:
+                        entry["parameter_values"][param_name] = []
+                    if param_value and param_value not in entry["parameter_values"][param_name]:
+                        entry["parameter_values"][param_name].append(param_value)
+
+                for comment_name, comment_value in sample_detail.comment_values.items():
+                    if comment_name not in entry["comment_values"]:
+                        entry["comment_values"][comment_name] = []
+                    if comment_value and comment_value not in entry["comment_values"][comment_name]:
+                        entry["comment_values"][comment_name].append(comment_value)
+
+                # Preserve common assay fields even when they appear both as
+                # dedicated attributes and as generic parameters.
+                if sample_detail.library_selection:
+                    pvals = entry["parameter_values"].setdefault("Library Selection", [])
+                    if sample_detail.library_selection not in pvals:
+                        pvals.append(sample_detail.library_selection)
+                if sample_detail.library_layout:
+                    pvals = entry["parameter_values"].setdefault("Library Layout", [])
+                    if sample_detail.library_layout not in pvals:
+                        pvals.append(sample_detail.library_layout)
 
         return info
 

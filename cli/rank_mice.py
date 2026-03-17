@@ -2,12 +2,12 @@
 """
 NASA OSDR Metadata Intelligence Engine - Mouse Ranking CLI
 
-Generate the Mouse Informativeness table (Table 2) that ranks mice
-across all OSDs in a mission by overall data coverage.
+Generate the Mouse Informativeness table that ranks source_name + OSD
+combinations within a project by overall data coverage.
 
 Usage:
-    python -m cli.rank_mice --mission RR-3
-    python -m cli.rank_mice --mission RR-1 -o outputs/rankings/rr1_mice.csv
+    python -m cli.rank_mice --project RR-3
+    python -m cli.rank_mice --project RR-1 -o outputs/rankings/rr1_mice.csv
 """
 
 import argparse
@@ -27,19 +27,19 @@ from src.utils.config import get_default_paths
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="NASA OSDR Mouse Ranking - Rank mice by cross-OSD informativeness",
+        description="NASA OSDR Mouse Ranking - Rank source_name + OSD combinations by informativeness",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""\
 Examples:
-    python -m cli.rank_mice --mission RR-1
-    python -m cli.rank_mice --mission RR-3 -o outputs/rankings/rr3_mice.csv
+    python -m cli.rank_mice --project RR-1
+    python -m cli.rank_mice --project RR-3 -o outputs/rankings/rr3_mice.csv
     python -m cli.rank_mice --mission RR-1 --format json
 """,
     )
 
     parser.add_argument(
-        "--mission", type=str, required=True,
-        help="Mission name (e.g., RR-1, RR-3)",
+        "--project", "--mission", dest="project", type=str, required=True,
+        help="Project name (e.g., RR-1, RR-3)",
     )
     parser.add_argument(
         "-o", "--output", type=Path, dest="output_path",
@@ -64,14 +64,14 @@ def main() -> int:
     resolver = MissionResolver(client=client, cache_dir=defaults["cache_dir"])
     retriever = DataRetriever(client=client, parser=isa_parser, resolver=resolver)
 
-    mission = args.mission
-    osds = resolver.resolve_mission(mission)
+    project = args.project
+    osds = resolver.resolve_mission(project)
     if not osds:
-        print(f"Error: No OSDs found for mission '{mission}'", file=sys.stderr)
+        print(f"Error: No OSDs found for project '{project}'", file=sys.stderr)
         return 1
 
     if not args.quiet:
-        print(f"Mission {mission}: {len(osds)} OSDs")
+        print(f"Project {project}: {len(osds)} OSDs")
 
     records = []
     for i, osd in enumerate(osds, 1):
@@ -91,13 +91,13 @@ def main() -> int:
         return 1
 
     scorer = MouseInformativenessScorer()
-    df = scorer.score(records, mission)
+    df = scorer.score(records, project)
 
     ext = "json" if args.format == "json" else "csv"
     if args.output_path:
         output_path = args.output_path
     else:
-        label = mission.replace(" ", "_")
+        label = project.replace(" ", "_")
         output_path = defaults["output_dir"] / "rankings" / f"mouse_ranking_{label}.{ext}"
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -107,7 +107,7 @@ def main() -> int:
         df.to_csv(output_path, index=False)
 
     if not args.quiet:
-        print(f"\nMouse ranking table: {len(df)} mice")
+        print(f"\nMouse ranking table: {len(df)} source_name + OSD rows")
         print(f"Output written to: {output_path}")
 
     return 0

@@ -2,12 +2,9 @@
 """
 NASA OSDR Metadata Intelligence Engine - Combined Ranking CLI
 
-Generate both the Sample Informativeness table (Table 1) and the Mouse
-Informativeness table (Table 2) for a mission or all known missions.
-
-Usage:
-    python -m cli.rank_all --mission RR-3 -o outputs/rankings/
-    python -m cli.rank_all --all -o outputs/rankings/
+Generate both the Sample Informativeness table and the Mouse
+Informativeness table for a project or all known projects.
+Pooled samples are excluded from both tables.
 """
 
 import argparse
@@ -34,19 +31,19 @@ def parse_args() -> argparse.Namespace:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""\
 Examples:
-    python -m cli.rank_all --mission RR-3 -o outputs/rankings/
+    python -m cli.rank_all --project RR-3 -o outputs/rankings/
     python -m cli.rank_all --all -o outputs/rankings/
     python -m cli.rank_all --mission RR-1 --format json
 """,
     )
 
     parser.add_argument(
-        "--mission", type=str, default=None,
-        help="Mission name (e.g., RR-1, RR-3)",
+        "--project", "--mission", dest="project", type=str, default=None,
+        help="Project name (e.g., RR-1, RR-3)",
     )
     parser.add_argument(
         "--all", action="store_true", dest="rank_all",
-        help="Generate tables for all known missions",
+        help="Generate tables for all known projects",
     )
     parser.add_argument(
         "-o", "--output", type=Path, dest="output_dir",
@@ -62,23 +59,23 @@ Examples:
     return parser.parse_args()
 
 
-def _rank_mission(
-    mission: str,
+def _rank_project(
+    project: str,
     retriever: DataRetriever,
     resolver: MissionResolver,
     output_dir: Path,
     fmt: str,
     quiet: bool,
 ) -> bool:
-    """Generate both tables for a single mission. Returns True on success."""
-    osds = resolver.resolve_mission(mission)
+    """Generate both tables for a single project. Returns True on success."""
+    osds = resolver.resolve_mission(project)
     if not osds:
         if not quiet:
-            print(f"  No OSDs found for mission '{mission}' -- skipping")
+            print(f"  No OSDs found for project '{project}' -- skipping")
         return False
 
     if not quiet:
-        print(f"\nMission {mission}: {len(osds)} OSDs")
+        print(f"\nProject {project}: {len(osds)} OSDs")
 
     records = []
     for i, osd in enumerate(osds, 1):
@@ -95,16 +92,15 @@ def _rank_mission(
 
     if not records:
         if not quiet:
-            print(f"  No records for {mission}")
+            print(f"  No records for {project}")
         return False
 
-    label = mission.replace(" ", "_")
+    label = project.replace(" ", "_")
     ext = "json" if fmt == "json" else "csv"
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    # Table 1: Sample Informativeness
     sample_scorer = SampleInformativenessScorer()
-    sample_df = sample_scorer.score(records)
+    sample_df = sample_scorer.score(records, project=project)
     sample_path = output_dir / f"sample_ranking_{label}.{ext}"
     if fmt == "json":
         sample_df.to_json(sample_path, orient="records", indent=2)
@@ -113,16 +109,15 @@ def _rank_mission(
     if not quiet:
         print(f"  Sample table: {len(sample_df)} rows -> {sample_path}")
 
-    # Table 2: Mouse Informativeness
     mouse_scorer = MouseInformativenessScorer()
-    mouse_df = mouse_scorer.score(records, mission)
+    mouse_df = mouse_scorer.score(records, project)
     mouse_path = output_dir / f"mouse_ranking_{label}.{ext}"
     if fmt == "json":
         mouse_df.to_json(mouse_path, orient="records", indent=2)
     else:
         mouse_df.to_csv(mouse_path, index=False)
     if not quiet:
-        print(f"  Mouse table: {len(mouse_df)} mice -> {mouse_path}")
+        print(f"  Mouse table: {len(mouse_df)} rows -> {mouse_path}")
 
     return True
 
@@ -130,8 +125,8 @@ def _rank_mission(
 def main() -> int:
     args = parse_args()
 
-    if not args.mission and not args.rank_all:
-        print("Error: Provide --mission or --all", file=sys.stderr)
+    if not args.project and not args.rank_all:
+        print("Error: Provide --project or --all", file=sys.stderr)
         return 1
 
     defaults = get_default_paths()
@@ -143,21 +138,18 @@ def main() -> int:
     output_dir = args.output_dir or (defaults["output_dir"] / "rankings")
 
     if args.rank_all:
-        missions = resolver.list_known_missions()
+        projects = resolver.list_known_missions()
         if not args.quiet:
-            print(f"Generating tables for {len(missions)} missions...")
+            print(f"Generating tables for {len(projects)} projects...")
         success = 0
-        for mission in missions:
-            if _rank_mission(mission, retriever, resolver, output_dir, args.format, args.quiet):
+        for project in projects:
+            if _rank_project(project, retriever, resolver, output_dir, args.format, args.quiet):
                 success += 1
         if not args.quiet:
-            print(f"\nCompleted: {success}/{len(missions)} missions")
-    else:
-        ok = _rank_mission(args.mission, retriever, resolver, output_dir, args.format, args.quiet)
-        if not ok:
-            return 1
+            print(f"\nCompleted {success}/{len(projects)} projects")
+        return 0 if success > 0 else 1
 
-    return 0
+    return 0 if _rank_project(args.project, retriever, resolver, output_dir, args.format, args.quiet) else 1
 
 
 if __name__ == "__main__":

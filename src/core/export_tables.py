@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Dict, List
+from typing import Any, Dict, Iterable, List, Tuple
 import pandas as pd
 
 from src.utils.export_schema import (
@@ -71,6 +71,8 @@ ASSAY_PARAMETER_MAP = {
     ],
     "metabolite_profiling": [
         "Parameter Value[GC/MS instrument]",
+        "Term Source REF",
+        "Term Accession Number",
         "Parameter Value[GC/MS ion source]",
         "Parameter Value[LC-MS/MS 1-instrument]",
         "Parameter Value[LC-MS/MS 1- ion source]",
@@ -81,8 +83,6 @@ ASSAY_PARAMETER_MAP = {
         "Parameter Value[LC-MS/MS 1-Assay name]",
         "Parameter Value[LC-MS/MS 2- Assay Name]",
         "MS Assay Name",
-        "Term Source REF",
-        "Term Accession Number",
     ],
     "behavior": [
         "Parameter Value[Vector Of The Sequence Of Assays Tests And Treatments Performed In Order]",
@@ -90,6 +90,9 @@ ASSAY_PARAMETER_MAP = {
         "Parameter Value[Subject Handling Frequency]",
         "Parameter Value[Number Of Screeners Working With Animals For Behavior Assessment]",
         "Parameter Value[Acclimation Time In Testing Room]",
+        "Unit",
+        "Term Source REF",
+        "Term Accession Number",
         "Parameter Value[Phase Of Light Cycle Assay Performed]",
         "Parameter Value[Define Primary Light Source]",
         "Parameter Value[Color Spectrum]",
@@ -117,14 +120,15 @@ ASSAY_PARAMETER_MAP = {
         "Parameter Value[Quantification Method]",
         "Parameter Value[Body Marker Tracked]",
         "Parameter Value[Subset Of Trial Used For Deriving Outcome Measures]",
-        "Term Source REF",
-        "Term Accession Number",
     ],
     "atpase_activity": [
         "Parameter Value[Plate Reader Instrument]",
     ],
     "calcium_uptake": [
         "Parameter Value[Amount Of Reaction Buffer]",
+        "Unit",
+        "Term Source REF",
+        "Term Accession Number",
         "Parameter Value[Sample Volume]",
         "Parameter Value[Sample Dilution]",
         "Protocol REF",
@@ -136,8 +140,6 @@ ASSAY_PARAMETER_MAP = {
         "Parameter Value[Read Time]",
         "Parameter Value[Temperature]",
         "Parameter Value[Instrument]",
-        "Term Source REF",
-        "Term Accession Number",
     ],
     "chromatin_accessibility": [
         "Parameter Value[Library Layout]",
@@ -147,14 +149,15 @@ ASSAY_PARAMETER_MAP = {
         "Parameter Value[Sequencing Instrument]",
         "Parameter Value[Base Caller]",
         "Parameter Value[R1 Read Length]",
+        "Unit",
+        "Term Source REF",
+        "Term Accession Number",
         "Parameter Value[R2 Read Length]",
         "Parameter Value[R3 Read Length]",
         "Assay Name",
         "Raw Data File",
         "Parameter Value[Total Cell Count]",
         "Parameter Value[Median Fragments Per Cell]",
-        "Term Source REF",
-        "Term Accession Number",
     ],
     "echocardiogram": [
         "Parameter Value[Name Of Hardware System]",
@@ -178,6 +181,9 @@ ASSAY_PARAMETER_MAP = {
     ],
     "protein_quantification": [
         "Parameter Value[Amount Of Protein Loaded]",
+        "Unit",
+        "Term Source REF",
+        "Term Accession Number",
         "Parameter Value[Type Of Gel]",
         "Parameter Value[Voltage]",
         "Parameter Value[Instrument For Gel]",
@@ -201,30 +207,46 @@ ASSAY_PARAMETER_MAP = {
         "Parameter Value[Imaging Substrate]",
         "Parameter Value[Imaging Substrate Company And Product Number]",
         "Parameter Value[Imaging Method]",
-        "Term Source REF",
-        "Term Accession Number",
     ],
 }
 
 
 def _safe_get(record: Dict[str, Any], *keys: str, default: Any = None) -> Any:
     for key in keys:
-        if key in record and record[key] not in [None, ""]:
+        if key in record and record[key] not in [None, "", [], {}]:
             return record[key]
     return default
 
 
-def classify_assay(record: Dict[str, Any]) -> tuple[str, str]:
+def _as_text(value: Any) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, list):
+        return " | ".join(str(v) for v in value if v not in [None, ""])
+    return str(value)
+
+
+def _iter_values(value: Any) -> Iterable[Any]:
+    if value in [None, "", [], {}]:
+        return []
+    if isinstance(value, list):
+        return [v for v in value if v not in [None, ""]]
+    return [value]
+
+
+def classify_assay(record: Dict[str, Any]) -> Tuple[str, str]:
     raw_parts = [
-        str(_safe_get(record, "measurement_types", default="") or ""),
-        str(_safe_get(record, "technology_types", default="") or ""),
-        str(_safe_get(record, "device_platforms", default="") or ""),
-        str(_safe_get(record, "assay_on_organ", default="") or ""),
-        str(_safe_get(record, "assay_summary", default="") or ""),
+        _as_text(_safe_get(record, "measurement_types", default="")),
+        _as_text(_safe_get(record, "technology_types", default="")),
+        _as_text(_safe_get(record, "device_platforms", default="")),
+        _as_text(_safe_get(record, "assay_on_organ", default="")),
+        _as_text(_safe_get(record, "assay_summary", default="")),
+        _as_text(_safe_get(record, "assay_names", default="")),
+        _as_text(_safe_get(record, "ms_assay_names", default="")),
     ]
     raw_text = " | ".join(raw_parts).lower()
 
-    matched = []
+    matched: List[Tuple[str, str]] = []
     for phrase, category in ASSAY_CATEGORY_MAP.items():
         if phrase in raw_text:
             matched.append((phrase, category))
@@ -270,12 +292,12 @@ def extract_sample_metadata(record: Dict[str, Any]) -> Dict[str, Any]:
         "sample_name": _safe_get(record, "sample_name", "sample_id"),
         "organism": _safe_get(record, "organism"),
         "material_type": _safe_get(record, "material_type"),
-        "measurement_types": _safe_get(record, "measurement_types"),
-        "technology_types": _safe_get(record, "technology_types"),
-        "device_platforms": _safe_get(record, "device_platforms"),
+        "measurement_types": _as_text(_safe_get(record, "measurement_types")),
+        "technology_types": _as_text(_safe_get(record, "technology_types")),
+        "device_platforms": _as_text(_safe_get(record, "device_platforms")),
         "assay_category": assay_category,
         "assay_subtype": assay_subtype,
-        "assay_name": _safe_get(record, "Assay Name", "assay_name", "MS Assay Name"),
+        "assay_name": _safe_get(record, "Assay Name", "assay_name", "MS Assay Name", "assay_names"),
         "raw_data_file": _safe_get(record, "Raw Data File", "raw_data_file", "data_files"),
         "is_rnaseq": assay_category == "rna_sequencing",
         "is_dna_methylation": assay_category == "dna_methylation",
@@ -303,29 +325,27 @@ def extract_assay_parameters(record: Dict[str, Any]) -> List[Dict[str, Any]]:
 
     for param in parameter_names:
         value = _safe_get(record, param)
-        if value in [None, ""]:
-            continue
-
-        rows.append({
-            "osd_id": _safe_get(record, "osd_id"),
-            "mission": _safe_get(record, "mission", "RR_mission"),
-            "sample_id": _safe_get(record, "sample_id"),
-            "mouse_id": _safe_get(record, "mouse_id"),
-            "assay_category": assay_category,
-            "assay_subtype": assay_subtype,
-            "parameter_name": param,
-            "parameter_value": value,
-            "term_source_ref": _safe_get(record, "Term Source REF"),
-            "term_accession_number": _safe_get(record, "Term Accession Number"),
-            "protocol_ref": _safe_get(record, "Protocol REF"),
-            "assay_name": _safe_get(record, "Assay Name", "assay_name", "MS Assay Name"),
-            "raw_data_file": _safe_get(record, "Raw Data File", "raw_data_file", "data_files"),
-        })
+        for v in _iter_values(value):
+            rows.append({
+                "osd_id": _safe_get(record, "osd_id"),
+                "mission": _safe_get(record, "mission", "RR_mission"),
+                "sample_id": _safe_get(record, "sample_id"),
+                "mouse_id": _safe_get(record, "mouse_id"),
+                "assay_category": assay_category,
+                "assay_subtype": assay_subtype,
+                "parameter_name": param,
+                "parameter_value": v,
+                "term_source_ref": _safe_get(record, "Term Source REF"),
+                "term_accession_number": _safe_get(record, "Term Accession Number"),
+                "protocol_ref": _safe_get(record, "Protocol REF"),
+                "assay_name": _safe_get(record, "Assay Name", "assay_name", "MS Assay Name", "assay_names"),
+                "raw_data_file": _safe_get(record, "Raw Data File", "raw_data_file", "data_files"),
+            })
 
     return rows
 
 
-def build_export_tables(records: List[Dict[str, Any]]) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+def build_export_tables(records: List[Dict[str, Any]]) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     mouse_rows: List[Dict[str, Any]] = []
     sample_rows: List[Dict[str, Any]] = []
     assay_rows: List[Dict[str, Any]] = []
@@ -339,25 +359,23 @@ def build_export_tables(records: List[Dict[str, Any]]) -> tuple[pd.DataFrame, pd
     sample_df = pd.DataFrame(sample_rows)
     assay_df = pd.DataFrame(assay_rows)
 
-    if not sample_df.empty:
+    if not sample_df.empty and not mouse_df.empty and {"osd_id", "mouse_id", "sample_id"}.issubset(sample_df.columns):
         sample_counts = (
             sample_df.groupby(["osd_id", "mouse_id"], dropna=False)["sample_id"]
-            .count()
+            .nunique()
             .reset_index(name="n_samples_linked")
         )
-        if not mouse_df.empty:
-            mouse_df = mouse_df.drop(columns=["n_samples_linked"], errors="ignore").merge(
-                sample_counts,
-                on=["osd_id", "mouse_id"],
-                how="left",
-            )
+        mouse_df = mouse_df.merge(sample_counts, on=["osd_id", "mouse_id"], how="left", suffixes=("", "_calc"))
+        if "n_samples_linked_calc" in mouse_df.columns:
+            mouse_df["n_samples_linked"] = mouse_df["n_samples_linked_calc"].combine_first(mouse_df["n_samples_linked"])
+            mouse_df = mouse_df.drop(columns=["n_samples_linked_calc"])
+        mouse_df = mouse_df.drop_duplicates(subset=["osd_id", "mouse_id"], keep="first").reset_index(drop=True)
 
-    if not mouse_df.empty:
-        mouse_df = mouse_df.drop_duplicates(subset=["osd_id", "mouse_id"]).reset_index(drop=True)
     if not sample_df.empty:
-        sample_df = sample_df.drop_duplicates(subset=["osd_id", "sample_id"]).reset_index(drop=True)
+        sample_df = sample_df.drop_duplicates(subset=["osd_id", "sample_id"], keep="first").reset_index(drop=True)
+
     if not assay_df.empty:
-        assay_df = assay_df.reset_index(drop=True)
+        assay_df = assay_df.drop_duplicates().reset_index(drop=True)
 
     mouse_df = mouse_df.reindex(columns=MOUSE_LEVEL_COLUMNS)
     sample_df = sample_df.reindex(columns=SAMPLE_LEVEL_COLUMNS)

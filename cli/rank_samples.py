@@ -2,17 +2,15 @@
 """
 NASA OSDR Metadata Intelligence Engine - Sample Ranking CLI
 
-Generate the Sample Informativeness table (Table 1) that ranks samples
-by data availability within each OSD study.
+Generate the Sample Informativeness table that ranks samples within OSDs
+by number of assay types and data files available. Pooled samples are removed.
 
 Usage:
-    python -m cli.rank_samples OSD-242
-    python -m cli.rank_samples OSD-242 OSD-379 -o outputs/rankings/sample_ranking.csv
-    python -m cli.rank_samples --mission RR-3
+    python -m cli.rank_samples OSD-242 OSD-379
+    python -m cli.rank_samples --project RR-3
 """
 
 import argparse
-import json
 import sys
 from pathlib import Path
 
@@ -33,9 +31,9 @@ def parse_args() -> argparse.Namespace:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""\
 Examples:
-    python -m cli.rank_samples OSD-242
-    python -m cli.rank_samples --mission RR-1 -o outputs/rankings/rr1_samples.csv
-    python -m cli.rank_samples OSD-102 --format json
+    python -m cli.rank_samples OSD-242 OSD-379
+    python -m cli.rank_samples --project RR-3 -o outputs/rankings/rr3_samples.csv
+    python -m cli.rank_samples --mission RR-1 --format json
 """,
     )
 
@@ -44,8 +42,8 @@ Examples:
         help="OSD study IDs to rank (e.g., OSD-242 OSD-379)",
     )
     parser.add_argument(
-        "--mission", type=str, default=None,
-        help="Rank samples for all OSDs in a mission",
+        "--project", "--mission", dest="project", type=str, default=None,
+        help="Rank samples for all OSDs in a project",
     )
     parser.add_argument(
         "-o", "--output", type=Path, dest="output_path",
@@ -64,8 +62,8 @@ Examples:
 def main() -> int:
     args = parse_args()
 
-    if not args.osd_ids and not args.mission:
-        print("Error: Provide OSD IDs or --mission", file=sys.stderr)
+    if not args.osd_ids and not args.project:
+        print("Error: Provide OSD IDs or --project", file=sys.stderr)
         return 1
 
     defaults = get_default_paths()
@@ -75,13 +73,13 @@ def main() -> int:
     retriever = DataRetriever(client=client, parser=parser, resolver=resolver)
 
     records = []
-    if args.mission:
-        osds = resolver.resolve_mission(args.mission)
+    if args.project:
+        osds = resolver.resolve_mission(args.project)
         if not osds:
-            print(f"Error: No OSDs found for mission '{args.mission}'", file=sys.stderr)
+            print(f"Error: No OSDs found for project '{args.project}'", file=sys.stderr)
             return 1
         if not args.quiet:
-            print(f"Mission {args.mission}: {len(osds)} OSDs")
+            print(f"Project {args.project}: {len(osds)} OSDs")
         for i, osd in enumerate(osds, 1):
             if not args.quiet:
                 print(f"  [{i}/{len(osds)}] {osd}...", end=" ", flush=True)
@@ -93,7 +91,8 @@ def main() -> int:
             except Exception as e:
                 if not args.quiet:
                     print(f"(error: {e})")
-        label = args.mission.replace(" ", "_")
+        label = args.project.replace(" ", "_")
+        project = args.project
     else:
         for i, osd in enumerate(args.osd_ids, 1):
             if not args.quiet:
@@ -107,13 +106,14 @@ def main() -> int:
                 if not args.quiet:
                     print(f"(error: {e})")
         label = "_".join(args.osd_ids) if len(args.osd_ids) <= 3 else "multi"
+        project = None
 
     if not records:
         print("Error: No sample records retrieved", file=sys.stderr)
         return 1
 
     scorer = SampleInformativenessScorer()
-    df = scorer.score(records)
+    df = scorer.score(records, project=project)
 
     ext = "json" if args.format == "json" else "csv"
     if args.output_path:
