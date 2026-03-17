@@ -234,6 +234,10 @@ def _iter_values(value: Any) -> Iterable[Any]:
     return [value]
 
 
+def _project_value(record: Dict[str, Any]) -> Any:
+    return _safe_get(record, "project", "mission", "RR_mission")
+
+
 def classify_assay(record: Dict[str, Any]) -> Tuple[str, str]:
     raw_parts = [
         _as_text(_safe_get(record, "measurement_types", default="")),
@@ -261,7 +265,8 @@ def classify_assay(record: Dict[str, Any]) -> Tuple[str, str]:
 def extract_mouse_metadata(record: Dict[str, Any]) -> Dict[str, Any]:
     row = {
         "osd_id": _safe_get(record, "osd_id"),
-        "mission": _safe_get(record, "mission", "RR_mission"),
+        "project": _project_value(record),
+        "mission": _project_value(record),
         "mouse_id": _safe_get(record, "mouse_id"),
         "source_name": _safe_get(record, "source_name"),
         "strain": _safe_get(record, "mouse_strain", "Characteristics[Strain]"),
@@ -278,14 +283,18 @@ def extract_mouse_metadata(record: Dict[str, Any]) -> Dict[str, Any]:
         "provenance_source": _safe_get(record, "provenance_source", default="enrichment"),
         "confidence": _safe_get(record, "confidence"),
     }
-    return {k: row.get(k) for k in MOUSE_LEVEL_COLUMNS}
+    cols = list(MOUSE_LEVEL_COLUMNS)
+    if "project" in row and "project" not in cols:
+        cols = ["project", *cols]
+    return {k: row.get(k) for k in cols}
 
 
 def extract_sample_metadata(record: Dict[str, Any]) -> Dict[str, Any]:
     assay_category, assay_subtype = classify_assay(record)
     row = {
         "osd_id": _safe_get(record, "osd_id"),
-        "mission": _safe_get(record, "mission", "RR_mission"),
+        "project": _project_value(record),
+        "mission": _project_value(record),
         "sample_id": _safe_get(record, "sample_id"),
         "mouse_id": _safe_get(record, "mouse_id"),
         "source_name": _safe_get(record, "source_name"),
@@ -315,7 +324,10 @@ def extract_sample_metadata(record: Dict[str, Any]) -> Dict[str, Any]:
         "provenance_source": _safe_get(record, "provenance_source", default="retrieval+enrichment"),
         "confidence": _safe_get(record, "confidence"),
     }
-    return {k: row.get(k) for k in SAMPLE_LEVEL_COLUMNS}
+    cols = list(SAMPLE_LEVEL_COLUMNS)
+    if "project" in row and "project" not in cols:
+        cols = ["project", *cols]
+    return {k: row.get(k) for k in cols}
 
 
 def extract_assay_parameters(record: Dict[str, Any]) -> List[Dict[str, Any]]:
@@ -323,23 +335,33 @@ def extract_assay_parameters(record: Dict[str, Any]) -> List[Dict[str, Any]]:
     parameter_names = ASSAY_PARAMETER_MAP.get(assay_category, [])
     rows: List[Dict[str, Any]] = []
 
+    assay_name = _safe_get(record, "Assay Name", "assay_name", "MS Assay Name", "assay_names")
+    measurement_types = _as_text(_safe_get(record, "measurement_types"))
+    technology_types = _as_text(_safe_get(record, "technology_types"))
+    device_platforms = _as_text(_safe_get(record, "device_platforms"))
+    raw_data_file = _safe_get(record, "Raw Data File", "raw_data_file", "data_files")
+
     for param in parameter_names:
         value = _safe_get(record, param)
         for v in _iter_values(value):
             rows.append({
                 "osd_id": _safe_get(record, "osd_id"),
-                "mission": _safe_get(record, "mission", "RR_mission"),
+                "project": _project_value(record),
+                "mission": _project_value(record),
                 "sample_id": _safe_get(record, "sample_id"),
                 "mouse_id": _safe_get(record, "mouse_id"),
                 "assay_category": assay_category,
                 "assay_subtype": assay_subtype,
+                "assay_name": assay_name,
+                "measurement_types": measurement_types,
+                "technology_types": technology_types,
+                "device_platforms": device_platforms,
                 "parameter_name": param,
                 "parameter_value": v,
                 "term_source_ref": _safe_get(record, "Term Source REF"),
                 "term_accession_number": _safe_get(record, "Term Accession Number"),
                 "protocol_ref": _safe_get(record, "Protocol REF"),
-                "assay_name": _safe_get(record, "Assay Name", "assay_name", "MS Assay Name", "assay_names"),
-                "raw_data_file": _safe_get(record, "Raw Data File", "raw_data_file", "data_files"),
+                "raw_data_file": raw_data_file,
             })
 
     return rows
@@ -372,13 +394,29 @@ def build_export_tables(records: List[Dict[str, Any]]) -> Tuple[pd.DataFrame, pd
         mouse_df = mouse_df.drop_duplicates(subset=["osd_id", "mouse_id"], keep="first").reset_index(drop=True)
 
     if not sample_df.empty:
-        sample_df = sample_df.drop_duplicates(subset=["osd_id", "sample_id"], keep="first").reset_index(drop=True)
+        # preserve one row per sample-assay combo instead of collapsing assays together
+        dedup_cols = [c for c in ["osd_id", "sample_id", "assay_category", "assay_name", "technology_types", "device_platforms"] if c in sample_df.columns]
+        sample_df = sample_df.drop_duplicates(subset=dedup_cols, keep="first").reset_index(drop=True)
 
     if not assay_df.empty:
         assay_df = assay_df.drop_duplicates().reset_index(drop=True)
 
-    mouse_df = mouse_df.reindex(columns=MOUSE_LEVEL_COLUMNS)
-    sample_df = sample_df.reindex(columns=SAMPLE_LEVEL_COLUMNS)
-    assay_df = assay_df.reindex(columns=ASSAY_PARAMETER_COLUMNS)
+    mouse_cols = list(MOUSE_LEVEL_COLUMNS)
+    if not mouse_df.empty and "project" in mouse_df.columns and "project" not in mouse_cols:
+        mouse_cols = ["project", *mouse_cols]
+
+    sample_cols = list(SAMPLE_LEVEL_COLUMNS)
+    if not sample_df.empty and "project" in sample_df.columns and "project" not in sample_cols:
+        sample_cols = ["project", *sample_cols]
+
+    assay_cols = list(ASSAY_PARAMETER_COLUMNS)
+    assay_extra_cols = ["project", "measurement_types", "technology_types", "device_platforms"]
+    for col in assay_extra_cols:
+        if col in assay_df.columns and col not in assay_cols:
+            assay_cols.append(col)
+
+    mouse_df = mouse_df.reindex(columns=mouse_cols)
+    sample_df = sample_df.reindex(columns=sample_cols)
+    assay_df = assay_df.reindex(columns=assay_cols)
 
     return mouse_df, sample_df, assay_df
