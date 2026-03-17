@@ -1,7 +1,9 @@
+
 from __future__ import annotations
 
 MOUSE_LEVEL_COLUMNS = [
     "osd_id",
+    "project",
     "mission",
     "mouse_id",
     "source_name",
@@ -22,11 +24,16 @@ MOUSE_LEVEL_COLUMNS = [
 
 SAMPLE_LEVEL_COLUMNS = [
     "osd_id",
+    "project",
     "mission",
     "sample_id",
     "mouse_id",
     "source_name",
     "sample_name",
+    "mouse_strain",
+    "mouse_sex",
+    "age",
+    "space_or_ground",
     "organism",
     "material_type",
     "measurement_types",
@@ -55,16 +62,20 @@ SAMPLE_LEVEL_COLUMNS = [
 
 ASSAY_PARAMETER_COLUMNS = [
     "osd_id",
+    "project",
     "mission",
     "sample_id",
     "mouse_id",
     "assay_category",
     "assay_subtype",
+    "assay_name",
+    "measurement_types",
+    "technology_types",
+    "device_platforms",
     "parameter_name",
     "parameter_value",
     "term_source_ref",
     "term_accession_number",
     "protocol_ref",
-    "assay_name",
     "raw_data_file",
 ]

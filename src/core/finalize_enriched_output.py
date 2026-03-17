@@ -1,3 +1,4 @@
+
 from __future__ import annotations
 
 import json
@@ -7,6 +8,7 @@ from typing import Any, Dict, Iterable, List, Tuple
 import pandas as pd
 
 from src.core.export_tables import build_export_tables
+from src.utils.assay_wide import assay_long_to_wide
 
 RAW_ASSAY_COLUMNS = ["measurement_types", "technology_types", "device_platforms"]
 SAMPLE_PROV_COLUMNS = [
@@ -28,6 +30,7 @@ STUDY_PROV_COLUMNS = [
 ]
 FINAL_COLUMN_ORDER = [
     "osd_id",
+    "project",
     "sample_id",
     "source_name",
     "RR_mission",
@@ -61,7 +64,6 @@ FINAL_COLUMN_ORDER = [
     "material_type",
 ]
 
-
 def _first_non_empty(values: Iterable[Any]) -> Any:
     for value in values:
         if value is None:
@@ -72,7 +74,6 @@ def _first_non_empty(values: Iterable[Any]) -> Any:
         if text and text.lower() != "nan":
             return value
     return ""
-
 
 def _coalesce_columns(df: pd.DataFrame, left: str, right: str, target: str | None = None) -> pd.DataFrame:
     target = target or left
@@ -85,10 +86,9 @@ def _coalesce_columns(df: pd.DataFrame, left: str, right: str, target: str | Non
         df[target] = df[left]
         return df
     df[target] = df[left].where(df[left].notna() & (df[left].astype(str).str.strip() != ""), df[right])
-    if target != left:
+    if target != left and left in df.columns:
         df.drop(columns=[left], inplace=True)
     return df
-
 
 def _normalize_pipe_text(value: Any) -> str:
     if value is None:
@@ -101,10 +101,8 @@ def _normalize_pipe_text(value: Any) -> str:
         return ""
     return text
 
-
 def _truthy(text: str) -> bool:
     return text.strip().lower() in {"yes", "true", "1", "y"}
-
 
 def _derive_assay_summary(row: pd.Series) -> Tuple[str, str]:
     pieces: List[str] = []
@@ -132,7 +130,6 @@ def _derive_assay_summary(row: pd.Series) -> Tuple[str, str]:
         level = "unknown"
     return summary, level
 
-
 def _derive_boolean_flags(summary: str) -> Dict[str, str]:
     text = summary.lower()
     return {
@@ -143,7 +140,6 @@ def _derive_boolean_flags(summary: str) -> Dict[str, str]:
         "is_wtbs": "Yes" if "whole transcriptome bisulfite" in text or "wtbs" in text else "No",
     }
 
-
 def _collect_nodes(obj: Any, bucket: List[Dict[str, Any]]) -> None:
     if isinstance(obj, dict):
         bucket.append(obj)
@@ -153,26 +149,20 @@ def _collect_nodes(obj: Any, bucket: List[Dict[str, Any]]) -> None:
         for item in obj:
             _collect_nodes(item, bucket)
 
-
 def _parse_provenance(provenance_path: Path) -> Tuple[pd.DataFrame, pd.DataFrame]:
     if not provenance_path.exists():
         return pd.DataFrame(), pd.DataFrame()
-
     with open(provenance_path, "r", encoding="utf-8") as handle:
         data = json.load(handle)
-
     nodes: List[Dict[str, Any]] = []
     _collect_nodes(data, nodes)
-
     sample_rows: List[Dict[str, Any]] = []
     study_rows: List[Dict[str, Any]] = []
-
     for node in nodes:
         osd_id = node.get("osd_id") or node.get("osd") or node.get("study_id") or ""
         sample_id = node.get("sample_id") or node.get("sample_name") or ""
         if not osd_id:
             continue
-
         payload = {"osd_id": osd_id, "sample_id": sample_id}
         for key in SAMPLE_PROV_COLUMNS:
             if key in node:
@@ -180,24 +170,18 @@ def _parse_provenance(provenance_path: Path) -> Tuple[pd.DataFrame, pd.DataFrame
         for key in STUDY_PROV_COLUMNS:
             if key in node:
                 payload[key] = node[key]
-
-        has_payload = any(key in payload for key in SAMPLE_PROV_COLUMNS + STUDY_PROV_COLUMNS)
-        if not has_payload:
+        if not any(key in payload for key in SAMPLE_PROV_COLUMNS + STUDY_PROV_COLUMNS):
             continue
-
         if sample_id in {"", "_study_level_", "study_level"}:
             study_rows.append({k: v for k, v in payload.items() if k != "sample_id"})
         else:
             sample_rows.append(payload)
-
     def _collapse(df: pd.DataFrame, group_cols: List[str]) -> pd.DataFrame:
         if df.empty:
             return df
         value_cols = [c for c in df.columns if c not in group_cols]
         return df.groupby(group_cols, dropna=False)[value_cols].agg(_first_non_empty).reset_index()
-
     return _collapse(pd.DataFrame(sample_rows), ["osd_id", "sample_id"]), _collapse(pd.DataFrame(study_rows), ["osd_id"])
-
 
 def _merged_records_from_outputs(
     retrieved_csv_path: Path,
@@ -214,7 +198,6 @@ def _merged_records_from_outputs(
         how="left",
         suffixes=("", "_retrieved"),
     )
-
     for col in ["source_name", "RR_mission", "organism", "material_type", "measurement_types", "technology_types", "device_platforms", "data_files"]:
         retrieved_col = f"{col}_retrieved"
         if retrieved_col in merged.columns:
@@ -240,11 +223,26 @@ def _merged_records_from_outputs(
                 if prov_col in merged.columns:
                     merged.drop(columns=[prov_col], inplace=True)
 
-    if "mouse_genetic_variant" in merged.columns and "mouse_strain" in merged.columns:
-        merged["mouse_strain"] = merged["mouse_strain"].where(
-            merged["mouse_strain"].notna() & (merged["mouse_strain"].astype(str).str.strip() != ""),
-            merged["mouse_genetic_variant"],
-        )
+    if "mouse_genetic_variant" in merged.columns:
+        if "mouse_strain" not in merged.columns:
+            merged["mouse_strain"] = merged["mouse_genetic_variant"]
+        else:
+            merged["mouse_strain"] = merged["mouse_strain"].where(
+                merged["mouse_strain"].notna() & (merged["mouse_strain"].astype(str).str.strip() != ""),
+                merged["mouse_genetic_variant"],
+            )
+
+    # derive project everywhere
+    if "project" not in merged.columns:
+        merged["project"] = ""
+    merged["project"] = merged["project"].where(
+        merged["project"].notna() & (merged["project"].astype(str).str.strip() != ""),
+        merged.get("RR_mission", pd.Series([""] * len(merged)))
+    )
+    if merged["project"].astype(str).str.strip().eq("").all():
+        unique_osds = sorted(set(str(x) for x in merged["osd_id"].dropna().unique()))
+        fallback = unique_osds[0] if len(unique_osds) == 1 else "multi_osd"
+        merged["project"] = fallback
 
     assay_summaries = merged.apply(_derive_assay_summary, axis=1, result_type="expand")
     assay_summaries.columns = ["assay_summary", "assay_assignment_level"]
@@ -273,29 +271,6 @@ def _merged_records_from_outputs(
     merged = merged[FINAL_COLUMN_ORDER + extra_cols].copy()
     return merged, merged.to_dict(orient="records")
 
-
-def finalize_enriched_output(
-    retrieved_csv_path: str | Path,
-    pipeline_csv_path: str | Path,
-    provenance_json_path: str | Path,
-    final_output_path: str | Path,
-) -> pd.DataFrame:
-    retrieved_csv_path = Path(retrieved_csv_path)
-    pipeline_csv_path = Path(pipeline_csv_path)
-    provenance_json_path = Path(provenance_json_path)
-    final_output_path = Path(final_output_path)
-
-    merged, _ = _merged_records_from_outputs(
-        retrieved_csv_path=retrieved_csv_path,
-        pipeline_csv_path=pipeline_csv_path,
-        provenance_json_path=provenance_json_path,
-    )
-
-    final_output_path.parent.mkdir(parents=True, exist_ok=True)
-    merged.to_csv(final_output_path, index=False)
-    return merged
-
-
 def write_all_export_tables(
     retrieved_csv_path: str | Path,
     pipeline_csv_path: str | Path,
@@ -317,15 +292,18 @@ def write_all_export_tables(
     mouse_df, sample_df, assay_df = build_export_tables(final_records)
     mouse_path = output_dir / "mouse_metadata.csv"
     sample_path = output_dir / "sample_metadata.csv"
-    assay_path = output_dir / "assay_parameters_long.csv"
+    assay_long_path = output_dir / "assay_parameters_long.csv"
+    assay_wide_path = output_dir / "assay_parameters_wide.csv"
 
     mouse_df.to_csv(mouse_path, index=False)
     sample_df.to_csv(sample_path, index=False)
-    assay_df.to_csv(assay_path, index=False)
+    assay_df.to_csv(assay_long_path, index=False)
+    assay_long_to_wide(assay_df).to_csv(assay_wide_path, index=False)
 
     return {
         "enriched_samples": enriched_samples_path,
         "mouse_metadata": mouse_path,
         "sample_metadata": sample_path,
-        "assay_parameters_long": assay_path,
+        "assay_parameters_long": assay_long_path,
+        "assay_parameters_wide": assay_wide_path,
     }

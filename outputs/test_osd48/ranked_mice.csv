@@ -1,0 +1,27 @@
+project,source_name,osd,num_organs,organs_list,num_total_assays,assays_per_organ,total_data_files,informativeness_score,informativeness_rank
+OSD-48,RR1_FLT_M25,OSD-48,1,Liver,5,"{""Liver"": [""Dna Methylation Profiling"", ""Molecular Cellular Imaging"", ""Protein Expression Profiling"", ""RNA-Seq"", ""Rna Methylation Profiling""]}",5,7.58,1
+OSD-48,RR1_FLT_M26,OSD-48,1,Liver,5,"{""Liver"": [""Dna Methylation Profiling"", ""Molecular Cellular Imaging"", ""Protein Expression Profiling"", ""RNA-Seq"", ""Rna Methylation Profiling""]}",5,7.58,1
+OSD-48,RR1_FLT_M27,OSD-48,1,Liver,5,"{""Liver"": [""Dna Methylation Profiling"", ""Molecular Cellular Imaging"", ""Protein Expression Profiling"", ""RNA-Seq"", ""Rna Methylation Profiling""]}",5,7.58,1
+OSD-48,RR1_FLT_M28,OSD-48,1,Liver,5,"{""Liver"": [""Dna Methylation Profiling"", ""Molecular Cellular Imaging"", ""Protein Expression Profiling"", ""RNA-Seq"", ""Rna Methylation Profiling""]}",5,7.58,1
+OSD-48,RR1_FLT_M30,OSD-48,1,Liver,5,"{""Liver"": [""Dna Methylation Profiling"", ""Molecular Cellular Imaging"", ""Protein Expression Profiling"", ""RNA-Seq"", ""Rna Methylation Profiling""]}",5,7.58,1
+OSD-48,RR1_GC_M36,OSD-48,1,Liver,5,"{""Liver"": [""Dna Methylation Profiling"", ""Molecular Cellular Imaging"", ""Protein Expression Profiling"", ""RNA-Seq"", ""Rna Methylation Profiling""]}",5,7.58,1
+OSD-48,RR1_GC_M37,OSD-48,1,Liver,5,"{""Liver"": [""Dna Methylation Profiling"", ""Molecular Cellular Imaging"", ""Protein Expression Profiling"", ""RNA-Seq"", ""Rna Methylation Profiling""]}",5,7.58,1
+OSD-48,RR1_GC_M38,OSD-48,1,Liver,5,"{""Liver"": [""Dna Methylation Profiling"", ""Molecular Cellular Imaging"", ""Protein Expression Profiling"", ""RNA-Seq"", ""Rna Methylation Profiling""]}",5,7.58,1
+OSD-48,RR1_GC_M39,OSD-48,1,Liver,5,"{""Liver"": [""Dna Methylation Profiling"", ""Molecular Cellular Imaging"", ""Protein Expression Profiling"", ""RNA-Seq"", ""Rna Methylation Profiling""]}",5,7.58,1
+OSD-48,RR1_GC_M40,OSD-48,1,Liver,5,"{""Liver"": [""Dna Methylation Profiling"", ""Molecular Cellular Imaging"", ""Protein Expression Profiling"", ""RNA-Seq"", ""Rna Methylation Profiling""]}",5,7.58,1
+OSD-48,RR1_FLT_M21,OSD-48,1,Liver,4,"{""Liver"": [""Dna Methylation Profiling"", ""Molecular Cellular Imaging"", ""Protein Expression Profiling"", ""RNA-Seq""]}",4,6.32,2
+OSD-48,RR1_FLT_M22,OSD-48,1,Liver,4,"{""Liver"": [""Dna Methylation Profiling"", ""Molecular Cellular Imaging"", ""Protein Expression Profiling"", ""RNA-Seq""]}",4,6.32,2
+OSD-48,RR1_GC_M31,OSD-48,1,Liver,4,"{""Liver"": [""Dna Methylation Profiling"", ""Molecular Cellular Imaging"", ""Protein Expression Profiling"", ""RNA-Seq""]}",4,6.32,2
+OSD-48,RR1_GC_M32,OSD-48,1,Liver,4,"{""Liver"": [""Dna Methylation Profiling"", ""Molecular Cellular Imaging"", ""Protein Expression Profiling"", ""RNA-Seq""]}",4,6.32,2
+OSD-48,RR1_BSL_M10,OSD-48,1,Liver,2,"{""Liver"": [""Molecular Cellular Imaging"", ""Protein Expression Profiling""]}",2,3.58,3
+OSD-48,RR1_BSL_M4,OSD-48,1,Liver,2,"{""Liver"": [""Molecular Cellular Imaging"", ""Protein Expression Profiling""]}",2,3.58,3
+OSD-48,RR1_BSL_M5,OSD-48,1,Liver,2,"{""Liver"": [""Molecular Cellular Imaging"", ""Protein Expression Profiling""]}",2,3.58,3
+OSD-48,RR1_BSL_M7,OSD-48,1,Liver,2,"{""Liver"": [""Molecular Cellular Imaging"", ""Protein Expression Profiling""]}",2,3.58,3
+OSD-48,RR1_BSL_M8,OSD-48,1,Liver,2,"{""Liver"": [""Molecular Cellular Imaging"", ""Protein Expression Profiling""]}",2,3.58,3
+OSD-48,RR1_VIV_M16,OSD-48,1,Liver,2,"{""Liver"": [""Molecular Cellular Imaging"", ""Protein Expression Profiling""]}",2,3.58,3
+OSD-48,RR1_VIV_M17,OSD-48,1,Liver,2,"{""Liver"": [""Molecular Cellular Imaging"", ""Protein Expression Profiling""]}",2,3.58,3
+OSD-48,RR1_VIV_M18,OSD-48,1,Liver,2,"{""Liver"": [""Molecular Cellular Imaging"", ""Protein Expression Profiling""]}",2,3.58,3
+OSD-48,RR1_VIV_M19,OSD-48,1,Liver,2,"{""Liver"": [""Molecular Cellular Imaging"", ""Protein Expression Profiling""]}",2,3.58,3
+OSD-48,RR1_VIV_M20,OSD-48,1,Liver,2,"{""Liver"": [""Molecular Cellular Imaging"", ""Protein Expression Profiling""]}",2,3.58,3
+OSD-48,RR1_FLT_M29,OSD-48,1,Liver,1,"{""Liver"": [""Rna Methylation Profiling""]}",1,2.0,4
+OSD-48,RR1_GC_M35,OSD-48,1,Liver,1,"{""Liver"": [""Rna Methylation Profiling""]}",1,2.0,4

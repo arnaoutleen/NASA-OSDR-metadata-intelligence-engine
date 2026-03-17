@@ -1,0 +1,4410 @@
+[
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_BSL_M4",
+    "sample_name": "Mmus_C57-6J_LVR_BSL_C_Rep1_M4",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Molecular Cellular Imaging",
+      "Protein Expression Profiling"
+    ],
+    "technology_types": [
+      "Mass Spectrometry",
+      "Microscopy"
+    ],
+    "device_platforms": [
+      "Orbitrap Fusion(Thermo Scientific)",
+      "pannoramic scan (3d histech)"
+    ],
+    "data_files": [
+      "LSDS-2_Histology_HE.tar.gz",
+      "LSDS-2_Histology_ORO.tar.gz"
+    ],
+    "assay_names": [
+      "Histology"
+    ],
+    "ms_assay_names": [
+      "TMT 11-plex"
+    ],
+    "extract_names": [
+      "RR1_BSL_M4_LVR_PRT"
+    ],
+    "Parameter Value[MS Run Group]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Pool strategy]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Instrument]": [
+      "Orbitrap Fusion"
+    ],
+    "Parameter Value[Ion Source]": [
+      "electrospray ionization"
+    ],
+    "Parameter Value[Analyzer]": [
+      "Ion Trap & Orbitrap"
+    ],
+    "Parameter Value[Preservation]": [
+      "liquid nitrogen"
+    ],
+    "Parameter Value[Fixation Chemical]": [
+      "paraffin (HE), OCT (ORO)"
+    ],
+    "Parameter Value[Section Thickness]": [
+      "4 (HE), 5 (ORO)"
+    ],
+    "Parameter Value[Image File]": [
+      "LSDS-2_Histology_M4-M5-M7_ORO.ome.tiff, LSDS-2_Histology_M4-M5-M7_ORO.jpg, LSDS-2_Histology_M4-M5-M7_HE.ome.tiff, LSDS-2_Histology_M4-M5-M7_HE.jpg"
+    ],
+    "Parameter Value[Submitted Results File]": [
+      "LSDS-2_Histology_OSD_48_Histology_Submitted_Results.xlsx"
+    ],
+    "Parameter Value[Transformed Reusable Files]": [
+      "LSDS-2_Histology_OSD_48_Histology_TRANSFORMED.csv"
+    ],
+    "Comment[Raw Data File name]": [
+      "170811_NASA_7313_TMT_11plex_Frac*.raw"
+    ],
+    "Comment[Peptide Group File]": [
+      "170811_NASA_7313_TMT_11plex_BB_Anova_PeptideGroups.txt"
+    ],
+    "Comment[Protein Group File]": [
+      "170811_NASA_7313_TMT_11plex_BB_Anova_ProteinGroups.txt"
+    ],
+    "Comment[Byonic output file .mgf]": [
+      "170811_NASA_....byspec2_20170815_Byonic.mgf"
+    ],
+    "Comment[Byonic output file .mzid]": [
+      "170811_NASA_....byspec2_20170815_Byonic.mzid"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_BSL_M5",
+    "sample_name": "Mmus_C57-6J_LVR_BSL_C_Rep2_M5",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Molecular Cellular Imaging",
+      "Protein Expression Profiling"
+    ],
+    "technology_types": [
+      "Mass Spectrometry",
+      "Microscopy"
+    ],
+    "device_platforms": [
+      "Orbitrap Fusion(Thermo Scientific)",
+      "pannoramic scan (3d histech)"
+    ],
+    "data_files": [
+      "LSDS-2_Histology_HE.tar.gz",
+      "LSDS-2_Histology_ORO.tar.gz"
+    ],
+    "assay_names": [
+      "Histology"
+    ],
+    "ms_assay_names": [
+      "TMT 11-plex"
+    ],
+    "extract_names": [
+      "RR1_BSL_M5_LVR_PRT"
+    ],
+    "Parameter Value[MS Run Group]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Pool strategy]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Instrument]": [
+      "Orbitrap Fusion"
+    ],
+    "Parameter Value[Ion Source]": [
+      "electrospray ionization"
+    ],
+    "Parameter Value[Analyzer]": [
+      "Ion Trap & Orbitrap"
+    ],
+    "Parameter Value[Preservation]": [
+      "liquid nitrogen"
+    ],
+    "Parameter Value[Fixation Chemical]": [
+      "paraffin (HE), OCT (ORO)"
+    ],
+    "Parameter Value[Section Thickness]": [
+      "4 (HE), 5 (ORO)"
+    ],
+    "Parameter Value[Image File]": [
+      "LSDS-2_Histology_M4-M5-M7_ORO.ome.tiff, LSDS-2_Histology_M4-M5-M7_ORO.jpg, LSDS-2_Histology_M4-M5-M7_HE.ome.tiff, LSDS-2_Histology_M4-M5-M7_HE.jpg"
+    ],
+    "Parameter Value[Submitted Results File]": [
+      "LSDS-2_Histology_OSD_48_Histology_Submitted_Results.xlsx"
+    ],
+    "Parameter Value[Transformed Reusable Files]": [
+      "LSDS-2_Histology_OSD_48_Histology_TRANSFORMED.csv"
+    ],
+    "Comment[Raw Data File name]": [
+      "170811_NASA_7313_TMT_11plex_Frac*.raw"
+    ],
+    "Comment[Peptide Group File]": [
+      "170811_NASA_7313_TMT_11plex_BB_Anova_PeptideGroups.txt"
+    ],
+    "Comment[Protein Group File]": [
+      "170811_NASA_7313_TMT_11plex_BB_Anova_ProteinGroups.txt"
+    ],
+    "Comment[Byonic output file .mgf]": [
+      "170811_NASA_....byspec2_20170815_Byonic.mgf"
+    ],
+    "Comment[Byonic output file .mzid]": [
+      "170811_NASA_....byspec2_20170815_Byonic.mzid"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_BSL_M7",
+    "sample_name": "Mmus_C57-6J_LVR_BSL_C_Rep3_M7",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Molecular Cellular Imaging",
+      "Protein Expression Profiling"
+    ],
+    "technology_types": [
+      "Mass Spectrometry",
+      "Microscopy"
+    ],
+    "device_platforms": [
+      "Orbitrap Fusion(Thermo Scientific)",
+      "pannoramic scan (3d histech)"
+    ],
+    "data_files": [
+      "LSDS-2_Histology_HE.tar.gz",
+      "LSDS-2_Histology_ORO.tar.gz"
+    ],
+    "assay_names": [
+      "Histology"
+    ],
+    "ms_assay_names": [
+      "TMT 11-plex"
+    ],
+    "extract_names": [
+      "RR1_BSL_M7_LVR_PRT"
+    ],
+    "Parameter Value[MS Run Group]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Pool strategy]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Instrument]": [
+      "Orbitrap Fusion"
+    ],
+    "Parameter Value[Ion Source]": [
+      "electrospray ionization"
+    ],
+    "Parameter Value[Analyzer]": [
+      "Ion Trap & Orbitrap"
+    ],
+    "Parameter Value[Preservation]": [
+      "liquid nitrogen"
+    ],
+    "Parameter Value[Fixation Chemical]": [
+      "paraffin (HE), OCT (ORO)"
+    ],
+    "Parameter Value[Section Thickness]": [
+      "4 (HE), 5 (ORO)"
+    ],
+    "Parameter Value[Image File]": [
+      "LSDS-2_Histology_M4-M5-M7_ORO.ome.tiff, LSDS-2_Histology_M4-M5-M7_ORO.jpg, LSDS-2_Histology_M4-M5-M7_HE.ome.tiff, LSDS-2_Histology_M4-M5-M7_HE.jpg"
+    ],
+    "Parameter Value[Submitted Results File]": [
+      "LSDS-2_Histology_OSD_48_Histology_Submitted_Results.xlsx"
+    ],
+    "Parameter Value[Transformed Reusable Files]": [
+      "LSDS-2_Histology_OSD_48_Histology_TRANSFORMED.csv"
+    ],
+    "Comment[Raw Data File name]": [
+      "170811_NASA_7313_TMT_11plex_Frac*.raw"
+    ],
+    "Comment[Peptide Group File]": [
+      "170811_NASA_7313_TMT_11plex_BB_Anova_PeptideGroups.txt"
+    ],
+    "Comment[Protein Group File]": [
+      "170811_NASA_7313_TMT_11plex_BB_Anova_ProteinGroups.txt"
+    ],
+    "Comment[Byonic output file .mgf]": [
+      "170811_NASA_....byspec2_20170815_Byonic.mgf"
+    ],
+    "Comment[Byonic output file .mzid]": [
+      "170811_NASA_....byspec2_20170815_Byonic.mzid"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_BSL_M8",
+    "sample_name": "Mmus_C57-6J_LVR_BSL_C_Rep4_M8",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Molecular Cellular Imaging",
+      "Protein Expression Profiling"
+    ],
+    "technology_types": [
+      "Mass Spectrometry",
+      "Microscopy"
+    ],
+    "device_platforms": [
+      "Orbitrap Fusion(Thermo Scientific)",
+      "pannoramic scan (3d histech)"
+    ],
+    "data_files": [
+      "LSDS-2_Histology_HE.tar.gz",
+      "LSDS-2_Histology_ORO.tar.gz"
+    ],
+    "assay_names": [
+      "Histology"
+    ],
+    "ms_assay_names": [
+      "TMT 11-plex"
+    ],
+    "extract_names": [
+      "RR1_BSL_M8_LVR_PRT"
+    ],
+    "Parameter Value[MS Run Group]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Pool strategy]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Instrument]": [
+      "Orbitrap Fusion"
+    ],
+    "Parameter Value[Ion Source]": [
+      "electrospray ionization"
+    ],
+    "Parameter Value[Analyzer]": [
+      "Ion Trap & Orbitrap"
+    ],
+    "Parameter Value[Preservation]": [
+      "liquid nitrogen"
+    ],
+    "Parameter Value[Fixation Chemical]": [
+      "paraffin (HE), OCT (ORO)"
+    ],
+    "Parameter Value[Section Thickness]": [
+      "4 (HE), 5 (ORO)"
+    ],
+    "Parameter Value[Image File]": [
+      "LSDS-2_Histology_M8-M10_ORO.ome.tiff, LSDS-2_Histology_M8-M10_ORO.jpg, LSDS-2_Histology_M8-M10_HE.ome.tiff, LSDS-2_Histology_M8-M10_HE.jpg"
+    ],
+    "Parameter Value[Submitted Results File]": [
+      "LSDS-2_Histology_OSD_48_Histology_Submitted_Results.xlsx"
+    ],
+    "Parameter Value[Transformed Reusable Files]": [
+      "LSDS-2_Histology_OSD_48_Histology_TRANSFORMED.csv"
+    ],
+    "Comment[Raw Data File name]": [
+      "170811_NASA_7313_TMT_11plex_Frac*.raw"
+    ],
+    "Comment[Peptide Group File]": [
+      "170811_NASA_7313_TMT_11plex_BB_Anova_PeptideGroups.txt"
+    ],
+    "Comment[Protein Group File]": [
+      "170811_NASA_7313_TMT_11plex_BB_Anova_ProteinGroups.txt"
+    ],
+    "Comment[Byonic output file .mgf]": [
+      "170811_NASA_....byspec2_20170815_Byonic.mgf"
+    ],
+    "Comment[Byonic output file .mzid]": [
+      "170811_NASA_....byspec2_20170815_Byonic.mzid"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_BSL_M10",
+    "sample_name": "Mmus_C57-6J_LVR_BSL_C_Rep5_M10",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Molecular Cellular Imaging",
+      "Protein Expression Profiling"
+    ],
+    "technology_types": [
+      "Mass Spectrometry",
+      "Microscopy"
+    ],
+    "device_platforms": [
+      "Orbitrap Fusion(Thermo Scientific)",
+      "pannoramic scan (3d histech)"
+    ],
+    "data_files": [
+      "LSDS-2_Histology_HE.tar.gz",
+      "LSDS-2_Histology_ORO.tar.gz"
+    ],
+    "assay_names": [
+      "Histology"
+    ],
+    "ms_assay_names": [
+      "TMT 11-plex"
+    ],
+    "extract_names": [
+      "RR1_BSL_M10_LVR_PRT"
+    ],
+    "Parameter Value[MS Run Group]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Pool strategy]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Instrument]": [
+      "Orbitrap Fusion"
+    ],
+    "Parameter Value[Ion Source]": [
+      "electrospray ionization"
+    ],
+    "Parameter Value[Analyzer]": [
+      "Ion Trap & Orbitrap"
+    ],
+    "Parameter Value[Preservation]": [
+      "liquid nitrogen"
+    ],
+    "Parameter Value[Fixation Chemical]": [
+      "paraffin (HE), OCT (ORO)"
+    ],
+    "Parameter Value[Section Thickness]": [
+      "4 (HE), 5 (ORO)"
+    ],
+    "Parameter Value[Image File]": [
+      "LSDS-2_Histology_M8-M10_ORO.ome.tiff, LSDS-2_Histology_M8-M10_ORO.jpg, LSDS-2_Histology_M8-M10_HE.ome.tiff, LSDS-2_Histology_M8-M10_HE.jpg"
+    ],
+    "Parameter Value[Submitted Results File]": [
+      "LSDS-2_Histology_OSD_48_Histology_Submitted_Results.xlsx"
+    ],
+    "Parameter Value[Transformed Reusable Files]": [
+      "LSDS-2_Histology_OSD_48_Histology_TRANSFORMED.csv"
+    ],
+    "Comment[Raw Data File name]": [
+      "170811_NASA_7313_TMT_11plex_Frac*.raw"
+    ],
+    "Comment[Peptide Group File]": [
+      "170811_NASA_7313_TMT_11plex_BB_Anova_PeptideGroups.txt"
+    ],
+    "Comment[Protein Group File]": [
+      "170811_NASA_7313_TMT_11plex_BB_Anova_ProteinGroups.txt"
+    ],
+    "Comment[Byonic output file .mgf]": [
+      "170811_NASA_....byspec2_20170815_Byonic.mgf"
+    ],
+    "Comment[Byonic output file .mzid]": [
+      "170811_NASA_....byspec2_20170815_Byonic.mzid"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_VIV_M16",
+    "sample_name": "Mmus_C57-6J_LVR_VIV_C_Rep1_M16",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Molecular Cellular Imaging",
+      "Protein Expression Profiling"
+    ],
+    "technology_types": [
+      "Mass Spectrometry",
+      "Microscopy"
+    ],
+    "device_platforms": [
+      "Orbitrap Fusion(Thermo Scientific)",
+      "pannoramic scan (3d histech)"
+    ],
+    "data_files": [
+      "LSDS-2_Histology_HE.tar.gz",
+      "LSDS-2_Histology_ORO.tar.gz"
+    ],
+    "assay_names": [
+      "Histology"
+    ],
+    "ms_assay_names": [
+      "TMT 11-plex"
+    ],
+    "extract_names": [
+      "RR1_VIV_M16_LVR_PRT"
+    ],
+    "Parameter Value[MS Run Group]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Pool strategy]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Instrument]": [
+      "Orbitrap Fusion"
+    ],
+    "Parameter Value[Ion Source]": [
+      "electrospray ionization"
+    ],
+    "Parameter Value[Analyzer]": [
+      "Ion Trap & Orbitrap"
+    ],
+    "Parameter Value[Preservation]": [
+      "liquid nitrogen"
+    ],
+    "Parameter Value[Fixation Chemical]": [
+      "paraffin (HE), OCT (ORO)"
+    ],
+    "Parameter Value[Section Thickness]": [
+      "4 (HE), 5 (ORO)"
+    ],
+    "Parameter Value[Image File]": [
+      "LSDS-2_Histology_M16-M17-M18_ORO.ome.tiff, LSDS-2_Histology_M16-M17-M18_ORO.jpg, LSDS-2_Histology_M16-M17-M18_HE.ome.tiff, LSDS-2_Histology_M16-M17-M18_HE.jpg"
+    ],
+    "Parameter Value[Submitted Results File]": [
+      "LSDS-2_Histology_OSD_48_Histology_Submitted_Results.xlsx"
+    ],
+    "Parameter Value[Transformed Reusable Files]": [
+      "LSDS-2_Histology_OSD_48_Histology_TRANSFORMED.csv"
+    ],
+    "Comment[Raw Data File name]": [
+      "170811_NASA_7313_TMT_11plex_Frac*.raw"
+    ],
+    "Comment[Peptide Group File]": [
+      "170811_NASA_7313_TMT_11plex_BB_Anova_PeptideGroups.txt"
+    ],
+    "Comment[Protein Group File]": [
+      "170811_NASA_7313_TMT_11plex_BB_Anova_ProteinGroups.txt"
+    ],
+    "Comment[Byonic output file .mgf]": [
+      "170811_NASA_....byspec2_20170815_Byonic.mgf"
+    ],
+    "Comment[Byonic output file .mzid]": [
+      "170811_NASA_....byspec2_20170815_Byonic.mzid"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_VIV_M17",
+    "sample_name": "Mmus_C57-6J_LVR_VIV_C_Rep2_M17",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Molecular Cellular Imaging",
+      "Protein Expression Profiling"
+    ],
+    "technology_types": [
+      "Mass Spectrometry",
+      "Microscopy"
+    ],
+    "device_platforms": [
+      "Orbitrap Fusion(Thermo Scientific)",
+      "pannoramic scan (3d histech)"
+    ],
+    "data_files": [
+      "LSDS-2_Histology_HE.tar.gz",
+      "LSDS-2_Histology_ORO.tar.gz"
+    ],
+    "assay_names": [
+      "Histology"
+    ],
+    "ms_assay_names": [
+      "TMT 11-plex"
+    ],
+    "extract_names": [
+      "RR1_VIV_M17_LVR_PRT"
+    ],
+    "Parameter Value[MS Run Group]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Pool strategy]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Instrument]": [
+      "Orbitrap Fusion"
+    ],
+    "Parameter Value[Ion Source]": [
+      "electrospray ionization"
+    ],
+    "Parameter Value[Analyzer]": [
+      "Ion Trap & Orbitrap"
+    ],
+    "Parameter Value[Preservation]": [
+      "liquid nitrogen"
+    ],
+    "Parameter Value[Fixation Chemical]": [
+      "paraffin (HE), OCT (ORO)"
+    ],
+    "Parameter Value[Section Thickness]": [
+      "4 (HE), 5 (ORO)"
+    ],
+    "Parameter Value[Image File]": [
+      "LSDS-2_Histology_M16-M17-M18_ORO.ome.tiff, LSDS-2_Histology_M16-M17-M18_ORO.jpg, LSDS-2_Histology_M16-M17-M18_HE.ome.tiff, LSDS-2_Histology_M16-M17-M18_HE.jpg"
+    ],
+    "Parameter Value[Submitted Results File]": [
+      "LSDS-2_Histology_OSD_48_Histology_Submitted_Results.xlsx"
+    ],
+    "Parameter Value[Transformed Reusable Files]": [
+      "LSDS-2_Histology_OSD_48_Histology_TRANSFORMED.csv"
+    ],
+    "Comment[Raw Data File name]": [
+      "170811_NASA_7313_TMT_11plex_Frac*.raw"
+    ],
+    "Comment[Peptide Group File]": [
+      "170811_NASA_7313_TMT_11plex_BB_Anova_PeptideGroups.txt"
+    ],
+    "Comment[Protein Group File]": [
+      "170811_NASA_7313_TMT_11plex_BB_Anova_ProteinGroups.txt"
+    ],
+    "Comment[Byonic output file .mgf]": [
+      "170811_NASA_....byspec2_20170815_Byonic.mgf"
+    ],
+    "Comment[Byonic output file .mzid]": [
+      "170811_NASA_....byspec2_20170815_Byonic.mzid"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_VIV_M18",
+    "sample_name": "Mmus_C57-6J_LVR_VIV_C_Rep3_M18",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Molecular Cellular Imaging",
+      "Protein Expression Profiling"
+    ],
+    "technology_types": [
+      "Mass Spectrometry",
+      "Microscopy"
+    ],
+    "device_platforms": [
+      "Orbitrap Fusion(Thermo Scientific)",
+      "pannoramic scan (3d histech)"
+    ],
+    "data_files": [
+      "LSDS-2_Histology_HE.tar.gz",
+      "LSDS-2_Histology_ORO.tar.gz"
+    ],
+    "assay_names": [
+      "Histology"
+    ],
+    "ms_assay_names": [
+      "TMT 11-plex"
+    ],
+    "extract_names": [
+      "RR1_VIV_M18_LVR_PRT"
+    ],
+    "Parameter Value[MS Run Group]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Pool strategy]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Instrument]": [
+      "Orbitrap Fusion"
+    ],
+    "Parameter Value[Ion Source]": [
+      "electrospray ionization"
+    ],
+    "Parameter Value[Analyzer]": [
+      "Ion Trap & Orbitrap"
+    ],
+    "Parameter Value[Preservation]": [
+      "liquid nitrogen"
+    ],
+    "Parameter Value[Fixation Chemical]": [
+      "paraffin (HE), OCT (ORO)"
+    ],
+    "Parameter Value[Section Thickness]": [
+      "4 (HE), 5 (ORO)"
+    ],
+    "Parameter Value[Image File]": [
+      "LSDS-2_Histology_M16-M17-M18_ORO.ome.tiff, LSDS-2_Histology_M16-M17-M18_ORO.jpg, LSDS-2_Histology_M16-M17-M18_HE.ome.tiff, LSDS-2_Histology_M16-M17-M18_HE.jpg"
+    ],
+    "Parameter Value[Submitted Results File]": [
+      "LSDS-2_Histology_OSD_48_Histology_Submitted_Results.xlsx"
+    ],
+    "Parameter Value[Transformed Reusable Files]": [
+      "LSDS-2_Histology_OSD_48_Histology_TRANSFORMED.csv"
+    ],
+    "Comment[Raw Data File name]": [
+      "170811_NASA_7313_TMT_11plex_Frac*.raw"
+    ],
+    "Comment[Peptide Group File]": [
+      "170811_NASA_7313_TMT_11plex_BB_Anova_PeptideGroups.txt"
+    ],
+    "Comment[Protein Group File]": [
+      "170811_NASA_7313_TMT_11plex_BB_Anova_ProteinGroups.txt"
+    ],
+    "Comment[Byonic output file .mgf]": [
+      "170811_NASA_....byspec2_20170815_Byonic.mgf"
+    ],
+    "Comment[Byonic output file .mzid]": [
+      "170811_NASA_....byspec2_20170815_Byonic.mzid"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_VIV_M19",
+    "sample_name": "Mmus_C57-6J_LVR_VIV_C_Rep4_M19",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Molecular Cellular Imaging",
+      "Protein Expression Profiling"
+    ],
+    "technology_types": [
+      "Mass Spectrometry",
+      "Microscopy"
+    ],
+    "device_platforms": [
+      "Orbitrap Fusion(Thermo Scientific)",
+      "pannoramic scan (3d histech)"
+    ],
+    "data_files": [
+      "LSDS-2_Histology_HE.tar.gz",
+      "LSDS-2_Histology_ORO.tar.gz"
+    ],
+    "assay_names": [
+      "Histology"
+    ],
+    "ms_assay_names": [
+      "TMT 11-plex"
+    ],
+    "extract_names": [
+      "RR1_VIV_M19_LVR_PRT"
+    ],
+    "Parameter Value[MS Run Group]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Pool strategy]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Instrument]": [
+      "Orbitrap Fusion"
+    ],
+    "Parameter Value[Ion Source]": [
+      "electrospray ionization"
+    ],
+    "Parameter Value[Analyzer]": [
+      "Ion Trap & Orbitrap"
+    ],
+    "Parameter Value[Preservation]": [
+      "liquid nitrogen"
+    ],
+    "Parameter Value[Fixation Chemical]": [
+      "paraffin (HE), OCT (ORO)"
+    ],
+    "Parameter Value[Section Thickness]": [
+      "4 (HE), 5 (ORO)"
+    ],
+    "Parameter Value[Image File]": [
+      "LSDS-2_Histology_M19-M20_ORO.ome.tiff, LSDS-2_Histology_M19-M20_ORO.jpg, LSDS-2_Histology_M19-M20_HE.ome.tiff, LSDS-2_Histology_M19-M20_HE.jpg"
+    ],
+    "Parameter Value[Submitted Results File]": [
+      "LSDS-2_Histology_OSD_48_Histology_Submitted_Results.xlsx"
+    ],
+    "Parameter Value[Transformed Reusable Files]": [
+      "LSDS-2_Histology_OSD_48_Histology_TRANSFORMED.csv"
+    ],
+    "Comment[Raw Data File name]": [
+      "170811_NASA_7313_TMT_11plex_Frac*.raw"
+    ],
+    "Comment[Peptide Group File]": [
+      "170811_NASA_7313_TMT_11plex_BB_Anova_PeptideGroups.txt"
+    ],
+    "Comment[Protein Group File]": [
+      "170811_NASA_7313_TMT_11plex_BB_Anova_ProteinGroups.txt"
+    ],
+    "Comment[Byonic output file .mgf]": [
+      "170811_NASA_....byspec2_20170815_Byonic.mgf"
+    ],
+    "Comment[Byonic output file .mzid]": [
+      "170811_NASA_....byspec2_20170815_Byonic.mzid"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_VIV_M20",
+    "sample_name": "Mmus_C57-6J_LVR_VIV_C_Rep5_M20",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Molecular Cellular Imaging",
+      "Protein Expression Profiling"
+    ],
+    "technology_types": [
+      "Mass Spectrometry",
+      "Microscopy"
+    ],
+    "device_platforms": [
+      "Orbitrap Fusion(Thermo Scientific)",
+      "pannoramic scan (3d histech)"
+    ],
+    "data_files": [
+      "LSDS-2_Histology_HE.tar.gz",
+      "LSDS-2_Histology_ORO.tar.gz"
+    ],
+    "assay_names": [
+      "Histology"
+    ],
+    "ms_assay_names": [
+      "TMT 11-plex"
+    ],
+    "extract_names": [
+      "RR1_VIV_M20_LVR_PRT"
+    ],
+    "Parameter Value[MS Run Group]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Pool strategy]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Instrument]": [
+      "Orbitrap Fusion"
+    ],
+    "Parameter Value[Ion Source]": [
+      "electrospray ionization"
+    ],
+    "Parameter Value[Analyzer]": [
+      "Ion Trap & Orbitrap"
+    ],
+    "Parameter Value[Preservation]": [
+      "liquid nitrogen"
+    ],
+    "Parameter Value[Fixation Chemical]": [
+      "paraffin (HE), OCT (ORO)"
+    ],
+    "Parameter Value[Section Thickness]": [
+      "4 (HE), 5 (ORO)"
+    ],
+    "Parameter Value[Image File]": [
+      "LSDS-2_Histology_M19-M20_ORO.ome.tiff, LSDS-2_Histology_M19-M20_ORO.jpg, LSDS-2_Histology_M19-M20_HE.ome.tiff, LSDS-2_Histology_M19-M20_HE.jpg"
+    ],
+    "Parameter Value[Submitted Results File]": [
+      "LSDS-2_Histology_OSD_48_Histology_Submitted_Results.xlsx"
+    ],
+    "Parameter Value[Transformed Reusable Files]": [
+      "LSDS-2_Histology_OSD_48_Histology_TRANSFORMED.csv"
+    ],
+    "Comment[Raw Data File name]": [
+      "170811_NASA_7313_TMT_11plex_Frac*.raw"
+    ],
+    "Comment[Peptide Group File]": [
+      "170811_NASA_7313_TMT_11plex_BB_Anova_PeptideGroups.txt"
+    ],
+    "Comment[Protein Group File]": [
+      "170811_NASA_7313_TMT_11plex_BB_Anova_ProteinGroups.txt"
+    ],
+    "Comment[Byonic output file .mgf]": [
+      "170811_NASA_....byspec2_20170815_Byonic.mgf"
+    ],
+    "Comment[Byonic output file .mzid]": [
+      "170811_NASA_....byspec2_20170815_Byonic.mzid"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_FLT_M21",
+    "sample_name": "Mmus_C57-6J_LVR_FLT_I_Rep1_M21",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Dna Methylation Profiling",
+      "Molecular Cellular Imaging",
+      "Protein Expression Profiling",
+      "RNA-Seq"
+    ],
+    "technology_types": [
+      "Mass Spectrometry",
+      "Microscopy",
+      "Rna Sequencing (Rna Seq)",
+      "Whole Genome Bisulfite Sequencing"
+    ],
+    "device_platforms": [
+      "Illumina",
+      "Orbitrap Fusion(Thermo Scientific)",
+      "pannoramic scan (3d histech)"
+    ],
+    "data_files": [
+      "GLDS-48_rna-seq_N-FLT-21_.tar.gz",
+      "GLDS-48_wgbs_N-FLT-21-wgbs.tar.gz",
+      "LSDS-2_Histology_HE.tar.gz",
+      "LSDS-2_Histology_ORO.tar.gz"
+    ],
+    "assay_names": [
+      "Histology",
+      "Whole Genome Bisulfite Sequencing",
+      "rna-seq"
+    ],
+    "ms_assay_names": [
+      "TMT 10-plex"
+    ],
+    "extract_names": [
+      "RR1_FLT_M21_LVR_DNA",
+      "RR1_FLT_M21_LVR_PRT",
+      "RR1_FLT_M21_LVR_RNA"
+    ],
+    "Parameter Value[QA Instrument]": [
+      "Agilent 2100 Bioanalyzer"
+    ],
+    "Parameter Value[QA Assay]": [
+      "RNA 6000 Nano Kit"
+    ],
+    "Parameter Value[QA Score]": [
+      "10"
+    ],
+    "Parameter Value[Library Selection]": [
+      "polyA enrichment",
+      "PCR"
+    ],
+    "Parameter Value[Library Layout]": [
+      "SINGLE",
+      "PAIRED"
+    ],
+    "Parameter Value[Stranded]": [
+      "STRANDED"
+    ],
+    "Parameter Value[Library QA Instrument]": [
+      "Agilent 2100 Bioanalyzer"
+    ],
+    "Parameter Value[Library Kit]": [
+      "Illumina TruSeq stranded RNA library prep kit"
+    ],
+    "Parameter Value[Sequencing Instrument]": [
+      "Illumina HiSeq 3000"
+    ],
+    "Parameter Value[Read Length]": [
+      "50"
+    ],
+    "Parameter Value[Read Depth]": [
+      "43556444"
+    ],
+    "Parameter Value[rRNA Contamination]": [
+      "3.3"
+    ],
+    "Parameter Value[Merged Sequence Data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_GLbulkRNAseq_raw.fastq.gz",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_R1_raw.fastq.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_R2_raw.fastq.gz"
+    ],
+    "Parameter Value[MultiQC File Names]": [
+      "GLDS-48_rna_seq_raw_multiqc_GLbulkRNAseq_data.zip, GLDS-48_rna_seq_raw_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[trimmed sequence data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_GLbulkRNAseq_trimmed.fastq.gz",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_R1_trimmed.fastq.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_R2_trimmed.fastq.gz"
+    ],
+    "Parameter Value[Trimmed Sequence Data/Trimming Reports]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_GLbulkRNAseq_trimming_report.txt",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_R1_raw.fastq.gz_trimming_report.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_R2_raw.fastq.gz_trimming_report.txt"
+    ],
+    "Parameter Value[Trimmed Sequence Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_trimmed_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_trimmed_multiqc_GLbulkRNAseq.html",
+      "GLDS-48_Gwgbs_trimmed_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_trimmed_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[aligned sequence data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_GLbulkRNAseq_Aligned.sortedByCoord_sorted.out.bam,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_GLbulkRNAseq_Aligned.sortedByCoord_sorted.out.bam.bai,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_GLbulkRNAseq_Aligned.toTranscriptome.out.bam,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_GLbulkRNAseq_SJ.out.tab",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_bismark_bt2_sorted.bam,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_bismark_bt2_sorted.bam.bai,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_bismark_bt2.deduplicated_sorted.bam,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_bismark_bt2.deduplicated_sorted.bam.bai"
+    ],
+    "Parameter Value[Aligned Sequence Data/Unmapped Reads]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_GLbulkRNAseq_unmapped.fastq.gz"
+    ],
+    "Parameter Value[Aligned Sequence Data/Alignment Logs]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_GLbulkRNAseq_Log.final.out"
+    ],
+    "Parameter Value[Aligned Sequence Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_align_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_align_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[RSeQC/MultiQC Reports]": [
+      "GLDS-48_rna_seq_geneBody_cov_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_geneBody_cov_multiqc_GLbulkRNAseq.html,GLDS-48_rna_seq_infer_exp_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_infer_exp_multiqc_GLbulkRNAseq.html,GLDS-48_rna_seq_read_dist_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_read_dist_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[Raw Counts Data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_GLbulkRNAseq.genes.results,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_GLbulkRNAseq.isoforms.results,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_GLbulkRNAseq_rRNArm.genes.results"
+    ],
+    "Parameter Value[Raw Counts Tables]": [
+      "GLDS-48_rna_seq_RSEM_Unnormalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_STAR_Unnormalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_RSEM_Unnormalized_Counts_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[Raw Counts Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_RSEM_count_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_RSEM_count_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[Normalized Counts Data]": [
+      "GLDS-48_rna_seq_Normalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_VST_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_Normalized_Counts_rRNArm_GLbulkRNAseq.csv,GLDS-48_rna_seq_VST_Counts_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[differential expression analysis data]": [
+      "GLDS-48_rna_seq_SampleTable_GLbulkRNAseq.csv,GLDS-48_rna_seq_contrasts_GLbulkRNAseq.csv,GLDS-48_rna_seq_differential_expression_GLbulkRNAseq.csv,GLDS-48_rna_seq_differential_expression_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[MS Run Group]": [
+      "Group C"
+    ],
+    "Parameter Value[Pool strategy]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Instrument]": [
+      "Orbitrap Fusion"
+    ],
+    "Parameter Value[Ion Source]": [
+      "electrospray ionization"
+    ],
+    "Parameter Value[Analyzer]": [
+      "Ion Trap & Orbitrap"
+    ],
+    "Parameter Value[library strategy]": [
+      "Bisulfite-Seq"
+    ],
+    "Parameter Value[Library Type]": [
+      "EpiGnome"
+    ],
+    "Parameter Value[Merged Sequence Data/MultiQC Reports]": [
+      "GLDS-48_Gwgbs_raw_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_raw_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[Read Count]": [
+      "247297668"
+    ],
+    "Parameter Value[Aligned Sequence Data/Alignment Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_bismark_bt2_qualimap.zip,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_bismark_bt2.nucleotide_stats.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_bismark_bt2_PE_report.txt"
+    ],
+    "Parameter Value[Aligned Sequence Data/Deduplication Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_bismark_bt2_pe.deduplication_report.txt"
+    ],
+    "Parameter Value[Methylation Call Data]": [
+      "GLDS-48_Gwgbs_CHG_context_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_CHH_context_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_CpG_context_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_bismark_bt2_pe.deduplicated.bedGraph.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_bismark_bt2_pe.deduplicated.bismark.cov.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_bismark_bt2_pe.deduplicated.CpG_report.txt.gz"
+    ],
+    "Parameter Value[Methylation Call Data/Methylation Call Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_bismark_bt2_pe.deduplicated.cytosine_context_summary.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_bismark_bt2_pe.deduplicated.M-bias.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_bismark_bt2_pe.deduplicated_splitting_report.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep1_M21_bismark_bt2_PE_report.html"
+    ],
+    "Parameter Value[Methylation Call Data/Methylation Call Reports/Methylation Call Summary Reports]": [
+      "GLDS-48_Gwgbs_bismark_summary_report_GLMethylSeq.html,GLDS-48_Gwgbs_bismark_summary_report_GLMethylSeq.txt"
+    ],
+    "Parameter Value[Methylation Call Data/MultiQC Reports]": [
+      "GLDS-48_Gwgbs_align_and_bismark_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_align_and_bismark_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[Differential Methylation Analysis Data]": [
+      "GLDS-48_Gwgbs_SampleTable_GLMethylSeq.csv,GLDS-48_Gwgbs_contrasts_GLMethylSeq.csv,GLDS-48_Gwgbs_differential_methylation_bases_GLMethylSeq.csv,GLDS-48_Gwgbs_differential_methylation_tiles_GLMethylSeq.csv"
+    ],
+    "Parameter Value[Preservation]": [
+      "liquid nitrogen"
+    ],
+    "Parameter Value[Fixation Chemical]": [
+      "paraffin (HE), OCT (ORO)"
+    ],
+    "Parameter Value[Section Thickness]": [
+      "4 (HE), 5 (ORO)"
+    ],
+    "Parameter Value[Image File]": [
+      "LSDS-2_Histology_M21-M22_ORO.ome.tiff, LSDS-2_Histology_M21-M22_ORO.jpg, LSDS-2_Histology_M21-M22_HE.ome.tiff, LSDS-2_Histology_M21-M22_HE.jpg"
+    ],
+    "Parameter Value[Submitted Results File]": [
+      "LSDS-2_Histology_OSD_48_Histology_Submitted_Results.xlsx"
+    ],
+    "Parameter Value[Transformed Reusable Files]": [
+      "LSDS-2_Histology_OSD_48_Histology_TRANSFORMED.csv"
+    ],
+    "Comment[Raw Data File name]": [
+      "150929_KChatacharty_NASA_GeneLab_GroupC_NASA_Flt_17_23_Fr*.raw"
+    ],
+    "Comment[Peptide Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Protein Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mgf]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mzid]": [
+      "Not Applicable"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_FLT_M22",
+    "sample_name": "Mmus_C57-6J_LVR_FLT_I_Rep2_M22",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Dna Methylation Profiling",
+      "Molecular Cellular Imaging",
+      "Protein Expression Profiling",
+      "RNA-Seq"
+    ],
+    "technology_types": [
+      "Mass Spectrometry",
+      "Microscopy",
+      "Rna Sequencing (Rna Seq)",
+      "Whole Genome Bisulfite Sequencing"
+    ],
+    "device_platforms": [
+      "Illumina",
+      "Orbitrap Fusion(Thermo Scientific)",
+      "pannoramic scan (3d histech)"
+    ],
+    "data_files": [
+      "GLDS-48_rna-seq_N-FLT-22_.tar.gz",
+      "GLDS-48_wgbs_N-FLT-22-wgbs.tar.gz",
+      "LSDS-2_Histology_HE.tar.gz",
+      "LSDS-2_Histology_ORO.tar.gz"
+    ],
+    "assay_names": [
+      "Histology",
+      "Whole Genome Bisulfite Sequencing",
+      "rna-seq"
+    ],
+    "ms_assay_names": [
+      "TMT 10-plex"
+    ],
+    "extract_names": [
+      "RR1_FLT_M22_LVR_DNA",
+      "RR1_FLT_M22_LVR_PRT",
+      "RR1_FLT_M22_LVR_RNA"
+    ],
+    "Parameter Value[QA Instrument]": [
+      "Agilent 2100 Bioanalyzer"
+    ],
+    "Parameter Value[QA Assay]": [
+      "RNA 6000 Nano Kit"
+    ],
+    "Parameter Value[QA Score]": [
+      "9.1"
+    ],
+    "Parameter Value[Library Selection]": [
+      "polyA enrichment",
+      "PCR"
+    ],
+    "Parameter Value[Library Layout]": [
+      "SINGLE",
+      "PAIRED"
+    ],
+    "Parameter Value[Stranded]": [
+      "STRANDED"
+    ],
+    "Parameter Value[Library QA Instrument]": [
+      "Agilent 2100 Bioanalyzer"
+    ],
+    "Parameter Value[Library Kit]": [
+      "Illumina TruSeq stranded RNA library prep kit"
+    ],
+    "Parameter Value[Sequencing Instrument]": [
+      "Illumina HiSeq 3000"
+    ],
+    "Parameter Value[Read Length]": [
+      "50"
+    ],
+    "Parameter Value[Read Depth]": [
+      "30340583"
+    ],
+    "Parameter Value[rRNA Contamination]": [
+      "4.92"
+    ],
+    "Parameter Value[Merged Sequence Data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_GLbulkRNAseq_raw.fastq.gz",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_R1_raw.fastq.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_R2_raw.fastq.gz"
+    ],
+    "Parameter Value[MultiQC File Names]": [
+      "GLDS-48_rna_seq_raw_multiqc_GLbulkRNAseq_data.zip, GLDS-48_rna_seq_raw_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[trimmed sequence data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_GLbulkRNAseq_trimmed.fastq.gz",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_R1_trimmed.fastq.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_R2_trimmed.fastq.gz"
+    ],
+    "Parameter Value[Trimmed Sequence Data/Trimming Reports]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_GLbulkRNAseq_trimming_report.txt",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_R1_raw.fastq.gz_trimming_report.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_R2_raw.fastq.gz_trimming_report.txt"
+    ],
+    "Parameter Value[Trimmed Sequence Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_trimmed_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_trimmed_multiqc_GLbulkRNAseq.html",
+      "GLDS-48_Gwgbs_trimmed_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_trimmed_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[aligned sequence data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_GLbulkRNAseq_Aligned.sortedByCoord_sorted.out.bam,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_GLbulkRNAseq_Aligned.sortedByCoord_sorted.out.bam.bai,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_GLbulkRNAseq_Aligned.toTranscriptome.out.bam,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_GLbulkRNAseq_SJ.out.tab",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_bismark_bt2_sorted.bam,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_bismark_bt2_sorted.bam.bai,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_bismark_bt2.deduplicated_sorted.bam,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_bismark_bt2.deduplicated_sorted.bam.bai"
+    ],
+    "Parameter Value[Aligned Sequence Data/Unmapped Reads]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_GLbulkRNAseq_unmapped.fastq.gz"
+    ],
+    "Parameter Value[Aligned Sequence Data/Alignment Logs]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_GLbulkRNAseq_Log.final.out"
+    ],
+    "Parameter Value[Aligned Sequence Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_align_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_align_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[RSeQC/MultiQC Reports]": [
+      "GLDS-48_rna_seq_geneBody_cov_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_geneBody_cov_multiqc_GLbulkRNAseq.html,GLDS-48_rna_seq_infer_exp_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_infer_exp_multiqc_GLbulkRNAseq.html,GLDS-48_rna_seq_read_dist_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_read_dist_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[Raw Counts Data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_GLbulkRNAseq.genes.results,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_GLbulkRNAseq.isoforms.results,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_GLbulkRNAseq_rRNArm.genes.results"
+    ],
+    "Parameter Value[Raw Counts Tables]": [
+      "GLDS-48_rna_seq_RSEM_Unnormalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_STAR_Unnormalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_RSEM_Unnormalized_Counts_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[Raw Counts Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_RSEM_count_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_RSEM_count_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[Normalized Counts Data]": [
+      "GLDS-48_rna_seq_Normalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_VST_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_Normalized_Counts_rRNArm_GLbulkRNAseq.csv,GLDS-48_rna_seq_VST_Counts_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[differential expression analysis data]": [
+      "GLDS-48_rna_seq_SampleTable_GLbulkRNAseq.csv,GLDS-48_rna_seq_contrasts_GLbulkRNAseq.csv,GLDS-48_rna_seq_differential_expression_GLbulkRNAseq.csv,GLDS-48_rna_seq_differential_expression_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[MS Run Group]": [
+      "Group C"
+    ],
+    "Parameter Value[Pool strategy]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Instrument]": [
+      "Orbitrap Fusion"
+    ],
+    "Parameter Value[Ion Source]": [
+      "electrospray ionization"
+    ],
+    "Parameter Value[Analyzer]": [
+      "Ion Trap & Orbitrap"
+    ],
+    "Parameter Value[library strategy]": [
+      "Bisulfite-Seq"
+    ],
+    "Parameter Value[Library Type]": [
+      "EpiGnome"
+    ],
+    "Parameter Value[Merged Sequence Data/MultiQC Reports]": [
+      "GLDS-48_Gwgbs_raw_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_raw_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[Read Count]": [
+      "184077548"
+    ],
+    "Parameter Value[Aligned Sequence Data/Alignment Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_bismark_bt2_qualimap.zip,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_bismark_bt2.nucleotide_stats.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_bismark_bt2_PE_report.txt"
+    ],
+    "Parameter Value[Aligned Sequence Data/Deduplication Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_bismark_bt2_pe.deduplication_report.txt"
+    ],
+    "Parameter Value[Methylation Call Data]": [
+      "GLDS-48_Gwgbs_CHG_context_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_CHH_context_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_CpG_context_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_bismark_bt2_pe.deduplicated.bedGraph.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_bismark_bt2_pe.deduplicated.bismark.cov.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_bismark_bt2_pe.deduplicated.CpG_report.txt.gz"
+    ],
+    "Parameter Value[Methylation Call Data/Methylation Call Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_bismark_bt2_pe.deduplicated.cytosine_context_summary.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_bismark_bt2_pe.deduplicated.M-bias.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_bismark_bt2_pe.deduplicated_splitting_report.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_I_Rep2_M22_bismark_bt2_PE_report.html"
+    ],
+    "Parameter Value[Methylation Call Data/Methylation Call Reports/Methylation Call Summary Reports]": [
+      "GLDS-48_Gwgbs_bismark_summary_report_GLMethylSeq.html,GLDS-48_Gwgbs_bismark_summary_report_GLMethylSeq.txt"
+    ],
+    "Parameter Value[Methylation Call Data/MultiQC Reports]": [
+      "GLDS-48_Gwgbs_align_and_bismark_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_align_and_bismark_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[Differential Methylation Analysis Data]": [
+      "GLDS-48_Gwgbs_SampleTable_GLMethylSeq.csv,GLDS-48_Gwgbs_contrasts_GLMethylSeq.csv,GLDS-48_Gwgbs_differential_methylation_bases_GLMethylSeq.csv,GLDS-48_Gwgbs_differential_methylation_tiles_GLMethylSeq.csv"
+    ],
+    "Parameter Value[Preservation]": [
+      "liquid nitrogen"
+    ],
+    "Parameter Value[Fixation Chemical]": [
+      "paraffin (HE), OCT (ORO)"
+    ],
+    "Parameter Value[Section Thickness]": [
+      "4 (HE), 5 (ORO)"
+    ],
+    "Parameter Value[Image File]": [
+      "LSDS-2_Histology_M21-M22_ORO.ome.tiff, LSDS-2_Histology_M21-M22_ORO.jpg, LSDS-2_Histology_M21-M22_HE.ome.tiff, LSDS-2_Histology_M21-M22_HE.jpg"
+    ],
+    "Parameter Value[Submitted Results File]": [
+      "LSDS-2_Histology_OSD_48_Histology_Submitted_Results.xlsx"
+    ],
+    "Parameter Value[Transformed Reusable Files]": [
+      "LSDS-2_Histology_OSD_48_Histology_TRANSFORMED.csv"
+    ],
+    "Comment[Raw Data File name]": [
+      "150929_KChatacharty_NASA_GeneLab_GroupC_NASA_Flt_17_23_Fr*.raw"
+    ],
+    "Comment[Peptide Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Protein Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mgf]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mzid]": [
+      "Not Applicable"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_FLT_M25",
+    "sample_name": "Mmus_C57-6J_LVR_FLT_C_Rep1_M25",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Dna Methylation Profiling",
+      "Molecular Cellular Imaging",
+      "Protein Expression Profiling",
+      "RNA-Seq",
+      "Rna Methylation Profiling"
+    ],
+    "technology_types": [
+      "Mass Spectrometry",
+      "Microscopy",
+      "Rna Sequencing (Rna Seq)",
+      "Whole Genome Bisulfite Sequencing",
+      "Whole Transcriptome Bisulfite Sequencing"
+    ],
+    "device_platforms": [
+      "Illumina",
+      "Orbitrap Fusion(Thermo Scientific)",
+      "pannoramic scan (3d histech)"
+    ],
+    "data_files": [
+      "GLDS-48_rna-seq_N-FLT-25.tar.gz",
+      "GLDS-48_wgbs_N-FLT-25-wgbs.tar.gz",
+      "GLDS-48_wtbs_N37_ACTTGA_L004_R1_001.fastq.gz",
+      "LSDS-2_Histology_HE.tar.gz",
+      "LSDS-2_Histology_ORO.tar.gz"
+    ],
+    "assay_names": [
+      "Histology",
+      "Whole Genome Bisulfite Sequencing",
+      "Whole Transcriptome Bisulfite Sequencing",
+      "rna-seq"
+    ],
+    "ms_assay_names": [
+      "TMT 10-plex"
+    ],
+    "extract_names": [
+      "RR1_FLT_M25_LVR_DNA",
+      "RR1_FLT_M25_LVR_PRT",
+      "RR1_FLT_M25_LVR_RNA"
+    ],
+    "Parameter Value[QA Instrument]": [
+      "Agilent 2100 Bioanalyzer",
+      "Bioanalyzer"
+    ],
+    "Parameter Value[QA Assay]": [
+      "RNA 6000 Nano Kit",
+      "Agilent RNA 6000 Pico/Nano Kit"
+    ],
+    "Parameter Value[QA Score]": [
+      "9.1"
+    ],
+    "Parameter Value[Library Selection]": [
+      "polyA enrichment",
+      "PCR"
+    ],
+    "Parameter Value[Library Layout]": [
+      "SINGLE",
+      "PAIRED"
+    ],
+    "Parameter Value[Stranded]": [
+      "STRANDED"
+    ],
+    "Parameter Value[Library QA Instrument]": [
+      "Agilent 2100 Bioanalyzer"
+    ],
+    "Parameter Value[Library Kit]": [
+      "Illumina TruSeq stranded RNA library prep kit"
+    ],
+    "Parameter Value[Sequencing Instrument]": [
+      "Illumina HiSeq 3000",
+      "Illumina HiSeq 2500"
+    ],
+    "Parameter Value[Read Length]": [
+      "50"
+    ],
+    "Parameter Value[Read Depth]": [
+      "37454380"
+    ],
+    "Parameter Value[rRNA Contamination]": [
+      "7.08"
+    ],
+    "Parameter Value[Merged Sequence Data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_GLbulkRNAseq_raw.fastq.gz",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_R1_raw.fastq.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_R2_raw.fastq.gz"
+    ],
+    "Parameter Value[MultiQC File Names]": [
+      "GLDS-48_rna_seq_raw_multiqc_GLbulkRNAseq_data.zip, GLDS-48_rna_seq_raw_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[trimmed sequence data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_GLbulkRNAseq_trimmed.fastq.gz",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_R1_trimmed.fastq.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_R2_trimmed.fastq.gz"
+    ],
+    "Parameter Value[Trimmed Sequence Data/Trimming Reports]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_GLbulkRNAseq_trimming_report.txt",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_R1_raw.fastq.gz_trimming_report.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_R2_raw.fastq.gz_trimming_report.txt"
+    ],
+    "Parameter Value[Trimmed Sequence Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_trimmed_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_trimmed_multiqc_GLbulkRNAseq.html",
+      "GLDS-48_Gwgbs_trimmed_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_trimmed_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[aligned sequence data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_GLbulkRNAseq_Aligned.sortedByCoord_sorted.out.bam,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_GLbulkRNAseq_Aligned.sortedByCoord_sorted.out.bam.bai,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_GLbulkRNAseq_Aligned.toTranscriptome.out.bam,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_GLbulkRNAseq_SJ.out.tab",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_bismark_bt2_sorted.bam,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_bismark_bt2_sorted.bam.bai,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_bismark_bt2.deduplicated_sorted.bam,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_bismark_bt2.deduplicated_sorted.bam.bai"
+    ],
+    "Parameter Value[Aligned Sequence Data/Unmapped Reads]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_GLbulkRNAseq_unmapped.fastq.gz"
+    ],
+    "Parameter Value[Aligned Sequence Data/Alignment Logs]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_GLbulkRNAseq_Log.final.out"
+    ],
+    "Parameter Value[Aligned Sequence Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_align_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_align_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[RSeQC/MultiQC Reports]": [
+      "GLDS-48_rna_seq_geneBody_cov_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_geneBody_cov_multiqc_GLbulkRNAseq.html,GLDS-48_rna_seq_infer_exp_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_infer_exp_multiqc_GLbulkRNAseq.html,GLDS-48_rna_seq_read_dist_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_read_dist_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[Raw Counts Data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_GLbulkRNAseq.genes.results,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_GLbulkRNAseq.isoforms.results,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_GLbulkRNAseq_rRNArm.genes.results"
+    ],
+    "Parameter Value[Raw Counts Tables]": [
+      "GLDS-48_rna_seq_RSEM_Unnormalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_STAR_Unnormalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_RSEM_Unnormalized_Counts_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[Raw Counts Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_RSEM_count_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_RSEM_count_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[Normalized Counts Data]": [
+      "GLDS-48_rna_seq_Normalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_VST_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_Normalized_Counts_rRNArm_GLbulkRNAseq.csv,GLDS-48_rna_seq_VST_Counts_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[differential expression analysis data]": [
+      "GLDS-48_rna_seq_SampleTable_GLbulkRNAseq.csv,GLDS-48_rna_seq_contrasts_GLbulkRNAseq.csv,GLDS-48_rna_seq_differential_expression_GLbulkRNAseq.csv,GLDS-48_rna_seq_differential_expression_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[MS Run Group]": [
+      "Group C"
+    ],
+    "Parameter Value[Pool strategy]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Instrument]": [
+      "Orbitrap Fusion"
+    ],
+    "Parameter Value[Ion Source]": [
+      "electrospray ionization"
+    ],
+    "Parameter Value[Analyzer]": [
+      "Ion Trap & Orbitrap"
+    ],
+    "Parameter Value[library strategy]": [
+      "Bisulfite-Seq"
+    ],
+    "Parameter Value[Library Type]": [
+      "EpiGnome",
+      "Not Available"
+    ],
+    "Parameter Value[Merged Sequence Data/MultiQC Reports]": [
+      "GLDS-48_Gwgbs_raw_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_raw_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[Read Count]": [
+      "189530188"
+    ],
+    "Parameter Value[Aligned Sequence Data/Alignment Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_bismark_bt2_qualimap.zip,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_bismark_bt2.nucleotide_stats.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_bismark_bt2_PE_report.txt"
+    ],
+    "Parameter Value[Aligned Sequence Data/Deduplication Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_bismark_bt2_pe.deduplication_report.txt"
+    ],
+    "Parameter Value[Methylation Call Data]": [
+      "GLDS-48_Gwgbs_CHG_context_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_CHH_context_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_CpG_context_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_bismark_bt2_pe.deduplicated.bedGraph.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_bismark_bt2_pe.deduplicated.bismark.cov.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_bismark_bt2_pe.deduplicated.CpG_report.txt.gz"
+    ],
+    "Parameter Value[Methylation Call Data/Methylation Call Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_bismark_bt2_pe.deduplicated.cytosine_context_summary.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_bismark_bt2_pe.deduplicated.M-bias.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_bismark_bt2_pe.deduplicated_splitting_report.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep1_M25_bismark_bt2_PE_report.html"
+    ],
+    "Parameter Value[Methylation Call Data/Methylation Call Reports/Methylation Call Summary Reports]": [
+      "GLDS-48_Gwgbs_bismark_summary_report_GLMethylSeq.html,GLDS-48_Gwgbs_bismark_summary_report_GLMethylSeq.txt"
+    ],
+    "Parameter Value[Methylation Call Data/MultiQC Reports]": [
+      "GLDS-48_Gwgbs_align_and_bismark_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_align_and_bismark_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[Differential Methylation Analysis Data]": [
+      "GLDS-48_Gwgbs_SampleTable_GLMethylSeq.csv,GLDS-48_Gwgbs_contrasts_GLMethylSeq.csv,GLDS-48_Gwgbs_differential_methylation_bases_GLMethylSeq.csv,GLDS-48_Gwgbs_differential_methylation_tiles_GLMethylSeq.csv"
+    ],
+    "Parameter Value[Extract Name]": [
+      "RR1_FLT_M25_LVR_RNA"
+    ],
+    "Parameter Value[Library Strategy]": [
+      "Bisulfite-Seq"
+    ],
+    "Parameter Value[Processed data files]": [
+      "GLDS-48_wtbs_Q160526C_Service_Report.pdf, GLDS-48_wtbs_LVR-Basic_Analysis.tar.gz, GLDS-48_wtbs_LVR-Advanced_Analysis.tar.gz"
+    ],
+    "Parameter Value[Preservation]": [
+      "liquid nitrogen"
+    ],
+    "Parameter Value[Fixation Chemical]": [
+      "paraffin (HE), OCT (ORO)"
+    ],
+    "Parameter Value[Section Thickness]": [
+      "4 (HE), 5 (ORO)"
+    ],
+    "Parameter Value[Image File]": [
+      "LSDS-2_Histology_M25-M26-M27_ORO.ome.tiff, LSDS-2_Histology_M25-M26-M27_ORO.jpg, LSDS-2_Histology_M25-M26-M27_HE.ome.tiff, LSDS-2_Histology_M25-M26-M27_HE.jpg"
+    ],
+    "Parameter Value[Submitted Results File]": [
+      "LSDS-2_Histology_OSD_48_Histology_Submitted_Results.xlsx"
+    ],
+    "Parameter Value[Transformed Reusable Files]": [
+      "LSDS-2_Histology_OSD_48_Histology_TRANSFORMED.csv"
+    ],
+    "Comment[Raw Data File name]": [
+      "150929_KChatacharty_NASA_GeneLab_GroupC_NASA_Flt_17_23_Fr*.raw"
+    ],
+    "Comment[Peptide Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Protein Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mgf]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mzid]": [
+      "Not Applicable"
+    ],
+    "Comment[Extraction Method]": [
+      "AllPrep DNA/RNA Mini Kit"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_FLT_M26",
+    "sample_name": "Mmus_C57-6J_LVR_FLT_C_Rep2_M26",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Dna Methylation Profiling",
+      "Molecular Cellular Imaging",
+      "Protein Expression Profiling",
+      "RNA-Seq",
+      "Rna Methylation Profiling"
+    ],
+    "technology_types": [
+      "Mass Spectrometry",
+      "Microscopy",
+      "Rna Sequencing (Rna Seq)",
+      "Whole Genome Bisulfite Sequencing",
+      "Whole Transcriptome Bisulfite Sequencing"
+    ],
+    "device_platforms": [
+      "Illumina",
+      "Orbitrap Fusion(Thermo Scientific)",
+      "pannoramic scan (3d histech)"
+    ],
+    "data_files": [
+      "GLDS-48_rna-seq_N-FLT-26.tar.gz",
+      "GLDS-48_wgbs_N-FLT-26-wgbs.tar.gz",
+      "GLDS-48_wtbs_N38_S37_R1_001.fastq.gz",
+      "LSDS-2_Histology_HE.tar.gz",
+      "LSDS-2_Histology_ORO.tar.gz"
+    ],
+    "assay_names": [
+      "Histology",
+      "Whole Genome Bisulfite Sequencing",
+      "Whole Transcriptome Bisulfite Sequencing",
+      "rna-seq"
+    ],
+    "ms_assay_names": [
+      "TMT 10-plex"
+    ],
+    "extract_names": [
+      "RR1_FLT_M26_LVR_DNA",
+      "RR1_FLT_M26_LVR_PRT",
+      "RR1_FLT_M26_LVR_RNA"
+    ],
+    "Parameter Value[QA Instrument]": [
+      "Agilent 2100 Bioanalyzer",
+      "Bioanalyzer"
+    ],
+    "Parameter Value[QA Assay]": [
+      "RNA 6000 Nano Kit",
+      "Agilent RNA 6000 Pico/Nano Kit"
+    ],
+    "Parameter Value[QA Score]": [
+      "8.1"
+    ],
+    "Parameter Value[Library Selection]": [
+      "polyA enrichment",
+      "PCR"
+    ],
+    "Parameter Value[Library Layout]": [
+      "SINGLE",
+      "PAIRED"
+    ],
+    "Parameter Value[Stranded]": [
+      "STRANDED"
+    ],
+    "Parameter Value[Library QA Instrument]": [
+      "Agilent 2100 Bioanalyzer"
+    ],
+    "Parameter Value[Library Kit]": [
+      "Illumina TruSeq stranded RNA library prep kit"
+    ],
+    "Parameter Value[Sequencing Instrument]": [
+      "Illumina HiSeq 3000",
+      "Illumina HiSeq 2500"
+    ],
+    "Parameter Value[Read Length]": [
+      "50"
+    ],
+    "Parameter Value[Read Depth]": [
+      "39990308"
+    ],
+    "Parameter Value[rRNA Contamination]": [
+      "13.27"
+    ],
+    "Parameter Value[Merged Sequence Data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_GLbulkRNAseq_raw.fastq.gz",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_R1_raw.fastq.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_R2_raw.fastq.gz"
+    ],
+    "Parameter Value[MultiQC File Names]": [
+      "GLDS-48_rna_seq_raw_multiqc_GLbulkRNAseq_data.zip, GLDS-48_rna_seq_raw_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[trimmed sequence data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_GLbulkRNAseq_trimmed.fastq.gz",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_R1_trimmed.fastq.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_R2_trimmed.fastq.gz"
+    ],
+    "Parameter Value[Trimmed Sequence Data/Trimming Reports]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_GLbulkRNAseq_trimming_report.txt",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_R1_raw.fastq.gz_trimming_report.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_R2_raw.fastq.gz_trimming_report.txt"
+    ],
+    "Parameter Value[Trimmed Sequence Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_trimmed_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_trimmed_multiqc_GLbulkRNAseq.html",
+      "GLDS-48_Gwgbs_trimmed_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_trimmed_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[aligned sequence data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_GLbulkRNAseq_Aligned.sortedByCoord_sorted.out.bam,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_GLbulkRNAseq_Aligned.sortedByCoord_sorted.out.bam.bai,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_GLbulkRNAseq_Aligned.toTranscriptome.out.bam,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_GLbulkRNAseq_SJ.out.tab",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_bismark_bt2_sorted.bam,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_bismark_bt2_sorted.bam.bai,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_bismark_bt2.deduplicated_sorted.bam,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_bismark_bt2.deduplicated_sorted.bam.bai"
+    ],
+    "Parameter Value[Aligned Sequence Data/Unmapped Reads]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_GLbulkRNAseq_unmapped.fastq.gz"
+    ],
+    "Parameter Value[Aligned Sequence Data/Alignment Logs]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_GLbulkRNAseq_Log.final.out"
+    ],
+    "Parameter Value[Aligned Sequence Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_align_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_align_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[RSeQC/MultiQC Reports]": [
+      "GLDS-48_rna_seq_geneBody_cov_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_geneBody_cov_multiqc_GLbulkRNAseq.html,GLDS-48_rna_seq_infer_exp_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_infer_exp_multiqc_GLbulkRNAseq.html,GLDS-48_rna_seq_read_dist_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_read_dist_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[Raw Counts Data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_GLbulkRNAseq.genes.results,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_GLbulkRNAseq.isoforms.results,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_GLbulkRNAseq_rRNArm.genes.results"
+    ],
+    "Parameter Value[Raw Counts Tables]": [
+      "GLDS-48_rna_seq_RSEM_Unnormalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_STAR_Unnormalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_RSEM_Unnormalized_Counts_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[Raw Counts Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_RSEM_count_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_RSEM_count_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[Normalized Counts Data]": [
+      "GLDS-48_rna_seq_Normalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_VST_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_Normalized_Counts_rRNArm_GLbulkRNAseq.csv,GLDS-48_rna_seq_VST_Counts_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[differential expression analysis data]": [
+      "GLDS-48_rna_seq_SampleTable_GLbulkRNAseq.csv,GLDS-48_rna_seq_contrasts_GLbulkRNAseq.csv,GLDS-48_rna_seq_differential_expression_GLbulkRNAseq.csv,GLDS-48_rna_seq_differential_expression_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[MS Run Group]": [
+      "Group C"
+    ],
+    "Parameter Value[Pool strategy]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Instrument]": [
+      "Orbitrap Fusion"
+    ],
+    "Parameter Value[Ion Source]": [
+      "electrospray ionization"
+    ],
+    "Parameter Value[Analyzer]": [
+      "Ion Trap & Orbitrap"
+    ],
+    "Parameter Value[library strategy]": [
+      "Bisulfite-Seq"
+    ],
+    "Parameter Value[Library Type]": [
+      "EpiGnome",
+      "Not Available"
+    ],
+    "Parameter Value[Merged Sequence Data/MultiQC Reports]": [
+      "GLDS-48_Gwgbs_raw_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_raw_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[Read Count]": [
+      "183681332"
+    ],
+    "Parameter Value[Aligned Sequence Data/Alignment Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_bismark_bt2_qualimap.zip,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_bismark_bt2.nucleotide_stats.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_bismark_bt2_PE_report.txt"
+    ],
+    "Parameter Value[Aligned Sequence Data/Deduplication Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_bismark_bt2_pe.deduplication_report.txt"
+    ],
+    "Parameter Value[Methylation Call Data]": [
+      "GLDS-48_Gwgbs_CHG_context_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_CHH_context_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_CpG_context_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_bismark_bt2_pe.deduplicated.bedGraph.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_bismark_bt2_pe.deduplicated.bismark.cov.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_bismark_bt2_pe.deduplicated.CpG_report.txt.gz"
+    ],
+    "Parameter Value[Methylation Call Data/Methylation Call Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_bismark_bt2_pe.deduplicated.cytosine_context_summary.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_bismark_bt2_pe.deduplicated.M-bias.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_bismark_bt2_pe.deduplicated_splitting_report.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep2_M26_bismark_bt2_PE_report.html"
+    ],
+    "Parameter Value[Methylation Call Data/Methylation Call Reports/Methylation Call Summary Reports]": [
+      "GLDS-48_Gwgbs_bismark_summary_report_GLMethylSeq.html,GLDS-48_Gwgbs_bismark_summary_report_GLMethylSeq.txt"
+    ],
+    "Parameter Value[Methylation Call Data/MultiQC Reports]": [
+      "GLDS-48_Gwgbs_align_and_bismark_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_align_and_bismark_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[Differential Methylation Analysis Data]": [
+      "GLDS-48_Gwgbs_SampleTable_GLMethylSeq.csv,GLDS-48_Gwgbs_contrasts_GLMethylSeq.csv,GLDS-48_Gwgbs_differential_methylation_bases_GLMethylSeq.csv,GLDS-48_Gwgbs_differential_methylation_tiles_GLMethylSeq.csv"
+    ],
+    "Parameter Value[Extract Name]": [
+      "RR1_FLT_M26_LVR_RNA"
+    ],
+    "Parameter Value[Library Strategy]": [
+      "Bisulfite-Seq"
+    ],
+    "Parameter Value[Processed data files]": [
+      "GLDS-48_wtbs_Q160526C_Service_Report.pdf, GLDS-48_wtbs_LVR-Basic_Analysis.tar.gz, GLDS-48_wtbs_LVR-Advanced_Analysis.tar.gz"
+    ],
+    "Parameter Value[Preservation]": [
+      "liquid nitrogen"
+    ],
+    "Parameter Value[Fixation Chemical]": [
+      "paraffin (HE), OCT (ORO)"
+    ],
+    "Parameter Value[Section Thickness]": [
+      "4 (HE), 5 (ORO)"
+    ],
+    "Parameter Value[Image File]": [
+      "LSDS-2_Histology_M25-M26-M27_ORO.ome.tiff, LSDS-2_Histology_M25-M26-M27_ORO.jpg, LSDS-2_Histology_M25-M26-M27_HE.ome.tiff, LSDS-2_Histology_M25-M26-M27_HE.jpg"
+    ],
+    "Parameter Value[Submitted Results File]": [
+      "LSDS-2_Histology_OSD_48_Histology_Submitted_Results.xlsx"
+    ],
+    "Parameter Value[Transformed Reusable Files]": [
+      "LSDS-2_Histology_OSD_48_Histology_TRANSFORMED.csv"
+    ],
+    "Comment[Raw Data File name]": [
+      "150929_KChatacharty_NASA_GeneLab_GroupC_NASA_Flt_17_23_Fr*.raw"
+    ],
+    "Comment[Peptide Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Protein Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mgf]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mzid]": [
+      "Not Applicable"
+    ],
+    "Comment[Extraction Method]": [
+      "AllPrep DNA/RNA Mini Kit"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_FLT_M27",
+    "sample_name": "Mmus_C57-6J_LVR_FLT_C_Rep3_M27",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Dna Methylation Profiling",
+      "Molecular Cellular Imaging",
+      "Protein Expression Profiling",
+      "RNA-Seq",
+      "Rna Methylation Profiling"
+    ],
+    "technology_types": [
+      "Mass Spectrometry",
+      "Microscopy",
+      "Rna Sequencing (Rna Seq)",
+      "Whole Genome Bisulfite Sequencing",
+      "Whole Transcriptome Bisulfite Sequencing"
+    ],
+    "device_platforms": [
+      "Illumina",
+      "Orbitrap Fusion(Thermo Scientific)",
+      "pannoramic scan (3d histech)"
+    ],
+    "data_files": [
+      "GLDS-48_rna-seq_N-FLT-27.tar.gz",
+      "GLDS-48_wgbs_N-FLT-27-wgbs.tar.gz",
+      "GLDS-48_wtbs_N39_S38_R1_001.fastq.gz",
+      "LSDS-2_Histology_HE.tar.gz",
+      "LSDS-2_Histology_ORO.tar.gz"
+    ],
+    "assay_names": [
+      "Histology",
+      "Whole Genome Bisulfite Sequencing",
+      "Whole Transcriptome Bisulfite Sequencing",
+      "rna-seq"
+    ],
+    "ms_assay_names": [
+      "TMT 10-plex"
+    ],
+    "extract_names": [
+      "RR1_FLT_M27_LVR_DNA",
+      "RR1_FLT_M27_LVR_PRT",
+      "RR1_FLT_M27_LVR_RNA"
+    ],
+    "Parameter Value[QA Instrument]": [
+      "Agilent 2100 Bioanalyzer",
+      "Bioanalyzer"
+    ],
+    "Parameter Value[QA Assay]": [
+      "RNA 6000 Nano Kit",
+      "Agilent RNA 6000 Pico/Nano Kit"
+    ],
+    "Parameter Value[QA Score]": [
+      "9.1"
+    ],
+    "Parameter Value[Library Selection]": [
+      "polyA enrichment",
+      "PCR"
+    ],
+    "Parameter Value[Library Layout]": [
+      "SINGLE",
+      "PAIRED"
+    ],
+    "Parameter Value[Stranded]": [
+      "STRANDED"
+    ],
+    "Parameter Value[Library QA Instrument]": [
+      "Agilent 2100 Bioanalyzer"
+    ],
+    "Parameter Value[Library Kit]": [
+      "Illumina TruSeq stranded RNA library prep kit"
+    ],
+    "Parameter Value[Sequencing Instrument]": [
+      "Illumina HiSeq 3000",
+      "Illumina HiSeq 2500"
+    ],
+    "Parameter Value[Read Length]": [
+      "50"
+    ],
+    "Parameter Value[Read Depth]": [
+      "36455172"
+    ],
+    "Parameter Value[rRNA Contamination]": [
+      "8.01"
+    ],
+    "Parameter Value[Merged Sequence Data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_GLbulkRNAseq_raw.fastq.gz",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_R1_raw.fastq.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_R2_raw.fastq.gz"
+    ],
+    "Parameter Value[MultiQC File Names]": [
+      "GLDS-48_rna_seq_raw_multiqc_GLbulkRNAseq_data.zip, GLDS-48_rna_seq_raw_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[trimmed sequence data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_GLbulkRNAseq_trimmed.fastq.gz",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_R1_trimmed.fastq.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_R2_trimmed.fastq.gz"
+    ],
+    "Parameter Value[Trimmed Sequence Data/Trimming Reports]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_GLbulkRNAseq_trimming_report.txt",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_R1_raw.fastq.gz_trimming_report.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_R2_raw.fastq.gz_trimming_report.txt"
+    ],
+    "Parameter Value[Trimmed Sequence Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_trimmed_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_trimmed_multiqc_GLbulkRNAseq.html",
+      "GLDS-48_Gwgbs_trimmed_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_trimmed_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[aligned sequence data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_GLbulkRNAseq_Aligned.sortedByCoord_sorted.out.bam,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_GLbulkRNAseq_Aligned.sortedByCoord_sorted.out.bam.bai,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_GLbulkRNAseq_Aligned.toTranscriptome.out.bam,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_GLbulkRNAseq_SJ.out.tab",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_bismark_bt2_sorted.bam,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_bismark_bt2_sorted.bam.bai,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_bismark_bt2.deduplicated_sorted.bam,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_bismark_bt2.deduplicated_sorted.bam.bai"
+    ],
+    "Parameter Value[Aligned Sequence Data/Unmapped Reads]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_GLbulkRNAseq_unmapped.fastq.gz"
+    ],
+    "Parameter Value[Aligned Sequence Data/Alignment Logs]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_GLbulkRNAseq_Log.final.out"
+    ],
+    "Parameter Value[Aligned Sequence Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_align_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_align_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[RSeQC/MultiQC Reports]": [
+      "GLDS-48_rna_seq_geneBody_cov_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_geneBody_cov_multiqc_GLbulkRNAseq.html,GLDS-48_rna_seq_infer_exp_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_infer_exp_multiqc_GLbulkRNAseq.html,GLDS-48_rna_seq_read_dist_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_read_dist_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[Raw Counts Data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_GLbulkRNAseq.genes.results,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_GLbulkRNAseq.isoforms.results,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_GLbulkRNAseq_rRNArm.genes.results"
+    ],
+    "Parameter Value[Raw Counts Tables]": [
+      "GLDS-48_rna_seq_RSEM_Unnormalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_STAR_Unnormalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_RSEM_Unnormalized_Counts_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[Raw Counts Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_RSEM_count_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_RSEM_count_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[Normalized Counts Data]": [
+      "GLDS-48_rna_seq_Normalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_VST_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_Normalized_Counts_rRNArm_GLbulkRNAseq.csv,GLDS-48_rna_seq_VST_Counts_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[differential expression analysis data]": [
+      "GLDS-48_rna_seq_SampleTable_GLbulkRNAseq.csv,GLDS-48_rna_seq_contrasts_GLbulkRNAseq.csv,GLDS-48_rna_seq_differential_expression_GLbulkRNAseq.csv,GLDS-48_rna_seq_differential_expression_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[MS Run Group]": [
+      "Group C"
+    ],
+    "Parameter Value[Pool strategy]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Instrument]": [
+      "Orbitrap Fusion"
+    ],
+    "Parameter Value[Ion Source]": [
+      "electrospray ionization"
+    ],
+    "Parameter Value[Analyzer]": [
+      "Ion Trap & Orbitrap"
+    ],
+    "Parameter Value[library strategy]": [
+      "Bisulfite-Seq"
+    ],
+    "Parameter Value[Library Type]": [
+      "EpiGnome",
+      "Not Available"
+    ],
+    "Parameter Value[Merged Sequence Data/MultiQC Reports]": [
+      "GLDS-48_Gwgbs_raw_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_raw_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[Read Count]": [
+      "222278089"
+    ],
+    "Parameter Value[Aligned Sequence Data/Alignment Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_bismark_bt2_qualimap.zip,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_bismark_bt2.nucleotide_stats.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_bismark_bt2_PE_report.txt"
+    ],
+    "Parameter Value[Aligned Sequence Data/Deduplication Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_bismark_bt2_pe.deduplication_report.txt"
+    ],
+    "Parameter Value[Methylation Call Data]": [
+      "GLDS-48_Gwgbs_CHG_context_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_CHH_context_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_CpG_context_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_bismark_bt2_pe.deduplicated.bedGraph.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_bismark_bt2_pe.deduplicated.bismark.cov.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_bismark_bt2_pe.deduplicated.CpG_report.txt.gz"
+    ],
+    "Parameter Value[Methylation Call Data/Methylation Call Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_bismark_bt2_pe.deduplicated.cytosine_context_summary.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_bismark_bt2_pe.deduplicated.M-bias.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_bismark_bt2_pe.deduplicated_splitting_report.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep3_M27_bismark_bt2_PE_report.html"
+    ],
+    "Parameter Value[Methylation Call Data/Methylation Call Reports/Methylation Call Summary Reports]": [
+      "GLDS-48_Gwgbs_bismark_summary_report_GLMethylSeq.html,GLDS-48_Gwgbs_bismark_summary_report_GLMethylSeq.txt"
+    ],
+    "Parameter Value[Methylation Call Data/MultiQC Reports]": [
+      "GLDS-48_Gwgbs_align_and_bismark_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_align_and_bismark_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[Differential Methylation Analysis Data]": [
+      "GLDS-48_Gwgbs_SampleTable_GLMethylSeq.csv,GLDS-48_Gwgbs_contrasts_GLMethylSeq.csv,GLDS-48_Gwgbs_differential_methylation_bases_GLMethylSeq.csv,GLDS-48_Gwgbs_differential_methylation_tiles_GLMethylSeq.csv"
+    ],
+    "Parameter Value[Extract Name]": [
+      "RR1_FLT_M27_LVR_RNA"
+    ],
+    "Parameter Value[Library Strategy]": [
+      "Bisulfite-Seq"
+    ],
+    "Parameter Value[Processed data files]": [
+      "GLDS-48_wtbs_Q160526C_Service_Report.pdf, GLDS-48_wtbs_LVR-Basic_Analysis.tar.gz, GLDS-48_wtbs_LVR-Advanced_Analysis.tar.gz"
+    ],
+    "Parameter Value[Preservation]": [
+      "liquid nitrogen"
+    ],
+    "Parameter Value[Fixation Chemical]": [
+      "paraffin (HE), OCT (ORO)"
+    ],
+    "Parameter Value[Section Thickness]": [
+      "4 (HE), 5 (ORO)"
+    ],
+    "Parameter Value[Image File]": [
+      "LSDS-2_Histology_M25-M26-M27_ORO.ome.tiff, LSDS-2_Histology_M25-M26-M27_ORO.jpg, LSDS-2_Histology_M25-M26-M27_HE.ome.tiff, LSDS-2_Histology_M25-M26-M27_HE.jpg"
+    ],
+    "Parameter Value[Submitted Results File]": [
+      "LSDS-2_Histology_OSD_48_Histology_Submitted_Results.xlsx"
+    ],
+    "Parameter Value[Transformed Reusable Files]": [
+      "LSDS-2_Histology_OSD_48_Histology_TRANSFORMED.csv"
+    ],
+    "Comment[Raw Data File name]": [
+      "150929_KChatacharty_NASA_GeneLab_GroupC_NASA_Flt_17_23_Fr*.raw"
+    ],
+    "Comment[Peptide Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Protein Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mgf]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mzid]": [
+      "Not Applicable"
+    ],
+    "Comment[Extraction Method]": [
+      "AllPrep DNA/RNA Mini Kit"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_FLT_M28",
+    "sample_name": "Mmus_C57-6J_LVR_FLT_C_Rep4_M28",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Dna Methylation Profiling",
+      "Molecular Cellular Imaging",
+      "Protein Expression Profiling",
+      "RNA-Seq",
+      "Rna Methylation Profiling"
+    ],
+    "technology_types": [
+      "Mass Spectrometry",
+      "Microscopy",
+      "Rna Sequencing (Rna Seq)",
+      "Whole Genome Bisulfite Sequencing",
+      "Whole Transcriptome Bisulfite Sequencing"
+    ],
+    "device_platforms": [
+      "Illumina",
+      "Orbitrap Fusion(Thermo Scientific)",
+      "pannoramic scan (3d histech)"
+    ],
+    "data_files": [
+      "GLDS-48_rna-seq_N-FLT-28.tar.gz",
+      "GLDS-48_wgbs_N-FLT-28-wgbs.tar.gz",
+      "GLDS-48_wtbs_N40_S39_R1_001.fastq.gz",
+      "LSDS-2_Histology_HE.tar.gz",
+      "LSDS-2_Histology_ORO.tar.gz"
+    ],
+    "assay_names": [
+      "Histology",
+      "Whole Genome Bisulfite Sequencing",
+      "Whole Transcriptome Bisulfite Sequencing",
+      "rna-seq"
+    ],
+    "ms_assay_names": [
+      "TMT 10-plex"
+    ],
+    "extract_names": [
+      "RR1_FLT_M28_LVR_DNA",
+      "RR1_FLT_M28_LVR_PRT",
+      "RR1_FLT_M28_LVR_RNA"
+    ],
+    "Parameter Value[QA Instrument]": [
+      "Agilent 2100 Bioanalyzer",
+      "Bioanalyzer"
+    ],
+    "Parameter Value[QA Assay]": [
+      "RNA 6000 Nano Kit",
+      "Agilent RNA 6000 Pico/Nano Kit"
+    ],
+    "Parameter Value[QA Score]": [
+      "7.7"
+    ],
+    "Parameter Value[Library Selection]": [
+      "polyA enrichment",
+      "PCR"
+    ],
+    "Parameter Value[Library Layout]": [
+      "SINGLE",
+      "PAIRED"
+    ],
+    "Parameter Value[Stranded]": [
+      "STRANDED"
+    ],
+    "Parameter Value[Library QA Instrument]": [
+      "Agilent 2100 Bioanalyzer"
+    ],
+    "Parameter Value[Library Kit]": [
+      "Illumina TruSeq stranded RNA library prep kit"
+    ],
+    "Parameter Value[Sequencing Instrument]": [
+      "Illumina HiSeq 3000",
+      "Illumina HiSeq 2500"
+    ],
+    "Parameter Value[Read Length]": [
+      "50"
+    ],
+    "Parameter Value[Read Depth]": [
+      "35981019"
+    ],
+    "Parameter Value[rRNA Contamination]": [
+      "10.11"
+    ],
+    "Parameter Value[Merged Sequence Data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_GLbulkRNAseq_raw.fastq.gz",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_R1_raw.fastq.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_R2_raw.fastq.gz"
+    ],
+    "Parameter Value[MultiQC File Names]": [
+      "GLDS-48_rna_seq_raw_multiqc_GLbulkRNAseq_data.zip, GLDS-48_rna_seq_raw_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[trimmed sequence data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_GLbulkRNAseq_trimmed.fastq.gz",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_R1_trimmed.fastq.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_R2_trimmed.fastq.gz"
+    ],
+    "Parameter Value[Trimmed Sequence Data/Trimming Reports]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_GLbulkRNAseq_trimming_report.txt",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_R1_raw.fastq.gz_trimming_report.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_R2_raw.fastq.gz_trimming_report.txt"
+    ],
+    "Parameter Value[Trimmed Sequence Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_trimmed_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_trimmed_multiqc_GLbulkRNAseq.html",
+      "GLDS-48_Gwgbs_trimmed_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_trimmed_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[aligned sequence data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_GLbulkRNAseq_Aligned.sortedByCoord_sorted.out.bam,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_GLbulkRNAseq_Aligned.sortedByCoord_sorted.out.bam.bai,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_GLbulkRNAseq_Aligned.toTranscriptome.out.bam,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_GLbulkRNAseq_SJ.out.tab",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_bismark_bt2_sorted.bam,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_bismark_bt2_sorted.bam.bai,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_bismark_bt2.deduplicated_sorted.bam,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_bismark_bt2.deduplicated_sorted.bam.bai"
+    ],
+    "Parameter Value[Aligned Sequence Data/Unmapped Reads]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_GLbulkRNAseq_unmapped.fastq.gz"
+    ],
+    "Parameter Value[Aligned Sequence Data/Alignment Logs]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_GLbulkRNAseq_Log.final.out"
+    ],
+    "Parameter Value[Aligned Sequence Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_align_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_align_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[RSeQC/MultiQC Reports]": [
+      "GLDS-48_rna_seq_geneBody_cov_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_geneBody_cov_multiqc_GLbulkRNAseq.html,GLDS-48_rna_seq_infer_exp_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_infer_exp_multiqc_GLbulkRNAseq.html,GLDS-48_rna_seq_read_dist_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_read_dist_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[Raw Counts Data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_GLbulkRNAseq.genes.results,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_GLbulkRNAseq.isoforms.results,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_GLbulkRNAseq_rRNArm.genes.results"
+    ],
+    "Parameter Value[Raw Counts Tables]": [
+      "GLDS-48_rna_seq_RSEM_Unnormalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_STAR_Unnormalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_RSEM_Unnormalized_Counts_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[Raw Counts Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_RSEM_count_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_RSEM_count_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[Normalized Counts Data]": [
+      "GLDS-48_rna_seq_Normalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_VST_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_Normalized_Counts_rRNArm_GLbulkRNAseq.csv,GLDS-48_rna_seq_VST_Counts_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[differential expression analysis data]": [
+      "GLDS-48_rna_seq_SampleTable_GLbulkRNAseq.csv,GLDS-48_rna_seq_contrasts_GLbulkRNAseq.csv,GLDS-48_rna_seq_differential_expression_GLbulkRNAseq.csv,GLDS-48_rna_seq_differential_expression_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[MS Run Group]": [
+      "Group C"
+    ],
+    "Parameter Value[Pool strategy]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Instrument]": [
+      "Orbitrap Fusion"
+    ],
+    "Parameter Value[Ion Source]": [
+      "electrospray ionization"
+    ],
+    "Parameter Value[Analyzer]": [
+      "Ion Trap & Orbitrap"
+    ],
+    "Parameter Value[library strategy]": [
+      "Bisulfite-Seq"
+    ],
+    "Parameter Value[Library Type]": [
+      "EpiGnome",
+      "Not Available"
+    ],
+    "Parameter Value[Merged Sequence Data/MultiQC Reports]": [
+      "GLDS-48_Gwgbs_raw_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_raw_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[Read Count]": [
+      "184336092"
+    ],
+    "Parameter Value[Aligned Sequence Data/Alignment Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_bismark_bt2_qualimap.zip,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_bismark_bt2.nucleotide_stats.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_bismark_bt2_PE_report.txt"
+    ],
+    "Parameter Value[Aligned Sequence Data/Deduplication Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_bismark_bt2_pe.deduplication_report.txt"
+    ],
+    "Parameter Value[Methylation Call Data]": [
+      "GLDS-48_Gwgbs_CHG_context_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_CHH_context_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_CpG_context_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_bismark_bt2_pe.deduplicated.bedGraph.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_bismark_bt2_pe.deduplicated.bismark.cov.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_bismark_bt2_pe.deduplicated.CpG_report.txt.gz"
+    ],
+    "Parameter Value[Methylation Call Data/Methylation Call Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_bismark_bt2_pe.deduplicated.cytosine_context_summary.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_bismark_bt2_pe.deduplicated.M-bias.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_bismark_bt2_pe.deduplicated_splitting_report.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep4_M28_bismark_bt2_PE_report.html"
+    ],
+    "Parameter Value[Methylation Call Data/Methylation Call Reports/Methylation Call Summary Reports]": [
+      "GLDS-48_Gwgbs_bismark_summary_report_GLMethylSeq.html,GLDS-48_Gwgbs_bismark_summary_report_GLMethylSeq.txt"
+    ],
+    "Parameter Value[Methylation Call Data/MultiQC Reports]": [
+      "GLDS-48_Gwgbs_align_and_bismark_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_align_and_bismark_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[Differential Methylation Analysis Data]": [
+      "GLDS-48_Gwgbs_SampleTable_GLMethylSeq.csv,GLDS-48_Gwgbs_contrasts_GLMethylSeq.csv,GLDS-48_Gwgbs_differential_methylation_bases_GLMethylSeq.csv,GLDS-48_Gwgbs_differential_methylation_tiles_GLMethylSeq.csv"
+    ],
+    "Parameter Value[Extract Name]": [
+      "RR1_FLT_M28_LVR_RNA"
+    ],
+    "Parameter Value[Library Strategy]": [
+      "Bisulfite-Seq"
+    ],
+    "Parameter Value[Processed data files]": [
+      "GLDS-48_wtbs_Q160526C_Service_Report.pdf, GLDS-48_wtbs_LVR-Basic_Analysis.tar.gz, GLDS-48_wtbs_LVR-Advanced_Analysis.tar.gz"
+    ],
+    "Parameter Value[Preservation]": [
+      "liquid nitrogen"
+    ],
+    "Parameter Value[Fixation Chemical]": [
+      "paraffin (HE), OCT (ORO)"
+    ],
+    "Parameter Value[Section Thickness]": [
+      "4 (HE), 5 (ORO)"
+    ],
+    "Parameter Value[Image File]": [
+      "LSDS-2_Histology_M28-M30_ORO.ome.tiff, LSDS-2_Histology_M28-M30_ORO.jpg, LSDS-2_Histology_M28-M30_HE.ome.tiff, LSDS-2_Histology_M28-M30_HE.jpg"
+    ],
+    "Parameter Value[Submitted Results File]": [
+      "LSDS-2_Histology_OSD_48_Histology_Submitted_Results.xlsx"
+    ],
+    "Parameter Value[Transformed Reusable Files]": [
+      "LSDS-2_Histology_OSD_48_Histology_TRANSFORMED.csv"
+    ],
+    "Comment[Raw Data File name]": [
+      "150929_KChatacharty_NASA_GeneLab_GroupC_NASA_Flt_17_23_Fr*.raw"
+    ],
+    "Comment[Peptide Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Protein Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mgf]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mzid]": [
+      "Not Applicable"
+    ],
+    "Comment[Extraction Method]": [
+      "AllPrep DNA/RNA Mini Kit"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_FLT_M29",
+    "sample_name": "Mmus_C57-6J_LVR_FLT_C_Rep6_M29",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Rna Methylation Profiling"
+    ],
+    "technology_types": [
+      "Whole Transcriptome Bisulfite Sequencing"
+    ],
+    "device_platforms": [
+      "Illumina"
+    ],
+    "data_files": [
+      "GLDS-48_wtbs_N41_CGATGT_L005_R1_001.fastq.gz"
+    ],
+    "assay_names": [
+      "Whole Transcriptome Bisulfite Sequencing"
+    ],
+    "ms_assay_names": [],
+    "extract_names": [],
+    "Parameter Value[QA Instrument]": [
+      "Bioanalyzer"
+    ],
+    "Parameter Value[QA Assay]": [
+      "Agilent RNA 6000 Pico/Nano Kit"
+    ],
+    "Parameter Value[QA Score]": [
+      "7.8"
+    ],
+    "Parameter Value[Extract Name]": [
+      "RR1_FLT_M29_LVR_RNA"
+    ],
+    "Parameter Value[Library Strategy]": [
+      "Bisulfite-Seq"
+    ],
+    "Parameter Value[Library Selection]": [
+      "PCR"
+    ],
+    "Parameter Value[Library Layout]": [
+      "SINGLE"
+    ],
+    "Parameter Value[Library Type]": [
+      "Not Available"
+    ],
+    "Parameter Value[Sequencing Instrument]": [
+      "Illumina HiSeq 2500"
+    ],
+    "Parameter Value[Processed data files]": [
+      "GLDS-48_wtbs_Q160526C_Service_Report.pdf, GLDS-48_wtbs_LVR-Basic_Analysis.tar.gz, GLDS-48_wtbs_LVR-Advanced_Analysis.tar.gz"
+    ],
+    "Comment[Extraction Method]": [
+      "AllPrep DNA/RNA Mini Kit"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_FLT_M30",
+    "sample_name": "Mmus_C57-6J_LVR_FLT_C_Rep5_M30",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Dna Methylation Profiling",
+      "Molecular Cellular Imaging",
+      "Protein Expression Profiling",
+      "RNA-Seq",
+      "Rna Methylation Profiling"
+    ],
+    "technology_types": [
+      "Mass Spectrometry",
+      "Microscopy",
+      "Rna Sequencing (Rna Seq)",
+      "Whole Genome Bisulfite Sequencing",
+      "Whole Transcriptome Bisulfite Sequencing"
+    ],
+    "device_platforms": [
+      "Illumina",
+      "Orbitrap Fusion(Thermo Scientific)",
+      "pannoramic scan (3d histech)"
+    ],
+    "data_files": [
+      "GLDS-48_rna-seq_N-FLT-30.tar.gz",
+      "GLDS-48_wgbs_N-FLT-30-wgbs.tar.gz",
+      "GLDS-48_wtbs_N42_TGACCA_L005_R1_001.fastq.gz",
+      "LSDS-2_Histology_HE.tar.gz",
+      "LSDS-2_Histology_ORO.tar.gz"
+    ],
+    "assay_names": [
+      "Histology",
+      "Whole Genome Bisulfite Sequencing",
+      "Whole Transcriptome Bisulfite Sequencing",
+      "rna-seq"
+    ],
+    "ms_assay_names": [
+      "TMT 10-plex"
+    ],
+    "extract_names": [
+      "RR1_FLT_M30_LVR_DNA",
+      "RR1_FLT_M30_LVR_PRT",
+      "RR1_FLT_M30_LVR_RNA"
+    ],
+    "Parameter Value[QA Instrument]": [
+      "Agilent 2100 Bioanalyzer",
+      "Bioanalyzer"
+    ],
+    "Parameter Value[QA Assay]": [
+      "RNA 6000 Nano Kit",
+      "Agilent RNA 6000 Pico/Nano Kit"
+    ],
+    "Parameter Value[QA Score]": [
+      "9"
+    ],
+    "Parameter Value[Library Selection]": [
+      "polyA enrichment",
+      "PCR"
+    ],
+    "Parameter Value[Library Layout]": [
+      "SINGLE",
+      "PAIRED"
+    ],
+    "Parameter Value[Stranded]": [
+      "STRANDED"
+    ],
+    "Parameter Value[Library QA Instrument]": [
+      "Agilent 2100 Bioanalyzer"
+    ],
+    "Parameter Value[Library Kit]": [
+      "Illumina TruSeq stranded RNA library prep kit"
+    ],
+    "Parameter Value[Sequencing Instrument]": [
+      "Illumina HiSeq 3000",
+      "Illumina HiSeq 2500"
+    ],
+    "Parameter Value[Read Length]": [
+      "50"
+    ],
+    "Parameter Value[Read Depth]": [
+      "34326754"
+    ],
+    "Parameter Value[rRNA Contamination]": [
+      "9.69"
+    ],
+    "Parameter Value[Merged Sequence Data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_GLbulkRNAseq_raw.fastq.gz",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_R1_raw.fastq.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_R2_raw.fastq.gz"
+    ],
+    "Parameter Value[MultiQC File Names]": [
+      "GLDS-48_rna_seq_raw_multiqc_GLbulkRNAseq_data.zip, GLDS-48_rna_seq_raw_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[trimmed sequence data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_GLbulkRNAseq_trimmed.fastq.gz",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_R1_trimmed.fastq.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_R2_trimmed.fastq.gz"
+    ],
+    "Parameter Value[Trimmed Sequence Data/Trimming Reports]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_GLbulkRNAseq_trimming_report.txt",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_R1_raw.fastq.gz_trimming_report.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_R2_raw.fastq.gz_trimming_report.txt"
+    ],
+    "Parameter Value[Trimmed Sequence Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_trimmed_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_trimmed_multiqc_GLbulkRNAseq.html",
+      "GLDS-48_Gwgbs_trimmed_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_trimmed_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[aligned sequence data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_GLbulkRNAseq_Aligned.sortedByCoord_sorted.out.bam,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_GLbulkRNAseq_Aligned.sortedByCoord_sorted.out.bam.bai,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_GLbulkRNAseq_Aligned.toTranscriptome.out.bam,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_GLbulkRNAseq_SJ.out.tab",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_bismark_bt2_sorted.bam,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_bismark_bt2_sorted.bam.bai,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_bismark_bt2.deduplicated_sorted.bam,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_bismark_bt2.deduplicated_sorted.bam.bai"
+    ],
+    "Parameter Value[Aligned Sequence Data/Unmapped Reads]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_GLbulkRNAseq_unmapped.fastq.gz"
+    ],
+    "Parameter Value[Aligned Sequence Data/Alignment Logs]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_GLbulkRNAseq_Log.final.out"
+    ],
+    "Parameter Value[Aligned Sequence Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_align_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_align_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[RSeQC/MultiQC Reports]": [
+      "GLDS-48_rna_seq_geneBody_cov_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_geneBody_cov_multiqc_GLbulkRNAseq.html,GLDS-48_rna_seq_infer_exp_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_infer_exp_multiqc_GLbulkRNAseq.html,GLDS-48_rna_seq_read_dist_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_read_dist_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[Raw Counts Data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_GLbulkRNAseq.genes.results,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_GLbulkRNAseq.isoforms.results,GLDS-48_rna_seq_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_GLbulkRNAseq_rRNArm.genes.results"
+    ],
+    "Parameter Value[Raw Counts Tables]": [
+      "GLDS-48_rna_seq_RSEM_Unnormalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_STAR_Unnormalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_RSEM_Unnormalized_Counts_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[Raw Counts Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_RSEM_count_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_RSEM_count_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[Normalized Counts Data]": [
+      "GLDS-48_rna_seq_Normalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_VST_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_Normalized_Counts_rRNArm_GLbulkRNAseq.csv,GLDS-48_rna_seq_VST_Counts_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[differential expression analysis data]": [
+      "GLDS-48_rna_seq_SampleTable_GLbulkRNAseq.csv,GLDS-48_rna_seq_contrasts_GLbulkRNAseq.csv,GLDS-48_rna_seq_differential_expression_GLbulkRNAseq.csv,GLDS-48_rna_seq_differential_expression_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[MS Run Group]": [
+      "Group C"
+    ],
+    "Parameter Value[Pool strategy]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Instrument]": [
+      "Orbitrap Fusion"
+    ],
+    "Parameter Value[Ion Source]": [
+      "electrospray ionization"
+    ],
+    "Parameter Value[Analyzer]": [
+      "Ion Trap & Orbitrap"
+    ],
+    "Parameter Value[library strategy]": [
+      "Bisulfite-Seq"
+    ],
+    "Parameter Value[Library Type]": [
+      "EpiGnome",
+      "Not Available"
+    ],
+    "Parameter Value[Merged Sequence Data/MultiQC Reports]": [
+      "GLDS-48_Gwgbs_raw_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_raw_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[Read Count]": [
+      "163750757"
+    ],
+    "Parameter Value[Aligned Sequence Data/Alignment Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_bismark_bt2_qualimap.zip,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_bismark_bt2.nucleotide_stats.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_bismark_bt2_PE_report.txt"
+    ],
+    "Parameter Value[Aligned Sequence Data/Deduplication Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_bismark_bt2_pe.deduplication_report.txt"
+    ],
+    "Parameter Value[Methylation Call Data]": [
+      "GLDS-48_Gwgbs_CHG_context_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_CHH_context_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_CpG_context_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_bismark_bt2_pe.deduplicated.bedGraph.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_bismark_bt2_pe.deduplicated.bismark.cov.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_bismark_bt2_pe.deduplicated.CpG_report.txt.gz"
+    ],
+    "Parameter Value[Methylation Call Data/Methylation Call Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_bismark_bt2_pe.deduplicated.cytosine_context_summary.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_bismark_bt2_pe.deduplicated.M-bias.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_bismark_bt2_pe.deduplicated_splitting_report.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_FLT_C_Rep5_M30_bismark_bt2_PE_report.html"
+    ],
+    "Parameter Value[Methylation Call Data/Methylation Call Reports/Methylation Call Summary Reports]": [
+      "GLDS-48_Gwgbs_bismark_summary_report_GLMethylSeq.html,GLDS-48_Gwgbs_bismark_summary_report_GLMethylSeq.txt"
+    ],
+    "Parameter Value[Methylation Call Data/MultiQC Reports]": [
+      "GLDS-48_Gwgbs_align_and_bismark_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_align_and_bismark_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[Differential Methylation Analysis Data]": [
+      "GLDS-48_Gwgbs_SampleTable_GLMethylSeq.csv,GLDS-48_Gwgbs_contrasts_GLMethylSeq.csv,GLDS-48_Gwgbs_differential_methylation_bases_GLMethylSeq.csv,GLDS-48_Gwgbs_differential_methylation_tiles_GLMethylSeq.csv"
+    ],
+    "Parameter Value[Extract Name]": [
+      "RR1_FLT_M30_LVR_RNA"
+    ],
+    "Parameter Value[Library Strategy]": [
+      "Bisulfite-Seq"
+    ],
+    "Parameter Value[Processed data files]": [
+      "GLDS-48_wtbs_Q160526C_Service_Report.pdf, GLDS-48_wtbs_LVR-Basic_Analysis.tar.gz, GLDS-48_wtbs_LVR-Advanced_Analysis.tar.gz"
+    ],
+    "Parameter Value[Preservation]": [
+      "liquid nitrogen"
+    ],
+    "Parameter Value[Fixation Chemical]": [
+      "paraffin (HE), OCT (ORO)"
+    ],
+    "Parameter Value[Section Thickness]": [
+      "4 (HE), 5 (ORO)"
+    ],
+    "Parameter Value[Image File]": [
+      "LSDS-2_Histology_M28-M30_ORO.ome.tiff, LSDS-2_Histology_M28-M30_ORO.jpg, LSDS-2_Histology_M28-M30_HE.ome.tiff, LSDS-2_Histology_M28-M30_HE.jpg"
+    ],
+    "Parameter Value[Submitted Results File]": [
+      "LSDS-2_Histology_OSD_48_Histology_Submitted_Results.xlsx"
+    ],
+    "Parameter Value[Transformed Reusable Files]": [
+      "LSDS-2_Histology_OSD_48_Histology_TRANSFORMED.csv"
+    ],
+    "Comment[Raw Data File name]": [
+      "150929_KChatacharty_NASA_GeneLab_GroupC_NASA_Flt_17_23_Fr*.raw"
+    ],
+    "Comment[Peptide Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Protein Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mgf]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mzid]": [
+      "Not Applicable"
+    ],
+    "Comment[Extraction Method]": [
+      "AllPrep DNA/RNA Mini Kit"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_GC_M31",
+    "sample_name": "Mmus_C57-6J_LVR_GC_I_Rep1_M31",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Dna Methylation Profiling",
+      "Molecular Cellular Imaging",
+      "Protein Expression Profiling",
+      "RNA-Seq"
+    ],
+    "technology_types": [
+      "Mass Spectrometry",
+      "Microscopy",
+      "Rna Sequencing (Rna Seq)",
+      "Whole Genome Bisulfite Sequencing"
+    ],
+    "device_platforms": [
+      "Illumina",
+      "Orbitrap Fusion(Thermo Scientific)",
+      "pannoramic scan (3d histech)"
+    ],
+    "data_files": [
+      "GLDS-48_rna-seq_N-GC-31.tar.gz",
+      "GLDS-48_wgbs_N-GC-31-wgbs.tar.gz",
+      "LSDS-2_Histology_HE.tar.gz",
+      "LSDS-2_Histology_ORO.tar.gz"
+    ],
+    "assay_names": [
+      "Histology",
+      "Whole Genome Bisulfite Sequencing",
+      "rna-seq"
+    ],
+    "ms_assay_names": [
+      "TMT 10-plex"
+    ],
+    "extract_names": [
+      "RR1_GC_M31_LVR_DNA",
+      "RR1_GC_M31_LVR_PRT",
+      "RR1_GC_M31_LVR_RNA"
+    ],
+    "Parameter Value[QA Instrument]": [
+      "Agilent 2100 Bioanalyzer"
+    ],
+    "Parameter Value[QA Assay]": [
+      "RNA 6000 Nano Kit"
+    ],
+    "Parameter Value[QA Score]": [
+      "9.3"
+    ],
+    "Parameter Value[Library Selection]": [
+      "polyA enrichment",
+      "PCR"
+    ],
+    "Parameter Value[Library Layout]": [
+      "SINGLE",
+      "PAIRED"
+    ],
+    "Parameter Value[Stranded]": [
+      "STRANDED"
+    ],
+    "Parameter Value[Library QA Instrument]": [
+      "Agilent 2100 Bioanalyzer"
+    ],
+    "Parameter Value[Library Kit]": [
+      "Illumina TruSeq stranded RNA library prep kit"
+    ],
+    "Parameter Value[Sequencing Instrument]": [
+      "Illumina HiSeq 3000"
+    ],
+    "Parameter Value[Read Length]": [
+      "50"
+    ],
+    "Parameter Value[Read Depth]": [
+      "36442893"
+    ],
+    "Parameter Value[rRNA Contamination]": [
+      "5.05"
+    ],
+    "Parameter Value[Merged Sequence Data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_I_Rep1_M31_GLbulkRNAseq_raw.fastq.gz",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep1_M31_R1_raw.fastq.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep1_M31_R2_raw.fastq.gz"
+    ],
+    "Parameter Value[MultiQC File Names]": [
+      "GLDS-48_rna_seq_raw_multiqc_GLbulkRNAseq_data.zip, GLDS-48_rna_seq_raw_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[trimmed sequence data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_I_Rep1_M31_GLbulkRNAseq_trimmed.fastq.gz",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep1_M31_R1_trimmed.fastq.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep1_M31_R2_trimmed.fastq.gz"
+    ],
+    "Parameter Value[Trimmed Sequence Data/Trimming Reports]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_I_Rep1_M31_GLbulkRNAseq_trimming_report.txt",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep1_M31_R1_raw.fastq.gz_trimming_report.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep1_M31_R2_raw.fastq.gz_trimming_report.txt"
+    ],
+    "Parameter Value[Trimmed Sequence Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_trimmed_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_trimmed_multiqc_GLbulkRNAseq.html",
+      "GLDS-48_Gwgbs_trimmed_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_trimmed_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[aligned sequence data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_I_Rep1_M31_GLbulkRNAseq_Aligned.sortedByCoord_sorted.out.bam,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_I_Rep1_M31_GLbulkRNAseq_Aligned.sortedByCoord_sorted.out.bam.bai,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_I_Rep1_M31_GLbulkRNAseq_Aligned.toTranscriptome.out.bam,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_I_Rep1_M31_GLbulkRNAseq_SJ.out.tab",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep1_M31_bismark_bt2_sorted.bam,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep1_M31_bismark_bt2_sorted.bam.bai,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep1_M31_bismark_bt2.deduplicated_sorted.bam,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep1_M31_bismark_bt2.deduplicated_sorted.bam.bai"
+    ],
+    "Parameter Value[Aligned Sequence Data/Unmapped Reads]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_I_Rep1_M31_GLbulkRNAseq_unmapped.fastq.gz"
+    ],
+    "Parameter Value[Aligned Sequence Data/Alignment Logs]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_I_Rep1_M31_GLbulkRNAseq_Log.final.out"
+    ],
+    "Parameter Value[Aligned Sequence Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_align_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_align_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[RSeQC/MultiQC Reports]": [
+      "GLDS-48_rna_seq_geneBody_cov_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_geneBody_cov_multiqc_GLbulkRNAseq.html,GLDS-48_rna_seq_infer_exp_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_infer_exp_multiqc_GLbulkRNAseq.html,GLDS-48_rna_seq_read_dist_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_read_dist_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[Raw Counts Data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_I_Rep1_M31_GLbulkRNAseq.genes.results,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_I_Rep1_M31_GLbulkRNAseq.isoforms.results,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_I_Rep1_M31_GLbulkRNAseq_rRNArm.genes.results"
+    ],
+    "Parameter Value[Raw Counts Tables]": [
+      "GLDS-48_rna_seq_RSEM_Unnormalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_STAR_Unnormalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_RSEM_Unnormalized_Counts_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[Raw Counts Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_RSEM_count_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_RSEM_count_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[Normalized Counts Data]": [
+      "GLDS-48_rna_seq_Normalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_VST_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_Normalized_Counts_rRNArm_GLbulkRNAseq.csv,GLDS-48_rna_seq_VST_Counts_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[differential expression analysis data]": [
+      "GLDS-48_rna_seq_SampleTable_GLbulkRNAseq.csv,GLDS-48_rna_seq_contrasts_GLbulkRNAseq.csv,GLDS-48_rna_seq_differential_expression_GLbulkRNAseq.csv,GLDS-48_rna_seq_differential_expression_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[MS Run Group]": [
+      "Group B"
+    ],
+    "Parameter Value[Pool strategy]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Instrument]": [
+      "Orbitrap Fusion"
+    ],
+    "Parameter Value[Ion Source]": [
+      "electrospray ionization"
+    ],
+    "Parameter Value[Analyzer]": [
+      "Ion Trap & Orbitrap"
+    ],
+    "Parameter Value[library strategy]": [
+      "Bisulfite-Seq"
+    ],
+    "Parameter Value[Library Type]": [
+      "EpiGnome"
+    ],
+    "Parameter Value[Merged Sequence Data/MultiQC Reports]": [
+      "GLDS-48_Gwgbs_raw_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_raw_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[Read Count]": [
+      "191151346"
+    ],
+    "Parameter Value[Aligned Sequence Data/Alignment Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep1_M31_bismark_bt2_qualimap.zip,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep1_M31_bismark_bt2.nucleotide_stats.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep1_M31_bismark_bt2_PE_report.txt"
+    ],
+    "Parameter Value[Aligned Sequence Data/Deduplication Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep1_M31_bismark_bt2_pe.deduplication_report.txt"
+    ],
+    "Parameter Value[Methylation Call Data]": [
+      "GLDS-48_Gwgbs_CHG_context_Mmus_C57-6J_LVR_GC_I_Rep1_M31_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_CHH_context_Mmus_C57-6J_LVR_GC_I_Rep1_M31_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_CpG_context_Mmus_C57-6J_LVR_GC_I_Rep1_M31_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep1_M31_bismark_bt2_pe.deduplicated.bedGraph.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep1_M31_bismark_bt2_pe.deduplicated.bismark.cov.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep1_M31_bismark_bt2_pe.deduplicated.CpG_report.txt.gz"
+    ],
+    "Parameter Value[Methylation Call Data/Methylation Call Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep1_M31_bismark_bt2_pe.deduplicated.cytosine_context_summary.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep1_M31_bismark_bt2_pe.deduplicated.M-bias.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep1_M31_bismark_bt2_pe.deduplicated_splitting_report.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep1_M31_bismark_bt2_PE_report.html"
+    ],
+    "Parameter Value[Methylation Call Data/Methylation Call Reports/Methylation Call Summary Reports]": [
+      "GLDS-48_Gwgbs_bismark_summary_report_GLMethylSeq.html,GLDS-48_Gwgbs_bismark_summary_report_GLMethylSeq.txt"
+    ],
+    "Parameter Value[Methylation Call Data/MultiQC Reports]": [
+      "GLDS-48_Gwgbs_align_and_bismark_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_align_and_bismark_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[Differential Methylation Analysis Data]": [
+      "GLDS-48_Gwgbs_SampleTable_GLMethylSeq.csv,GLDS-48_Gwgbs_contrasts_GLMethylSeq.csv,GLDS-48_Gwgbs_differential_methylation_bases_GLMethylSeq.csv,GLDS-48_Gwgbs_differential_methylation_tiles_GLMethylSeq.csv"
+    ],
+    "Parameter Value[Preservation]": [
+      "liquid nitrogen"
+    ],
+    "Parameter Value[Fixation Chemical]": [
+      "paraffin (HE), OCT (ORO)"
+    ],
+    "Parameter Value[Section Thickness]": [
+      "4 (HE), 5 (ORO)"
+    ],
+    "Parameter Value[Image File]": [
+      "LSDS-2_Histology_M31-M32_ORO.ome.tiff, LSDS-2_Histology_M31-M32_ORO.jpg, LSDS-2_Histology_M31-M32_HE.ome.tiff, LSDS-2_Histology_M31-M32_HE.jpg"
+    ],
+    "Parameter Value[Submitted Results File]": [
+      "LSDS-2_Histology_OSD_48_Histology_Submitted_Results.xlsx"
+    ],
+    "Parameter Value[Transformed Reusable Files]": [
+      "LSDS-2_Histology_OSD_48_Histology_TRANSFORMED.csv"
+    ],
+    "Comment[Raw Data File name]": [
+      "150929_KChatacharty_NASA_GeneLab_GroupB_NASA_GC_10_16_Fr*.raw"
+    ],
+    "Comment[Peptide Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Protein Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mgf]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mzid]": [
+      "Not Applicable"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_GC_M32",
+    "sample_name": "Mmus_C57-6J_LVR_GC_I_Rep2_M32",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Dna Methylation Profiling",
+      "Molecular Cellular Imaging",
+      "Protein Expression Profiling",
+      "RNA-Seq"
+    ],
+    "technology_types": [
+      "Mass Spectrometry",
+      "Microscopy",
+      "Rna Sequencing (Rna Seq)",
+      "Whole Genome Bisulfite Sequencing"
+    ],
+    "device_platforms": [
+      "Illumina",
+      "Orbitrap Fusion(Thermo Scientific)",
+      "pannoramic scan (3d histech)"
+    ],
+    "data_files": [
+      "GLDS-48_rna-seq_N-GC-32.tar.gz",
+      "GLDS-48_wgbs_N-GC-32-wgbs.tar.gz",
+      "LSDS-2_Histology_HE.tar.gz",
+      "LSDS-2_Histology_ORO.tar.gz"
+    ],
+    "assay_names": [
+      "Histology",
+      "Whole Genome Bisulfite Sequencing",
+      "rna-seq"
+    ],
+    "ms_assay_names": [
+      "TMT 10-plex"
+    ],
+    "extract_names": [
+      "RR1_GC_M32_LVR_DNA",
+      "RR1_GC_M32_LVR_PRT",
+      "RR1_GC_M32_LVR_RNA"
+    ],
+    "Parameter Value[QA Instrument]": [
+      "Agilent 2100 Bioanalyzer"
+    ],
+    "Parameter Value[QA Assay]": [
+      "RNA 6000 Nano Kit"
+    ],
+    "Parameter Value[QA Score]": [
+      "9.8"
+    ],
+    "Parameter Value[Library Selection]": [
+      "polyA enrichment",
+      "PCR"
+    ],
+    "Parameter Value[Library Layout]": [
+      "SINGLE",
+      "PAIRED"
+    ],
+    "Parameter Value[Stranded]": [
+      "STRANDED"
+    ],
+    "Parameter Value[Library QA Instrument]": [
+      "Agilent 2100 Bioanalyzer"
+    ],
+    "Parameter Value[Library Kit]": [
+      "Illumina TruSeq stranded RNA library prep kit"
+    ],
+    "Parameter Value[Sequencing Instrument]": [
+      "Illumina HiSeq 3000"
+    ],
+    "Parameter Value[Read Length]": [
+      "50"
+    ],
+    "Parameter Value[Read Depth]": [
+      "38631142"
+    ],
+    "Parameter Value[rRNA Contamination]": [
+      "5.74"
+    ],
+    "Parameter Value[Merged Sequence Data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_I_Rep2_M32_GLbulkRNAseq_raw.fastq.gz",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep2_M32_R1_raw.fastq.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep2_M32_R2_raw.fastq.gz"
+    ],
+    "Parameter Value[MultiQC File Names]": [
+      "GLDS-48_rna_seq_raw_multiqc_GLbulkRNAseq_data.zip, GLDS-48_rna_seq_raw_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[trimmed sequence data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_I_Rep2_M32_GLbulkRNAseq_trimmed.fastq.gz",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep2_M32_R1_trimmed.fastq.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep2_M32_R2_trimmed.fastq.gz"
+    ],
+    "Parameter Value[Trimmed Sequence Data/Trimming Reports]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_I_Rep2_M32_GLbulkRNAseq_trimming_report.txt",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep2_M32_R1_raw.fastq.gz_trimming_report.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep2_M32_R2_raw.fastq.gz_trimming_report.txt"
+    ],
+    "Parameter Value[Trimmed Sequence Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_trimmed_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_trimmed_multiqc_GLbulkRNAseq.html",
+      "GLDS-48_Gwgbs_trimmed_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_trimmed_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[aligned sequence data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_I_Rep2_M32_GLbulkRNAseq_Aligned.sortedByCoord_sorted.out.bam,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_I_Rep2_M32_GLbulkRNAseq_Aligned.sortedByCoord_sorted.out.bam.bai,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_I_Rep2_M32_GLbulkRNAseq_Aligned.toTranscriptome.out.bam,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_I_Rep2_M32_GLbulkRNAseq_SJ.out.tab",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep2_M32_bismark_bt2_sorted.bam,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep2_M32_bismark_bt2_sorted.bam.bai,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep2_M32_bismark_bt2.deduplicated_sorted.bam,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep2_M32_bismark_bt2.deduplicated_sorted.bam.bai"
+    ],
+    "Parameter Value[Aligned Sequence Data/Unmapped Reads]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_I_Rep2_M32_GLbulkRNAseq_unmapped.fastq.gz"
+    ],
+    "Parameter Value[Aligned Sequence Data/Alignment Logs]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_I_Rep2_M32_GLbulkRNAseq_Log.final.out"
+    ],
+    "Parameter Value[Aligned Sequence Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_align_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_align_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[RSeQC/MultiQC Reports]": [
+      "GLDS-48_rna_seq_geneBody_cov_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_geneBody_cov_multiqc_GLbulkRNAseq.html,GLDS-48_rna_seq_infer_exp_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_infer_exp_multiqc_GLbulkRNAseq.html,GLDS-48_rna_seq_read_dist_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_read_dist_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[Raw Counts Data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_I_Rep2_M32_GLbulkRNAseq.genes.results,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_I_Rep2_M32_GLbulkRNAseq.isoforms.results,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_I_Rep2_M32_GLbulkRNAseq_rRNArm.genes.results"
+    ],
+    "Parameter Value[Raw Counts Tables]": [
+      "GLDS-48_rna_seq_RSEM_Unnormalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_STAR_Unnormalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_RSEM_Unnormalized_Counts_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[Raw Counts Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_RSEM_count_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_RSEM_count_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[Normalized Counts Data]": [
+      "GLDS-48_rna_seq_Normalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_VST_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_Normalized_Counts_rRNArm_GLbulkRNAseq.csv,GLDS-48_rna_seq_VST_Counts_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[differential expression analysis data]": [
+      "GLDS-48_rna_seq_SampleTable_GLbulkRNAseq.csv,GLDS-48_rna_seq_contrasts_GLbulkRNAseq.csv,GLDS-48_rna_seq_differential_expression_GLbulkRNAseq.csv,GLDS-48_rna_seq_differential_expression_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[MS Run Group]": [
+      "Group B"
+    ],
+    "Parameter Value[Pool strategy]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Instrument]": [
+      "Orbitrap Fusion"
+    ],
+    "Parameter Value[Ion Source]": [
+      "electrospray ionization"
+    ],
+    "Parameter Value[Analyzer]": [
+      "Ion Trap & Orbitrap"
+    ],
+    "Parameter Value[library strategy]": [
+      "Bisulfite-Seq"
+    ],
+    "Parameter Value[Library Type]": [
+      "EpiGnome"
+    ],
+    "Parameter Value[Merged Sequence Data/MultiQC Reports]": [
+      "GLDS-48_Gwgbs_raw_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_raw_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[Read Count]": [
+      "166380900"
+    ],
+    "Parameter Value[Aligned Sequence Data/Alignment Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep2_M32_bismark_bt2_qualimap.zip,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep2_M32_bismark_bt2.nucleotide_stats.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep2_M32_bismark_bt2_PE_report.txt"
+    ],
+    "Parameter Value[Aligned Sequence Data/Deduplication Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep2_M32_bismark_bt2_pe.deduplication_report.txt"
+    ],
+    "Parameter Value[Methylation Call Data]": [
+      "GLDS-48_Gwgbs_CHG_context_Mmus_C57-6J_LVR_GC_I_Rep2_M32_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_CHH_context_Mmus_C57-6J_LVR_GC_I_Rep2_M32_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_CpG_context_Mmus_C57-6J_LVR_GC_I_Rep2_M32_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep2_M32_bismark_bt2_pe.deduplicated.bedGraph.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep2_M32_bismark_bt2_pe.deduplicated.bismark.cov.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep2_M32_bismark_bt2_pe.deduplicated.CpG_report.txt.gz"
+    ],
+    "Parameter Value[Methylation Call Data/Methylation Call Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep2_M32_bismark_bt2_pe.deduplicated.cytosine_context_summary.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep2_M32_bismark_bt2_pe.deduplicated.M-bias.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep2_M32_bismark_bt2_pe.deduplicated_splitting_report.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_I_Rep2_M32_bismark_bt2_PE_report.html"
+    ],
+    "Parameter Value[Methylation Call Data/Methylation Call Reports/Methylation Call Summary Reports]": [
+      "GLDS-48_Gwgbs_bismark_summary_report_GLMethylSeq.html,GLDS-48_Gwgbs_bismark_summary_report_GLMethylSeq.txt"
+    ],
+    "Parameter Value[Methylation Call Data/MultiQC Reports]": [
+      "GLDS-48_Gwgbs_align_and_bismark_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_align_and_bismark_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[Differential Methylation Analysis Data]": [
+      "GLDS-48_Gwgbs_SampleTable_GLMethylSeq.csv,GLDS-48_Gwgbs_contrasts_GLMethylSeq.csv,GLDS-48_Gwgbs_differential_methylation_bases_GLMethylSeq.csv,GLDS-48_Gwgbs_differential_methylation_tiles_GLMethylSeq.csv"
+    ],
+    "Parameter Value[Preservation]": [
+      "liquid nitrogen"
+    ],
+    "Parameter Value[Fixation Chemical]": [
+      "paraffin (HE), OCT (ORO)"
+    ],
+    "Parameter Value[Section Thickness]": [
+      "4 (HE), 5 (ORO)"
+    ],
+    "Parameter Value[Image File]": [
+      "LSDS-2_Histology_M31-M32_ORO.ome.tiff, LSDS-2_Histology_M31-M32_ORO.jpg, LSDS-2_Histology_M31-M32_HE.ome.tiff, LSDS-2_Histology_M31-M32_HE.jpg"
+    ],
+    "Parameter Value[Submitted Results File]": [
+      "LSDS-2_Histology_OSD_48_Histology_Submitted_Results.xlsx"
+    ],
+    "Parameter Value[Transformed Reusable Files]": [
+      "LSDS-2_Histology_OSD_48_Histology_TRANSFORMED.csv"
+    ],
+    "Comment[Raw Data File name]": [
+      "150929_KChatacharty_NASA_GeneLab_GroupB_NASA_GC_10_16_Fr*.raw"
+    ],
+    "Comment[Peptide Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Protein Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mgf]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mzid]": [
+      "Not Applicable"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_GC_M35",
+    "sample_name": "Mmus_C57-6J_LVR_GC_C_Rep6_M35",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Rna Methylation Profiling"
+    ],
+    "technology_types": [
+      "Whole Transcriptome Bisulfite Sequencing"
+    ],
+    "device_platforms": [
+      "Illumina"
+    ],
+    "data_files": [
+      "GLDS-48_wtbs_N43_ACAGTG_L005_R1_001.fastq.gz"
+    ],
+    "assay_names": [
+      "Whole Transcriptome Bisulfite Sequencing"
+    ],
+    "ms_assay_names": [],
+    "extract_names": [],
+    "Parameter Value[QA Instrument]": [
+      "Bioanalyzer"
+    ],
+    "Parameter Value[QA Assay]": [
+      "Agilent RNA 6000 Pico/Nano Kit"
+    ],
+    "Parameter Value[QA Score]": [
+      "7.2"
+    ],
+    "Parameter Value[Extract Name]": [
+      "RR1_GC_M35_LVR_RNA"
+    ],
+    "Parameter Value[Library Strategy]": [
+      "Bisulfite-Seq"
+    ],
+    "Parameter Value[Library Selection]": [
+      "PCR"
+    ],
+    "Parameter Value[Library Layout]": [
+      "SINGLE"
+    ],
+    "Parameter Value[Library Type]": [
+      "Not Available"
+    ],
+    "Parameter Value[Sequencing Instrument]": [
+      "Illumina HiSeq 2500"
+    ],
+    "Parameter Value[Processed data files]": [
+      "GLDS-48_wtbs_Q160526C_Service_Report.pdf, GLDS-48_wtbs_LVR-Basic_Analysis.tar.gz, GLDS-48_wtbs_LVR-Advanced_Analysis.tar.gz"
+    ],
+    "Comment[Extraction Method]": [
+      "AllPrep DNA/RNA Mini Kit"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_GC_M36",
+    "sample_name": "Mmus_C57-6J_LVR_GC_C_Rep1_M36",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Dna Methylation Profiling",
+      "Molecular Cellular Imaging",
+      "Protein Expression Profiling",
+      "RNA-Seq",
+      "Rna Methylation Profiling"
+    ],
+    "technology_types": [
+      "Mass Spectrometry",
+      "Microscopy",
+      "Rna Sequencing (Rna Seq)",
+      "Whole Genome Bisulfite Sequencing",
+      "Whole Transcriptome Bisulfite Sequencing"
+    ],
+    "device_platforms": [
+      "Illumina",
+      "Orbitrap Fusion(Thermo Scientific)",
+      "pannoramic scan (3d histech)"
+    ],
+    "data_files": [
+      "GLDS-48_rna-seq_N-GC-36.tar.gz",
+      "GLDS-48_wgbs_N-GC-36-wgbs.tar.gz",
+      "GLDS-48_wtbs_N44_S40_R1_001.fastq.gz",
+      "LSDS-2_Histology_HE.tar.gz",
+      "LSDS-2_Histology_ORO.tar.gz"
+    ],
+    "assay_names": [
+      "Histology",
+      "Whole Genome Bisulfite Sequencing",
+      "Whole Transcriptome Bisulfite Sequencing",
+      "rna-seq"
+    ],
+    "ms_assay_names": [
+      "TMT 10-plex"
+    ],
+    "extract_names": [
+      "RR1_GC_M36_LVR_DNA",
+      "RR1_GC_M36_LVR_PRT",
+      "RR1_GC_M36_LVR_RNA"
+    ],
+    "Parameter Value[QA Instrument]": [
+      "Agilent 2100 Bioanalyzer",
+      "Bioanalyzer"
+    ],
+    "Parameter Value[QA Assay]": [
+      "RNA 6000 Nano Kit",
+      "Agilent RNA 6000 Pico/Nano Kit"
+    ],
+    "Parameter Value[QA Score]": [
+      "7.9"
+    ],
+    "Parameter Value[Library Selection]": [
+      "polyA enrichment",
+      "PCR"
+    ],
+    "Parameter Value[Library Layout]": [
+      "SINGLE",
+      "PAIRED"
+    ],
+    "Parameter Value[Stranded]": [
+      "STRANDED"
+    ],
+    "Parameter Value[Library QA Instrument]": [
+      "Agilent 2100 Bioanalyzer"
+    ],
+    "Parameter Value[Library Kit]": [
+      "Illumina TruSeq stranded RNA library prep kit"
+    ],
+    "Parameter Value[Sequencing Instrument]": [
+      "Illumina HiSeq 3000",
+      "Illumina HiSeq 2500"
+    ],
+    "Parameter Value[Read Length]": [
+      "50"
+    ],
+    "Parameter Value[Read Depth]": [
+      "37381993"
+    ],
+    "Parameter Value[rRNA Contamination]": [
+      "8.75"
+    ],
+    "Parameter Value[Merged Sequence Data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep1_M36_GLbulkRNAseq_raw.fastq.gz",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep1_M36_R1_raw.fastq.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep1_M36_R2_raw.fastq.gz"
+    ],
+    "Parameter Value[MultiQC File Names]": [
+      "GLDS-48_rna_seq_raw_multiqc_GLbulkRNAseq_data.zip, GLDS-48_rna_seq_raw_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[trimmed sequence data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep1_M36_GLbulkRNAseq_trimmed.fastq.gz",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep1_M36_R1_trimmed.fastq.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep1_M36_R2_trimmed.fastq.gz"
+    ],
+    "Parameter Value[Trimmed Sequence Data/Trimming Reports]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep1_M36_GLbulkRNAseq_trimming_report.txt",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep1_M36_R1_raw.fastq.gz_trimming_report.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep1_M36_R2_raw.fastq.gz_trimming_report.txt"
+    ],
+    "Parameter Value[Trimmed Sequence Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_trimmed_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_trimmed_multiqc_GLbulkRNAseq.html",
+      "GLDS-48_Gwgbs_trimmed_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_trimmed_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[aligned sequence data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep1_M36_GLbulkRNAseq_Aligned.sortedByCoord_sorted.out.bam,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep1_M36_GLbulkRNAseq_Aligned.sortedByCoord_sorted.out.bam.bai,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep1_M36_GLbulkRNAseq_Aligned.toTranscriptome.out.bam,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep1_M36_GLbulkRNAseq_SJ.out.tab",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep1_M36_bismark_bt2_sorted.bam,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep1_M36_bismark_bt2_sorted.bam.bai,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep1_M36_bismark_bt2.deduplicated_sorted.bam,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep1_M36_bismark_bt2.deduplicated_sorted.bam.bai"
+    ],
+    "Parameter Value[Aligned Sequence Data/Unmapped Reads]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep1_M36_GLbulkRNAseq_unmapped.fastq.gz"
+    ],
+    "Parameter Value[Aligned Sequence Data/Alignment Logs]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep1_M36_GLbulkRNAseq_Log.final.out"
+    ],
+    "Parameter Value[Aligned Sequence Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_align_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_align_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[RSeQC/MultiQC Reports]": [
+      "GLDS-48_rna_seq_geneBody_cov_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_geneBody_cov_multiqc_GLbulkRNAseq.html,GLDS-48_rna_seq_infer_exp_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_infer_exp_multiqc_GLbulkRNAseq.html,GLDS-48_rna_seq_read_dist_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_read_dist_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[Raw Counts Data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep1_M36_GLbulkRNAseq.genes.results,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep1_M36_GLbulkRNAseq.isoforms.results,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep1_M36_GLbulkRNAseq_rRNArm.genes.results"
+    ],
+    "Parameter Value[Raw Counts Tables]": [
+      "GLDS-48_rna_seq_RSEM_Unnormalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_STAR_Unnormalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_RSEM_Unnormalized_Counts_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[Raw Counts Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_RSEM_count_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_RSEM_count_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[Normalized Counts Data]": [
+      "GLDS-48_rna_seq_Normalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_VST_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_Normalized_Counts_rRNArm_GLbulkRNAseq.csv,GLDS-48_rna_seq_VST_Counts_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[differential expression analysis data]": [
+      "GLDS-48_rna_seq_SampleTable_GLbulkRNAseq.csv,GLDS-48_rna_seq_contrasts_GLbulkRNAseq.csv,GLDS-48_rna_seq_differential_expression_GLbulkRNAseq.csv,GLDS-48_rna_seq_differential_expression_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[MS Run Group]": [
+      "Group B"
+    ],
+    "Parameter Value[Pool strategy]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Instrument]": [
+      "Orbitrap Fusion"
+    ],
+    "Parameter Value[Ion Source]": [
+      "electrospray ionization"
+    ],
+    "Parameter Value[Analyzer]": [
+      "Ion Trap & Orbitrap"
+    ],
+    "Parameter Value[library strategy]": [
+      "Bisulfite-Seq"
+    ],
+    "Parameter Value[Library Type]": [
+      "EpiGnome",
+      "Not Available"
+    ],
+    "Parameter Value[Merged Sequence Data/MultiQC Reports]": [
+      "GLDS-48_Gwgbs_raw_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_raw_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[Read Count]": [
+      "195875153"
+    ],
+    "Parameter Value[Aligned Sequence Data/Alignment Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep1_M36_bismark_bt2_qualimap.zip,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep1_M36_bismark_bt2.nucleotide_stats.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep1_M36_bismark_bt2_PE_report.txt"
+    ],
+    "Parameter Value[Aligned Sequence Data/Deduplication Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep1_M36_bismark_bt2_pe.deduplication_report.txt"
+    ],
+    "Parameter Value[Methylation Call Data]": [
+      "GLDS-48_Gwgbs_CHG_context_Mmus_C57-6J_LVR_GC_C_Rep1_M36_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_CHH_context_Mmus_C57-6J_LVR_GC_C_Rep1_M36_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_CpG_context_Mmus_C57-6J_LVR_GC_C_Rep1_M36_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep1_M36_bismark_bt2_pe.deduplicated.bedGraph.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep1_M36_bismark_bt2_pe.deduplicated.bismark.cov.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep1_M36_bismark_bt2_pe.deduplicated.CpG_report.txt.gz"
+    ],
+    "Parameter Value[Methylation Call Data/Methylation Call Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep1_M36_bismark_bt2_pe.deduplicated.cytosine_context_summary.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep1_M36_bismark_bt2_pe.deduplicated.M-bias.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep1_M36_bismark_bt2_pe.deduplicated_splitting_report.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep1_M36_bismark_bt2_PE_report.html"
+    ],
+    "Parameter Value[Methylation Call Data/Methylation Call Reports/Methylation Call Summary Reports]": [
+      "GLDS-48_Gwgbs_bismark_summary_report_GLMethylSeq.html,GLDS-48_Gwgbs_bismark_summary_report_GLMethylSeq.txt"
+    ],
+    "Parameter Value[Methylation Call Data/MultiQC Reports]": [
+      "GLDS-48_Gwgbs_align_and_bismark_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_align_and_bismark_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[Differential Methylation Analysis Data]": [
+      "GLDS-48_Gwgbs_SampleTable_GLMethylSeq.csv,GLDS-48_Gwgbs_contrasts_GLMethylSeq.csv,GLDS-48_Gwgbs_differential_methylation_bases_GLMethylSeq.csv,GLDS-48_Gwgbs_differential_methylation_tiles_GLMethylSeq.csv"
+    ],
+    "Parameter Value[Extract Name]": [
+      "RR1_GC_M36_LVR_RNA"
+    ],
+    "Parameter Value[Library Strategy]": [
+      "Bisulfite-Seq"
+    ],
+    "Parameter Value[Processed data files]": [
+      "GLDS-48_wtbs_Q160526C_Service_Report.pdf, GLDS-48_wtbs_LVR-Basic_Analysis.tar.gz, GLDS-48_wtbs_LVR-Advanced_Analysis.tar.gz"
+    ],
+    "Parameter Value[Preservation]": [
+      "liquid nitrogen"
+    ],
+    "Parameter Value[Fixation Chemical]": [
+      "paraffin (HE), OCT (ORO)"
+    ],
+    "Parameter Value[Section Thickness]": [
+      "4 (HE), 5 (ORO)"
+    ],
+    "Parameter Value[Image File]": [
+      "LSDS-2_Histology_M36-M37-M38_ORO.ome.tiff, LSDS-2_Histology_M36-M37-M38_ORO.jpg, LSDS-2_Histology_M36-M37-M38_HE.ome.tiff, LSDS-2_Histology_M36-M37-M38_HE.jpg"
+    ],
+    "Parameter Value[Submitted Results File]": [
+      "LSDS-2_Histology_OSD_48_Histology_Submitted_Results.xlsx"
+    ],
+    "Parameter Value[Transformed Reusable Files]": [
+      "LSDS-2_Histology_OSD_48_Histology_TRANSFORMED.csv"
+    ],
+    "Comment[Raw Data File name]": [
+      "150929_KChatacharty_NASA_GeneLab_GroupB_NASA_GC_10_16_Fr*.raw"
+    ],
+    "Comment[Peptide Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Protein Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mgf]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mzid]": [
+      "Not Applicable"
+    ],
+    "Comment[Extraction Method]": [
+      "AllPrep DNA/RNA Mini Kit"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_GC_M37",
+    "sample_name": "Mmus_C57-6J_LVR_GC_C_Rep2_M37",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Dna Methylation Profiling",
+      "Molecular Cellular Imaging",
+      "Protein Expression Profiling",
+      "RNA-Seq",
+      "Rna Methylation Profiling"
+    ],
+    "technology_types": [
+      "Mass Spectrometry",
+      "Microscopy",
+      "Rna Sequencing (Rna Seq)",
+      "Whole Genome Bisulfite Sequencing",
+      "Whole Transcriptome Bisulfite Sequencing"
+    ],
+    "device_platforms": [
+      "Illumina",
+      "Orbitrap Fusion(Thermo Scientific)",
+      "pannoramic scan (3d histech)"
+    ],
+    "data_files": [
+      "GLDS-48_rna-seq_N-GC-37.tar.gz",
+      "GLDS-48_wgbs_N-GC-37-wgbs.tar.gz",
+      "GLDS-48_wtbs_N45_ACTTGA_L005_R1_001.fastq.gz",
+      "LSDS-2_Histology_HE.tar.gz",
+      "LSDS-2_Histology_ORO.tar.gz"
+    ],
+    "assay_names": [
+      "Histology",
+      "Whole Genome Bisulfite Sequencing",
+      "Whole Transcriptome Bisulfite Sequencing",
+      "rna-seq"
+    ],
+    "ms_assay_names": [
+      "TMT 10-plex"
+    ],
+    "extract_names": [
+      "RR1_GC_M37_LVR_DNA",
+      "RR1_GC_M37_LVR_PRT",
+      "RR1_GC_M37_LVR_RNA"
+    ],
+    "Parameter Value[QA Instrument]": [
+      "Agilent 2100 Bioanalyzer",
+      "Bioanalyzer"
+    ],
+    "Parameter Value[QA Assay]": [
+      "RNA 6000 Nano Kit",
+      "Agilent RNA 6000 Pico/Nano Kit"
+    ],
+    "Parameter Value[QA Score]": [
+      "8"
+    ],
+    "Parameter Value[Library Selection]": [
+      "polyA enrichment",
+      "PCR"
+    ],
+    "Parameter Value[Library Layout]": [
+      "SINGLE",
+      "PAIRED"
+    ],
+    "Parameter Value[Stranded]": [
+      "STRANDED"
+    ],
+    "Parameter Value[Library QA Instrument]": [
+      "Agilent 2100 Bioanalyzer"
+    ],
+    "Parameter Value[Library Kit]": [
+      "Illumina TruSeq stranded RNA library prep kit"
+    ],
+    "Parameter Value[Sequencing Instrument]": [
+      "Illumina HiSeq 3000",
+      "Illumina HiSeq 2500"
+    ],
+    "Parameter Value[Read Length]": [
+      "50"
+    ],
+    "Parameter Value[Read Depth]": [
+      "32579161"
+    ],
+    "Parameter Value[rRNA Contamination]": [
+      "5.46"
+    ],
+    "Parameter Value[Merged Sequence Data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep2_M37_GLbulkRNAseq_raw.fastq.gz",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep2_M37_R1_raw.fastq.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep2_M37_R2_raw.fastq.gz"
+    ],
+    "Parameter Value[MultiQC File Names]": [
+      "GLDS-48_rna_seq_raw_multiqc_GLbulkRNAseq_data.zip, GLDS-48_rna_seq_raw_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[trimmed sequence data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep2_M37_GLbulkRNAseq_trimmed.fastq.gz",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep2_M37_R1_trimmed.fastq.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep2_M37_R2_trimmed.fastq.gz"
+    ],
+    "Parameter Value[Trimmed Sequence Data/Trimming Reports]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep2_M37_GLbulkRNAseq_trimming_report.txt",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep2_M37_R1_raw.fastq.gz_trimming_report.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep2_M37_R2_raw.fastq.gz_trimming_report.txt"
+    ],
+    "Parameter Value[Trimmed Sequence Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_trimmed_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_trimmed_multiqc_GLbulkRNAseq.html",
+      "GLDS-48_Gwgbs_trimmed_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_trimmed_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[aligned sequence data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep2_M37_GLbulkRNAseq_Aligned.sortedByCoord_sorted.out.bam,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep2_M37_GLbulkRNAseq_Aligned.sortedByCoord_sorted.out.bam.bai,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep2_M37_GLbulkRNAseq_Aligned.toTranscriptome.out.bam,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep2_M37_GLbulkRNAseq_SJ.out.tab",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep2_M37_bismark_bt2_sorted.bam,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep2_M37_bismark_bt2_sorted.bam.bai,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep2_M37_bismark_bt2.deduplicated_sorted.bam,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep2_M37_bismark_bt2.deduplicated_sorted.bam.bai"
+    ],
+    "Parameter Value[Aligned Sequence Data/Unmapped Reads]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep2_M37_GLbulkRNAseq_unmapped.fastq.gz"
+    ],
+    "Parameter Value[Aligned Sequence Data/Alignment Logs]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep2_M37_GLbulkRNAseq_Log.final.out"
+    ],
+    "Parameter Value[Aligned Sequence Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_align_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_align_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[RSeQC/MultiQC Reports]": [
+      "GLDS-48_rna_seq_geneBody_cov_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_geneBody_cov_multiqc_GLbulkRNAseq.html,GLDS-48_rna_seq_infer_exp_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_infer_exp_multiqc_GLbulkRNAseq.html,GLDS-48_rna_seq_read_dist_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_read_dist_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[Raw Counts Data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep2_M37_GLbulkRNAseq.genes.results,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep2_M37_GLbulkRNAseq.isoforms.results,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep2_M37_GLbulkRNAseq_rRNArm.genes.results"
+    ],
+    "Parameter Value[Raw Counts Tables]": [
+      "GLDS-48_rna_seq_RSEM_Unnormalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_STAR_Unnormalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_RSEM_Unnormalized_Counts_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[Raw Counts Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_RSEM_count_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_RSEM_count_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[Normalized Counts Data]": [
+      "GLDS-48_rna_seq_Normalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_VST_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_Normalized_Counts_rRNArm_GLbulkRNAseq.csv,GLDS-48_rna_seq_VST_Counts_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[differential expression analysis data]": [
+      "GLDS-48_rna_seq_SampleTable_GLbulkRNAseq.csv,GLDS-48_rna_seq_contrasts_GLbulkRNAseq.csv,GLDS-48_rna_seq_differential_expression_GLbulkRNAseq.csv,GLDS-48_rna_seq_differential_expression_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[MS Run Group]": [
+      "Group B"
+    ],
+    "Parameter Value[Pool strategy]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Instrument]": [
+      "Orbitrap Fusion"
+    ],
+    "Parameter Value[Ion Source]": [
+      "electrospray ionization"
+    ],
+    "Parameter Value[Analyzer]": [
+      "Ion Trap & Orbitrap"
+    ],
+    "Parameter Value[library strategy]": [
+      "Bisulfite-Seq"
+    ],
+    "Parameter Value[Library Type]": [
+      "EpiGnome",
+      "Not Available"
+    ],
+    "Parameter Value[Merged Sequence Data/MultiQC Reports]": [
+      "GLDS-48_Gwgbs_raw_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_raw_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[Read Count]": [
+      "193508936"
+    ],
+    "Parameter Value[Aligned Sequence Data/Alignment Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep2_M37_bismark_bt2_qualimap.zip,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep2_M37_bismark_bt2.nucleotide_stats.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep2_M37_bismark_bt2_PE_report.txt"
+    ],
+    "Parameter Value[Aligned Sequence Data/Deduplication Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep2_M37_bismark_bt2_pe.deduplication_report.txt"
+    ],
+    "Parameter Value[Methylation Call Data]": [
+      "GLDS-48_Gwgbs_CHG_context_Mmus_C57-6J_LVR_GC_C_Rep2_M37_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_CHH_context_Mmus_C57-6J_LVR_GC_C_Rep2_M37_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_CpG_context_Mmus_C57-6J_LVR_GC_C_Rep2_M37_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep2_M37_bismark_bt2_pe.deduplicated.bedGraph.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep2_M37_bismark_bt2_pe.deduplicated.bismark.cov.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep2_M37_bismark_bt2_pe.deduplicated.CpG_report.txt.gz"
+    ],
+    "Parameter Value[Methylation Call Data/Methylation Call Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep2_M37_bismark_bt2_pe.deduplicated.cytosine_context_summary.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep2_M37_bismark_bt2_pe.deduplicated.M-bias.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep2_M37_bismark_bt2_pe.deduplicated_splitting_report.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep2_M37_bismark_bt2_PE_report.html"
+    ],
+    "Parameter Value[Methylation Call Data/Methylation Call Reports/Methylation Call Summary Reports]": [
+      "GLDS-48_Gwgbs_bismark_summary_report_GLMethylSeq.html,GLDS-48_Gwgbs_bismark_summary_report_GLMethylSeq.txt"
+    ],
+    "Parameter Value[Methylation Call Data/MultiQC Reports]": [
+      "GLDS-48_Gwgbs_align_and_bismark_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_align_and_bismark_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[Differential Methylation Analysis Data]": [
+      "GLDS-48_Gwgbs_SampleTable_GLMethylSeq.csv,GLDS-48_Gwgbs_contrasts_GLMethylSeq.csv,GLDS-48_Gwgbs_differential_methylation_bases_GLMethylSeq.csv,GLDS-48_Gwgbs_differential_methylation_tiles_GLMethylSeq.csv"
+    ],
+    "Parameter Value[Extract Name]": [
+      "RR1_GC_M37_LVR_RNA"
+    ],
+    "Parameter Value[Library Strategy]": [
+      "Bisulfite-Seq"
+    ],
+    "Parameter Value[Processed data files]": [
+      "GLDS-48_wtbs_Q160526C_Service_Report.pdf, GLDS-48_wtbs_LVR-Basic_Analysis.tar.gz, GLDS-48_wtbs_LVR-Advanced_Analysis.tar.gz"
+    ],
+    "Parameter Value[Preservation]": [
+      "liquid nitrogen"
+    ],
+    "Parameter Value[Fixation Chemical]": [
+      "paraffin (HE), OCT (ORO)"
+    ],
+    "Parameter Value[Section Thickness]": [
+      "4 (HE), 5 (ORO)"
+    ],
+    "Parameter Value[Image File]": [
+      "LSDS-2_Histology_M36-M37-M38_ORO.ome.tiff, LSDS-2_Histology_M36-M37-M38_ORO.jpg, LSDS-2_Histology_M36-M37-M38_HE.ome.tiff, LSDS-2_Histology_M36-M37-M38_HE.jpg"
+    ],
+    "Parameter Value[Submitted Results File]": [
+      "LSDS-2_Histology_OSD_48_Histology_Submitted_Results.xlsx"
+    ],
+    "Parameter Value[Transformed Reusable Files]": [
+      "LSDS-2_Histology_OSD_48_Histology_TRANSFORMED.csv"
+    ],
+    "Comment[Raw Data File name]": [
+      "150929_KChatacharty_NASA_GeneLab_GroupB_NASA_GC_10_16_Fr*.raw"
+    ],
+    "Comment[Peptide Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Protein Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mgf]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mzid]": [
+      "Not Applicable"
+    ],
+    "Comment[Extraction Method]": [
+      "AllPrep DNA/RNA Mini Kit"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_GC_M38",
+    "sample_name": "Mmus_C57-6J_LVR_GC_C_Rep3_M38",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Dna Methylation Profiling",
+      "Molecular Cellular Imaging",
+      "Protein Expression Profiling",
+      "RNA-Seq",
+      "Rna Methylation Profiling"
+    ],
+    "technology_types": [
+      "Mass Spectrometry",
+      "Microscopy",
+      "Rna Sequencing (Rna Seq)",
+      "Whole Genome Bisulfite Sequencing",
+      "Whole Transcriptome Bisulfite Sequencing"
+    ],
+    "device_platforms": [
+      "Illumina",
+      "Orbitrap Fusion(Thermo Scientific)",
+      "pannoramic scan (3d histech)"
+    ],
+    "data_files": [
+      "GLDS-48_rna-seq_N-GC-38.tar.gz",
+      "GLDS-48_wgbs_N-GC-38-wgbs.tar.gz",
+      "GLDS-48_wtbs_N46_GATCAG_L005_R1_001.fastq.gz",
+      "LSDS-2_Histology_HE.tar.gz",
+      "LSDS-2_Histology_ORO.tar.gz"
+    ],
+    "assay_names": [
+      "Histology",
+      "Whole Genome Bisulfite Sequencing",
+      "Whole Transcriptome Bisulfite Sequencing",
+      "rna-seq"
+    ],
+    "ms_assay_names": [
+      "TMT 10-plex"
+    ],
+    "extract_names": [
+      "RR1_GC_M38_LVR_DNA",
+      "RR1_GC_M38_LVR_PRT",
+      "RR1_GC_M38_LVR_RNA"
+    ],
+    "Parameter Value[QA Instrument]": [
+      "Agilent 2100 Bioanalyzer",
+      "Bioanalyzer"
+    ],
+    "Parameter Value[QA Assay]": [
+      "RNA 6000 Nano Kit",
+      "Agilent RNA 6000 Pico/Nano Kit"
+    ],
+    "Parameter Value[QA Score]": [
+      "8"
+    ],
+    "Parameter Value[Library Selection]": [
+      "polyA enrichment",
+      "PCR"
+    ],
+    "Parameter Value[Library Layout]": [
+      "SINGLE",
+      "PAIRED"
+    ],
+    "Parameter Value[Stranded]": [
+      "STRANDED"
+    ],
+    "Parameter Value[Library QA Instrument]": [
+      "Agilent 2100 Bioanalyzer"
+    ],
+    "Parameter Value[Library Kit]": [
+      "Illumina TruSeq stranded RNA library prep kit"
+    ],
+    "Parameter Value[Sequencing Instrument]": [
+      "Illumina HiSeq 3000",
+      "Illumina HiSeq 2500"
+    ],
+    "Parameter Value[Read Length]": [
+      "50"
+    ],
+    "Parameter Value[Read Depth]": [
+      "43549720"
+    ],
+    "Parameter Value[rRNA Contamination]": [
+      "7.3"
+    ],
+    "Parameter Value[Merged Sequence Data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep3_M38_GLbulkRNAseq_raw.fastq.gz",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep3_M38_R1_raw.fastq.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep3_M38_R2_raw.fastq.gz"
+    ],
+    "Parameter Value[MultiQC File Names]": [
+      "GLDS-48_rna_seq_raw_multiqc_GLbulkRNAseq_data.zip, GLDS-48_rna_seq_raw_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[trimmed sequence data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep3_M38_GLbulkRNAseq_trimmed.fastq.gz",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep3_M38_R1_trimmed.fastq.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep3_M38_R2_trimmed.fastq.gz"
+    ],
+    "Parameter Value[Trimmed Sequence Data/Trimming Reports]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep3_M38_GLbulkRNAseq_trimming_report.txt",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep3_M38_R1_raw.fastq.gz_trimming_report.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep3_M38_R2_raw.fastq.gz_trimming_report.txt"
+    ],
+    "Parameter Value[Trimmed Sequence Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_trimmed_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_trimmed_multiqc_GLbulkRNAseq.html",
+      "GLDS-48_Gwgbs_trimmed_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_trimmed_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[aligned sequence data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep3_M38_GLbulkRNAseq_Aligned.sortedByCoord_sorted.out.bam,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep3_M38_GLbulkRNAseq_Aligned.sortedByCoord_sorted.out.bam.bai,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep3_M38_GLbulkRNAseq_Aligned.toTranscriptome.out.bam,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep3_M38_GLbulkRNAseq_SJ.out.tab",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep3_M38_bismark_bt2_sorted.bam,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep3_M38_bismark_bt2_sorted.bam.bai,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep3_M38_bismark_bt2.deduplicated_sorted.bam,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep3_M38_bismark_bt2.deduplicated_sorted.bam.bai"
+    ],
+    "Parameter Value[Aligned Sequence Data/Unmapped Reads]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep3_M38_GLbulkRNAseq_unmapped.fastq.gz"
+    ],
+    "Parameter Value[Aligned Sequence Data/Alignment Logs]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep3_M38_GLbulkRNAseq_Log.final.out"
+    ],
+    "Parameter Value[Aligned Sequence Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_align_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_align_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[RSeQC/MultiQC Reports]": [
+      "GLDS-48_rna_seq_geneBody_cov_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_geneBody_cov_multiqc_GLbulkRNAseq.html,GLDS-48_rna_seq_infer_exp_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_infer_exp_multiqc_GLbulkRNAseq.html,GLDS-48_rna_seq_read_dist_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_read_dist_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[Raw Counts Data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep3_M38_GLbulkRNAseq.genes.results,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep3_M38_GLbulkRNAseq.isoforms.results,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep3_M38_GLbulkRNAseq_rRNArm.genes.results"
+    ],
+    "Parameter Value[Raw Counts Tables]": [
+      "GLDS-48_rna_seq_RSEM_Unnormalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_STAR_Unnormalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_RSEM_Unnormalized_Counts_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[Raw Counts Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_RSEM_count_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_RSEM_count_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[Normalized Counts Data]": [
+      "GLDS-48_rna_seq_Normalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_VST_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_Normalized_Counts_rRNArm_GLbulkRNAseq.csv,GLDS-48_rna_seq_VST_Counts_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[differential expression analysis data]": [
+      "GLDS-48_rna_seq_SampleTable_GLbulkRNAseq.csv,GLDS-48_rna_seq_contrasts_GLbulkRNAseq.csv,GLDS-48_rna_seq_differential_expression_GLbulkRNAseq.csv,GLDS-48_rna_seq_differential_expression_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[MS Run Group]": [
+      "Group B"
+    ],
+    "Parameter Value[Pool strategy]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Instrument]": [
+      "Orbitrap Fusion"
+    ],
+    "Parameter Value[Ion Source]": [
+      "electrospray ionization"
+    ],
+    "Parameter Value[Analyzer]": [
+      "Ion Trap & Orbitrap"
+    ],
+    "Parameter Value[library strategy]": [
+      "Bisulfite-Seq"
+    ],
+    "Parameter Value[Library Type]": [
+      "EpiGnome",
+      "Not Available"
+    ],
+    "Parameter Value[Merged Sequence Data/MultiQC Reports]": [
+      "GLDS-48_Gwgbs_raw_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_raw_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[Read Count]": [
+      "238296144"
+    ],
+    "Parameter Value[Aligned Sequence Data/Alignment Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep3_M38_bismark_bt2_qualimap.zip,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep3_M38_bismark_bt2.nucleotide_stats.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep3_M38_bismark_bt2_PE_report.txt"
+    ],
+    "Parameter Value[Aligned Sequence Data/Deduplication Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep3_M38_bismark_bt2_pe.deduplication_report.txt"
+    ],
+    "Parameter Value[Methylation Call Data]": [
+      "GLDS-48_Gwgbs_CHG_context_Mmus_C57-6J_LVR_GC_C_Rep3_M38_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_CHH_context_Mmus_C57-6J_LVR_GC_C_Rep3_M38_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_CpG_context_Mmus_C57-6J_LVR_GC_C_Rep3_M38_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep3_M38_bismark_bt2_pe.deduplicated.bedGraph.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep3_M38_bismark_bt2_pe.deduplicated.bismark.cov.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep3_M38_bismark_bt2_pe.deduplicated.CpG_report.txt.gz"
+    ],
+    "Parameter Value[Methylation Call Data/Methylation Call Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep3_M38_bismark_bt2_pe.deduplicated.cytosine_context_summary.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep3_M38_bismark_bt2_pe.deduplicated.M-bias.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep3_M38_bismark_bt2_pe.deduplicated_splitting_report.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep3_M38_bismark_bt2_PE_report.html"
+    ],
+    "Parameter Value[Methylation Call Data/Methylation Call Reports/Methylation Call Summary Reports]": [
+      "GLDS-48_Gwgbs_bismark_summary_report_GLMethylSeq.html,GLDS-48_Gwgbs_bismark_summary_report_GLMethylSeq.txt"
+    ],
+    "Parameter Value[Methylation Call Data/MultiQC Reports]": [
+      "GLDS-48_Gwgbs_align_and_bismark_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_align_and_bismark_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[Differential Methylation Analysis Data]": [
+      "GLDS-48_Gwgbs_SampleTable_GLMethylSeq.csv,GLDS-48_Gwgbs_contrasts_GLMethylSeq.csv,GLDS-48_Gwgbs_differential_methylation_bases_GLMethylSeq.csv,GLDS-48_Gwgbs_differential_methylation_tiles_GLMethylSeq.csv"
+    ],
+    "Parameter Value[Extract Name]": [
+      "RR1_GC_M38_LVR_RNA"
+    ],
+    "Parameter Value[Library Strategy]": [
+      "Bisulfite-Seq"
+    ],
+    "Parameter Value[Processed data files]": [
+      "GLDS-48_wtbs_Q160526C_Service_Report.pdf, GLDS-48_wtbs_LVR-Basic_Analysis.tar.gz, GLDS-48_wtbs_LVR-Advanced_Analysis.tar.gz"
+    ],
+    "Parameter Value[Preservation]": [
+      "liquid nitrogen"
+    ],
+    "Parameter Value[Fixation Chemical]": [
+      "paraffin (HE), OCT (ORO)"
+    ],
+    "Parameter Value[Section Thickness]": [
+      "4 (HE), 5 (ORO)"
+    ],
+    "Parameter Value[Image File]": [
+      "LSDS-2_Histology_M36-M37-M38_ORO.ome.tiff, LSDS-2_Histology_M36-M37-M38_ORO.jpg, LSDS-2_Histology_M36-M37-M38_HE.ome.tiff, LSDS-2_Histology_M36-M37-M38_HE.jpg"
+    ],
+    "Parameter Value[Submitted Results File]": [
+      "LSDS-2_Histology_OSD_48_Histology_Submitted_Results.xlsx"
+    ],
+    "Parameter Value[Transformed Reusable Files]": [
+      "LSDS-2_Histology_OSD_48_Histology_TRANSFORMED.csv"
+    ],
+    "Comment[Raw Data File name]": [
+      "150929_KChatacharty_NASA_GeneLab_GroupB_NASA_GC_10_16_Fr*.raw"
+    ],
+    "Comment[Peptide Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Protein Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mgf]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mzid]": [
+      "Not Applicable"
+    ],
+    "Comment[Extraction Method]": [
+      "AllPrep DNA/RNA Mini Kit"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_GC_M39",
+    "sample_name": "Mmus_C57-6J_LVR_GC_C_Rep4_M39",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Dna Methylation Profiling",
+      "Molecular Cellular Imaging",
+      "Protein Expression Profiling",
+      "RNA-Seq",
+      "Rna Methylation Profiling"
+    ],
+    "technology_types": [
+      "Mass Spectrometry",
+      "Microscopy",
+      "Rna Sequencing (Rna Seq)",
+      "Whole Genome Bisulfite Sequencing",
+      "Whole Transcriptome Bisulfite Sequencing"
+    ],
+    "device_platforms": [
+      "Illumina",
+      "Orbitrap Fusion(Thermo Scientific)",
+      "pannoramic scan (3d histech)"
+    ],
+    "data_files": [
+      "GLDS-48_rna-seq_N-GC-39.tar.gz",
+      "GLDS-48_wgbs_N-GC-39-wgbs.tar.gz",
+      "GLDS-48_wtbs_N47_TAGCTT_L005_R1_001.fastq.gz",
+      "LSDS-2_Histology_HE.tar.gz",
+      "LSDS-2_Histology_ORO.tar.gz"
+    ],
+    "assay_names": [
+      "Histology",
+      "Whole Genome Bisulfite Sequencing",
+      "Whole Transcriptome Bisulfite Sequencing",
+      "rna-seq"
+    ],
+    "ms_assay_names": [
+      "TMT 10-plex"
+    ],
+    "extract_names": [
+      "RR1_GC_M39_LVR_DNA",
+      "RR1_GC_M39_LVR_PRT",
+      "RR1_GC_M39_LVR_RNA"
+    ],
+    "Parameter Value[QA Instrument]": [
+      "Agilent 2100 Bioanalyzer",
+      "Bioanalyzer"
+    ],
+    "Parameter Value[QA Assay]": [
+      "RNA 6000 Nano Kit",
+      "Agilent RNA 6000 Pico/Nano Kit"
+    ],
+    "Parameter Value[QA Score]": [
+      "7.9"
+    ],
+    "Parameter Value[Library Selection]": [
+      "polyA enrichment",
+      "PCR"
+    ],
+    "Parameter Value[Library Layout]": [
+      "SINGLE",
+      "PAIRED"
+    ],
+    "Parameter Value[Stranded]": [
+      "STRANDED"
+    ],
+    "Parameter Value[Library QA Instrument]": [
+      "Agilent 2100 Bioanalyzer"
+    ],
+    "Parameter Value[Library Kit]": [
+      "Illumina TruSeq stranded RNA library prep kit"
+    ],
+    "Parameter Value[Sequencing Instrument]": [
+      "Illumina HiSeq 3000",
+      "Illumina HiSeq 2500"
+    ],
+    "Parameter Value[Read Length]": [
+      "50"
+    ],
+    "Parameter Value[Read Depth]": [
+      "34115170"
+    ],
+    "Parameter Value[rRNA Contamination]": [
+      "8.18"
+    ],
+    "Parameter Value[Merged Sequence Data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep4_M39_GLbulkRNAseq_raw.fastq.gz",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep4_M39_R1_raw.fastq.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep4_M39_R2_raw.fastq.gz"
+    ],
+    "Parameter Value[MultiQC File Names]": [
+      "GLDS-48_rna_seq_raw_multiqc_GLbulkRNAseq_data.zip, GLDS-48_rna_seq_raw_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[trimmed sequence data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep4_M39_GLbulkRNAseq_trimmed.fastq.gz",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep4_M39_R1_trimmed.fastq.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep4_M39_R2_trimmed.fastq.gz"
+    ],
+    "Parameter Value[Trimmed Sequence Data/Trimming Reports]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep4_M39_GLbulkRNAseq_trimming_report.txt",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep4_M39_R1_raw.fastq.gz_trimming_report.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep4_M39_R2_raw.fastq.gz_trimming_report.txt"
+    ],
+    "Parameter Value[Trimmed Sequence Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_trimmed_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_trimmed_multiqc_GLbulkRNAseq.html",
+      "GLDS-48_Gwgbs_trimmed_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_trimmed_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[aligned sequence data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep4_M39_GLbulkRNAseq_Aligned.sortedByCoord_sorted.out.bam,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep4_M39_GLbulkRNAseq_Aligned.sortedByCoord_sorted.out.bam.bai,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep4_M39_GLbulkRNAseq_Aligned.toTranscriptome.out.bam,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep4_M39_GLbulkRNAseq_SJ.out.tab",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep4_M39_bismark_bt2_sorted.bam,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep4_M39_bismark_bt2_sorted.bam.bai,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep4_M39_bismark_bt2.deduplicated_sorted.bam,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep4_M39_bismark_bt2.deduplicated_sorted.bam.bai"
+    ],
+    "Parameter Value[Aligned Sequence Data/Unmapped Reads]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep4_M39_GLbulkRNAseq_unmapped.fastq.gz"
+    ],
+    "Parameter Value[Aligned Sequence Data/Alignment Logs]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep4_M39_GLbulkRNAseq_Log.final.out"
+    ],
+    "Parameter Value[Aligned Sequence Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_align_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_align_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[RSeQC/MultiQC Reports]": [
+      "GLDS-48_rna_seq_geneBody_cov_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_geneBody_cov_multiqc_GLbulkRNAseq.html,GLDS-48_rna_seq_infer_exp_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_infer_exp_multiqc_GLbulkRNAseq.html,GLDS-48_rna_seq_read_dist_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_read_dist_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[Raw Counts Data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep4_M39_GLbulkRNAseq.genes.results,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep4_M39_GLbulkRNAseq.isoforms.results,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep4_M39_GLbulkRNAseq_rRNArm.genes.results"
+    ],
+    "Parameter Value[Raw Counts Tables]": [
+      "GLDS-48_rna_seq_RSEM_Unnormalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_STAR_Unnormalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_RSEM_Unnormalized_Counts_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[Raw Counts Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_RSEM_count_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_RSEM_count_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[Normalized Counts Data]": [
+      "GLDS-48_rna_seq_Normalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_VST_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_Normalized_Counts_rRNArm_GLbulkRNAseq.csv,GLDS-48_rna_seq_VST_Counts_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[differential expression analysis data]": [
+      "GLDS-48_rna_seq_SampleTable_GLbulkRNAseq.csv,GLDS-48_rna_seq_contrasts_GLbulkRNAseq.csv,GLDS-48_rna_seq_differential_expression_GLbulkRNAseq.csv,GLDS-48_rna_seq_differential_expression_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[MS Run Group]": [
+      "Group B"
+    ],
+    "Parameter Value[Pool strategy]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Instrument]": [
+      "Orbitrap Fusion"
+    ],
+    "Parameter Value[Ion Source]": [
+      "electrospray ionization"
+    ],
+    "Parameter Value[Analyzer]": [
+      "Ion Trap & Orbitrap"
+    ],
+    "Parameter Value[library strategy]": [
+      "Bisulfite-Seq"
+    ],
+    "Parameter Value[Library Type]": [
+      "EpiGnome",
+      "Not Available"
+    ],
+    "Parameter Value[Merged Sequence Data/MultiQC Reports]": [
+      "GLDS-48_Gwgbs_raw_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_raw_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[Read Count]": [
+      "186298646"
+    ],
+    "Parameter Value[Aligned Sequence Data/Alignment Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep4_M39_bismark_bt2_qualimap.zip,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep4_M39_bismark_bt2.nucleotide_stats.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep4_M39_bismark_bt2_PE_report.txt"
+    ],
+    "Parameter Value[Aligned Sequence Data/Deduplication Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep4_M39_bismark_bt2_pe.deduplication_report.txt"
+    ],
+    "Parameter Value[Methylation Call Data]": [
+      "GLDS-48_Gwgbs_CHG_context_Mmus_C57-6J_LVR_GC_C_Rep4_M39_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_CHH_context_Mmus_C57-6J_LVR_GC_C_Rep4_M39_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_CpG_context_Mmus_C57-6J_LVR_GC_C_Rep4_M39_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep4_M39_bismark_bt2_pe.deduplicated.bedGraph.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep4_M39_bismark_bt2_pe.deduplicated.bismark.cov.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep4_M39_bismark_bt2_pe.deduplicated.CpG_report.txt.gz"
+    ],
+    "Parameter Value[Methylation Call Data/Methylation Call Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep4_M39_bismark_bt2_pe.deduplicated.cytosine_context_summary.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep4_M39_bismark_bt2_pe.deduplicated.M-bias.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep4_M39_bismark_bt2_pe.deduplicated_splitting_report.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep4_M39_bismark_bt2_PE_report.html"
+    ],
+    "Parameter Value[Methylation Call Data/Methylation Call Reports/Methylation Call Summary Reports]": [
+      "GLDS-48_Gwgbs_bismark_summary_report_GLMethylSeq.html,GLDS-48_Gwgbs_bismark_summary_report_GLMethylSeq.txt"
+    ],
+    "Parameter Value[Methylation Call Data/MultiQC Reports]": [
+      "GLDS-48_Gwgbs_align_and_bismark_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_align_and_bismark_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[Differential Methylation Analysis Data]": [
+      "GLDS-48_Gwgbs_SampleTable_GLMethylSeq.csv,GLDS-48_Gwgbs_contrasts_GLMethylSeq.csv,GLDS-48_Gwgbs_differential_methylation_bases_GLMethylSeq.csv,GLDS-48_Gwgbs_differential_methylation_tiles_GLMethylSeq.csv"
+    ],
+    "Parameter Value[Extract Name]": [
+      "RR1_GC_M39_LVR_RNA"
+    ],
+    "Parameter Value[Library Strategy]": [
+      "Bisulfite-Seq"
+    ],
+    "Parameter Value[Processed data files]": [
+      "GLDS-48_wtbs_Q160526C_Service_Report.pdf, GLDS-48_wtbs_LVR-Basic_Analysis.tar.gz, GLDS-48_wtbs_LVR-Advanced_Analysis.tar.gz"
+    ],
+    "Parameter Value[Preservation]": [
+      "liquid nitrogen"
+    ],
+    "Parameter Value[Fixation Chemical]": [
+      "paraffin (HE), OCT (ORO)"
+    ],
+    "Parameter Value[Section Thickness]": [
+      "4 (HE), 5 (ORO)"
+    ],
+    "Parameter Value[Image File]": [
+      "LSDS-2_Histology_M39-M40_ORO.ome.tiff, LSDS-2_Histology_M39-M40_ORO.jpg, LSDS-2_Histology_M39-M40_HE.ome.tiff, LSDS-2_Histology_M39-M40_HE.jpg"
+    ],
+    "Parameter Value[Submitted Results File]": [
+      "LSDS-2_Histology_OSD_48_Histology_Submitted_Results.xlsx"
+    ],
+    "Parameter Value[Transformed Reusable Files]": [
+      "LSDS-2_Histology_OSD_48_Histology_TRANSFORMED.csv"
+    ],
+    "Comment[Raw Data File name]": [
+      "150929_KChatacharty_NASA_GeneLab_GroupB_NASA_GC_10_16_Fr*.raw"
+    ],
+    "Comment[Peptide Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Protein Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mgf]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mzid]": [
+      "Not Applicable"
+    ],
+    "Comment[Extraction Method]": [
+      "AllPrep DNA/RNA Mini Kit"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_GC_M40",
+    "sample_name": "Mmus_C57-6J_LVR_GC_C_Rep5_M40",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Dna Methylation Profiling",
+      "Molecular Cellular Imaging",
+      "Protein Expression Profiling",
+      "RNA-Seq",
+      "Rna Methylation Profiling"
+    ],
+    "technology_types": [
+      "Mass Spectrometry",
+      "Microscopy",
+      "Rna Sequencing (Rna Seq)",
+      "Whole Genome Bisulfite Sequencing",
+      "Whole Transcriptome Bisulfite Sequencing"
+    ],
+    "device_platforms": [
+      "Illumina",
+      "Orbitrap Fusion(Thermo Scientific)",
+      "pannoramic scan (3d histech)"
+    ],
+    "data_files": [
+      "GLDS-48_rna-seq_N-GC-40.tar.gz",
+      "GLDS-48_wgbs_N-GC-40-wgbs.tar.gz",
+      "GLDS-48_wtbs_N48_CTTGTA_L005_R1_001.fastq.gz",
+      "LSDS-2_Histology_HE.tar.gz",
+      "LSDS-2_Histology_ORO.tar.gz"
+    ],
+    "assay_names": [
+      "Histology",
+      "Whole Genome Bisulfite Sequencing",
+      "Whole Transcriptome Bisulfite Sequencing",
+      "rna-seq"
+    ],
+    "ms_assay_names": [
+      "TMT 10-plex"
+    ],
+    "extract_names": [
+      "RR1_GC_M40_LVR_DNA",
+      "RR1_GC_M40_LVR_PRT",
+      "RR1_GC_M40_LVR_RNA"
+    ],
+    "Parameter Value[QA Instrument]": [
+      "Agilent 2100 Bioanalyzer",
+      "Bioanalyzer"
+    ],
+    "Parameter Value[QA Assay]": [
+      "RNA 6000 Nano Kit",
+      "Agilent RNA 6000 Pico/Nano Kit"
+    ],
+    "Parameter Value[QA Score]": [
+      "9.2"
+    ],
+    "Parameter Value[Library Selection]": [
+      "polyA enrichment",
+      "PCR"
+    ],
+    "Parameter Value[Library Layout]": [
+      "SINGLE",
+      "PAIRED"
+    ],
+    "Parameter Value[Stranded]": [
+      "STRANDED"
+    ],
+    "Parameter Value[Library QA Instrument]": [
+      "Agilent 2100 Bioanalyzer"
+    ],
+    "Parameter Value[Library Kit]": [
+      "Illumina TruSeq stranded RNA library prep kit"
+    ],
+    "Parameter Value[Sequencing Instrument]": [
+      "Illumina HiSeq 3000",
+      "Illumina HiSeq 2500"
+    ],
+    "Parameter Value[Read Length]": [
+      "50"
+    ],
+    "Parameter Value[Read Depth]": [
+      "35007400"
+    ],
+    "Parameter Value[rRNA Contamination]": [
+      "5.1"
+    ],
+    "Parameter Value[Merged Sequence Data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep5_M40_GLbulkRNAseq_raw.fastq.gz",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep5_M40_R1_raw.fastq.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep5_M40_R2_raw.fastq.gz"
+    ],
+    "Parameter Value[MultiQC File Names]": [
+      "GLDS-48_rna_seq_raw_multiqc_GLbulkRNAseq_data.zip, GLDS-48_rna_seq_raw_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[trimmed sequence data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep5_M40_GLbulkRNAseq_trimmed.fastq.gz",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep5_M40_R1_trimmed.fastq.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep5_M40_R2_trimmed.fastq.gz"
+    ],
+    "Parameter Value[Trimmed Sequence Data/Trimming Reports]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep5_M40_GLbulkRNAseq_trimming_report.txt",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep5_M40_R1_raw.fastq.gz_trimming_report.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep5_M40_R2_raw.fastq.gz_trimming_report.txt"
+    ],
+    "Parameter Value[Trimmed Sequence Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_trimmed_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_trimmed_multiqc_GLbulkRNAseq.html",
+      "GLDS-48_Gwgbs_trimmed_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_trimmed_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[aligned sequence data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep5_M40_GLbulkRNAseq_Aligned.sortedByCoord_sorted.out.bam,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep5_M40_GLbulkRNAseq_Aligned.sortedByCoord_sorted.out.bam.bai,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep5_M40_GLbulkRNAseq_Aligned.toTranscriptome.out.bam,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep5_M40_GLbulkRNAseq_SJ.out.tab",
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep5_M40_bismark_bt2_sorted.bam,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep5_M40_bismark_bt2_sorted.bam.bai,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep5_M40_bismark_bt2.deduplicated_sorted.bam,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep5_M40_bismark_bt2.deduplicated_sorted.bam.bai"
+    ],
+    "Parameter Value[Aligned Sequence Data/Unmapped Reads]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep5_M40_GLbulkRNAseq_unmapped.fastq.gz"
+    ],
+    "Parameter Value[Aligned Sequence Data/Alignment Logs]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep5_M40_GLbulkRNAseq_Log.final.out"
+    ],
+    "Parameter Value[Aligned Sequence Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_align_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_align_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[RSeQC/MultiQC Reports]": [
+      "GLDS-48_rna_seq_geneBody_cov_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_geneBody_cov_multiqc_GLbulkRNAseq.html,GLDS-48_rna_seq_infer_exp_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_infer_exp_multiqc_GLbulkRNAseq.html,GLDS-48_rna_seq_read_dist_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_read_dist_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[Raw Counts Data]": [
+      "GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep5_M40_GLbulkRNAseq.genes.results,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep5_M40_GLbulkRNAseq.isoforms.results,GLDS-48_rna_seq_Mmus_C57-6J_LVR_GC_C_Rep5_M40_GLbulkRNAseq_rRNArm.genes.results"
+    ],
+    "Parameter Value[Raw Counts Tables]": [
+      "GLDS-48_rna_seq_RSEM_Unnormalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_STAR_Unnormalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_RSEM_Unnormalized_Counts_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[Raw Counts Data/MultiQC Reports]": [
+      "GLDS-48_rna_seq_RSEM_count_multiqc_GLbulkRNAseq_data.zip,GLDS-48_rna_seq_RSEM_count_multiqc_GLbulkRNAseq.html"
+    ],
+    "Parameter Value[Normalized Counts Data]": [
+      "GLDS-48_rna_seq_Normalized_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_VST_Counts_GLbulkRNAseq.csv,GLDS-48_rna_seq_Normalized_Counts_rRNArm_GLbulkRNAseq.csv,GLDS-48_rna_seq_VST_Counts_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[differential expression analysis data]": [
+      "GLDS-48_rna_seq_SampleTable_GLbulkRNAseq.csv,GLDS-48_rna_seq_contrasts_GLbulkRNAseq.csv,GLDS-48_rna_seq_differential_expression_GLbulkRNAseq.csv,GLDS-48_rna_seq_differential_expression_rRNArm_GLbulkRNAseq.csv"
+    ],
+    "Parameter Value[MS Run Group]": [
+      "Group B"
+    ],
+    "Parameter Value[Pool strategy]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Instrument]": [
+      "Orbitrap Fusion"
+    ],
+    "Parameter Value[Ion Source]": [
+      "electrospray ionization"
+    ],
+    "Parameter Value[Analyzer]": [
+      "Ion Trap & Orbitrap"
+    ],
+    "Parameter Value[library strategy]": [
+      "Bisulfite-Seq"
+    ],
+    "Parameter Value[Library Type]": [
+      "EpiGnome",
+      "Not Available"
+    ],
+    "Parameter Value[Merged Sequence Data/MultiQC Reports]": [
+      "GLDS-48_Gwgbs_raw_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_raw_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[Read Count]": [
+      "159398959"
+    ],
+    "Parameter Value[Aligned Sequence Data/Alignment Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep5_M40_bismark_bt2_qualimap.zip,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep5_M40_bismark_bt2.nucleotide_stats.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep5_M40_bismark_bt2_PE_report.txt"
+    ],
+    "Parameter Value[Aligned Sequence Data/Deduplication Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep5_M40_bismark_bt2_pe.deduplication_report.txt"
+    ],
+    "Parameter Value[Methylation Call Data]": [
+      "GLDS-48_Gwgbs_CHG_context_Mmus_C57-6J_LVR_GC_C_Rep5_M40_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_CHH_context_Mmus_C57-6J_LVR_GC_C_Rep5_M40_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_CpG_context_Mmus_C57-6J_LVR_GC_C_Rep5_M40_bismark_bt2_pe.deduplicated.txt.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep5_M40_bismark_bt2_pe.deduplicated.bedGraph.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep5_M40_bismark_bt2_pe.deduplicated.bismark.cov.gz,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep5_M40_bismark_bt2_pe.deduplicated.CpG_report.txt.gz"
+    ],
+    "Parameter Value[Methylation Call Data/Methylation Call Reports]": [
+      "GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep5_M40_bismark_bt2_pe.deduplicated.cytosine_context_summary.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep5_M40_bismark_bt2_pe.deduplicated.M-bias.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep5_M40_bismark_bt2_pe.deduplicated_splitting_report.txt,GLDS-48_Gwgbs_Mmus_C57-6J_LVR_GC_C_Rep5_M40_bismark_bt2_PE_report.html"
+    ],
+    "Parameter Value[Methylation Call Data/Methylation Call Reports/Methylation Call Summary Reports]": [
+      "GLDS-48_Gwgbs_bismark_summary_report_GLMethylSeq.html,GLDS-48_Gwgbs_bismark_summary_report_GLMethylSeq.txt"
+    ],
+    "Parameter Value[Methylation Call Data/MultiQC Reports]": [
+      "GLDS-48_Gwgbs_align_and_bismark_multiqc_GLMethylSeq.html,GLDS-48_Gwgbs_align_and_bismark_multiqc_GLMethylSeq_data.zip"
+    ],
+    "Parameter Value[Differential Methylation Analysis Data]": [
+      "GLDS-48_Gwgbs_SampleTable_GLMethylSeq.csv,GLDS-48_Gwgbs_contrasts_GLMethylSeq.csv,GLDS-48_Gwgbs_differential_methylation_bases_GLMethylSeq.csv,GLDS-48_Gwgbs_differential_methylation_tiles_GLMethylSeq.csv"
+    ],
+    "Parameter Value[Extract Name]": [
+      "RR1_GC_M40_LVR_RNA"
+    ],
+    "Parameter Value[Library Strategy]": [
+      "Bisulfite-Seq"
+    ],
+    "Parameter Value[Processed data files]": [
+      "GLDS-48_wtbs_Q160526C_Service_Report.pdf, GLDS-48_wtbs_LVR-Basic_Analysis.tar.gz, GLDS-48_wtbs_LVR-Advanced_Analysis.tar.gz"
+    ],
+    "Parameter Value[Preservation]": [
+      "liquid nitrogen"
+    ],
+    "Parameter Value[Fixation Chemical]": [
+      "paraffin (HE), OCT (ORO)"
+    ],
+    "Parameter Value[Section Thickness]": [
+      "4 (HE), 5 (ORO)"
+    ],
+    "Parameter Value[Image File]": [
+      "LSDS-2_Histology_M39-M40_ORO.ome.tiff, LSDS-2_Histology_M39-M40_ORO.jpg, LSDS-2_Histology_M39-M40_HE.ome.tiff, LSDS-2_Histology_M39-M40_HE.jpg"
+    ],
+    "Parameter Value[Submitted Results File]": [
+      "LSDS-2_Histology_OSD_48_Histology_Submitted_Results.xlsx"
+    ],
+    "Parameter Value[Transformed Reusable Files]": [
+      "LSDS-2_Histology_OSD_48_Histology_TRANSFORMED.csv"
+    ],
+    "Comment[Raw Data File name]": [
+      "150929_KChatacharty_NASA_GeneLab_GroupB_NASA_GC_10_16_Fr*.raw"
+    ],
+    "Comment[Peptide Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Protein Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mgf]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mzid]": [
+      "Not Applicable"
+    ],
+    "Comment[Extraction Method]": [
+      "AllPrep DNA/RNA Mini Kit"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_GC_NASA+CASIS_LVR_POOL",
+    "sample_name": "RR1_GC_NASA+CASIS_LVR_POOL",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Protein Expression Profiling"
+    ],
+    "technology_types": [
+      "Mass Spectrometry"
+    ],
+    "device_platforms": [
+      "Orbitrap Fusion(Thermo Scientific)"
+    ],
+    "data_files": [],
+    "assay_names": [],
+    "ms_assay_names": [
+      "TMT 10-plex"
+    ],
+    "extract_names": [
+      "RR1_GC_NASA+CASIS_LVR_POOL"
+    ],
+    "Parameter Value[MS Run Group]": [
+      "Group B"
+    ],
+    "Parameter Value[Pool strategy]": [
+      "equivalent aliquots of each sample as a function of mass"
+    ],
+    "Parameter Value[Instrument]": [
+      "Orbitrap Fusion"
+    ],
+    "Parameter Value[Ion Source]": [
+      "electrospray ionization"
+    ],
+    "Parameter Value[Analyzer]": [
+      "Ion Trap & Orbitrap"
+    ],
+    "Comment[Raw Data File name]": [
+      "150929_KChatacharty_NASA_GeneLab_GroupB_NASA_GC_10_16_Fr*.raw"
+    ],
+    "Comment[Peptide Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Protein Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mgf]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mzid]": [
+      "Not Applicable"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_GC_NASA_LVR_POOL",
+    "sample_name": "RR1_GC_NASA_LVR_POOL",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Protein Expression Profiling"
+    ],
+    "technology_types": [
+      "Mass Spectrometry"
+    ],
+    "device_platforms": [
+      "Orbitrap Fusion(Thermo Scientific)"
+    ],
+    "data_files": [],
+    "assay_names": [],
+    "ms_assay_names": [
+      "TMT 10-plex"
+    ],
+    "extract_names": [
+      "RR1_GC_NASA_LVR_POOL"
+    ],
+    "Parameter Value[MS Run Group]": [
+      "Group B"
+    ],
+    "Parameter Value[Pool strategy]": [
+      "equivalent aliquots of each sample as a function of mass"
+    ],
+    "Parameter Value[Instrument]": [
+      "Orbitrap Fusion"
+    ],
+    "Parameter Value[Ion Source]": [
+      "electrospray ionization"
+    ],
+    "Parameter Value[Analyzer]": [
+      "Ion Trap & Orbitrap"
+    ],
+    "Comment[Raw Data File name]": [
+      "150929_KChatacharty_NASA_GeneLab_GroupB_NASA_GC_10_16_Fr*.raw"
+    ],
+    "Comment[Peptide Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Protein Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mgf]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mzid]": [
+      "Not Applicable"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_BA_CASIS_LVR_POOL",
+    "sample_name": "RR1_BA_CASIS_LVR_POOL",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Protein Expression Profiling"
+    ],
+    "technology_types": [
+      "Mass Spectrometry"
+    ],
+    "device_platforms": [
+      "Orbitrap Fusion(Thermo Scientific)"
+    ],
+    "data_files": [],
+    "assay_names": [],
+    "ms_assay_names": [
+      "TMT 10-plex"
+    ],
+    "extract_names": [
+      "RR1_BA_CASIS_LVR_POOL"
+    ],
+    "Parameter Value[MS Run Group]": [
+      "Group B",
+      "Group C"
+    ],
+    "Parameter Value[Pool strategy]": [
+      "equivalent aliquots of each sample as a function of mass"
+    ],
+    "Parameter Value[Instrument]": [
+      "Orbitrap Fusion"
+    ],
+    "Parameter Value[Ion Source]": [
+      "electrospray ionization"
+    ],
+    "Parameter Value[Analyzer]": [
+      "Ion Trap & Orbitrap"
+    ],
+    "Comment[Raw Data File name]": [
+      "150929_KChatacharty_NASA_GeneLab_GroupB_NASA_GC_10_16_Fr*.raw",
+      "150929_KChatacharty_NASA_GeneLab_GroupC_NASA_Flt_17_23_Fr*.raw"
+    ],
+    "Comment[Peptide Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Protein Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mgf]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mzid]": [
+      "Not Applicable"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_FLT_NASA+CASIS_LVR_POOL",
+    "sample_name": "RR1_FLT_NASA+CASIS_LVR_POOL",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Protein Expression Profiling"
+    ],
+    "technology_types": [
+      "Mass Spectrometry"
+    ],
+    "device_platforms": [
+      "Orbitrap Fusion(Thermo Scientific)"
+    ],
+    "data_files": [],
+    "assay_names": [],
+    "ms_assay_names": [
+      "TMT 10-plex"
+    ],
+    "extract_names": [
+      "RR1_FLT_NASA+CASIS_LVR_POOL"
+    ],
+    "Parameter Value[MS Run Group]": [
+      "Group C"
+    ],
+    "Parameter Value[Pool strategy]": [
+      "equivalent aliquots of each sample as a function of mass"
+    ],
+    "Parameter Value[Instrument]": [
+      "Orbitrap Fusion"
+    ],
+    "Parameter Value[Ion Source]": [
+      "electrospray ionization"
+    ],
+    "Parameter Value[Analyzer]": [
+      "Ion Trap & Orbitrap"
+    ],
+    "Comment[Raw Data File name]": [
+      "150929_KChatacharty_NASA_GeneLab_GroupC_NASA_Flt_17_23_Fr*.raw"
+    ],
+    "Comment[Peptide Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Protein Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mgf]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mzid]": [
+      "Not Applicable"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_FLT_NASA_LVR_POOL",
+    "sample_name": "RR1_FLT_NASA_LVR_POOL",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Protein Expression Profiling"
+    ],
+    "technology_types": [
+      "Mass Spectrometry"
+    ],
+    "device_platforms": [
+      "Orbitrap Fusion(Thermo Scientific)"
+    ],
+    "data_files": [],
+    "assay_names": [],
+    "ms_assay_names": [
+      "TMT 10-plex"
+    ],
+    "extract_names": [
+      "RR1_FLT_NASA_LVR_POOL"
+    ],
+    "Parameter Value[MS Run Group]": [
+      "Group C"
+    ],
+    "Parameter Value[Pool strategy]": [
+      "equivalent aliquots of each sample as a function of mass"
+    ],
+    "Parameter Value[Instrument]": [
+      "Orbitrap Fusion"
+    ],
+    "Parameter Value[Ion Source]": [
+      "electrospray ionization"
+    ],
+    "Parameter Value[Analyzer]": [
+      "Ion Trap & Orbitrap"
+    ],
+    "Comment[Raw Data File name]": [
+      "150929_KChatacharty_NASA_GeneLab_GroupC_NASA_Flt_17_23_Fr*.raw"
+    ],
+    "Comment[Peptide Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Protein Group File]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mgf]": [
+      "Not Applicable"
+    ],
+    "Comment[Byonic output file .mzid]": [
+      "Not Applicable"
+    ]
+  },
+  {
+    "osd": "OSD-48",
+    "source_name": "RR1_BA_CASIS_LVR_POOL",
+    "sample_name": "RR1_BSL_VIV_NASA_LVR_POOL",
+    "organism": "Mus musculus",
+    "material_type": "Liver",
+    "measurement_types": [
+      "Protein Expression Profiling"
+    ],
+    "technology_types": [
+      "Mass Spectrometry"
+    ],
+    "device_platforms": [
+      "Orbitrap Fusion(Thermo Scientific)"
+    ],
+    "data_files": [],
+    "assay_names": [],
+    "ms_assay_names": [
+      "TMT 11-plex"
+    ],
+    "extract_names": [
+      "RR1_BSL_VIV_NASA_LVR_POOL"
+    ],
+    "Parameter Value[MS Run Group]": [
+      "Not Applicable"
+    ],
+    "Parameter Value[Pool strategy]": [
+      "equivalent aliquots of each sample as a function of mass"
+    ],
+    "Parameter Value[Instrument]": [
+      "Orbitrap Fusion"
+    ],
+    "Parameter Value[Ion Source]": [
+      "electrospray ionization"
+    ],
+    "Parameter Value[Analyzer]": [
+      "Ion Trap & Orbitrap"
+    ],
+    "Comment[Raw Data File name]": [
+      "170811_NASA_7313_TMT_11plex_Frac*.raw"
+    ],
+    "Comment[Peptide Group File]": [
+      "170811_NASA_7313_TMT_11plex_BB_Anova_PeptideGroups.txt"
+    ],
+    "Comment[Protein Group File]": [
+      "170811_NASA_7313_TMT_11plex_BB_Anova_ProteinGroups.txt"
+    ],
+    "Comment[Byonic output file .mgf]": [
+      "170811_NASA_....byspec2_20170815_Byonic.mgf"
+    ],
+    "Comment[Byonic output file .mzid]": [
+      "170811_NASA_....byspec2_20170815_Byonic.mzid"
+    ]
+  }
+]

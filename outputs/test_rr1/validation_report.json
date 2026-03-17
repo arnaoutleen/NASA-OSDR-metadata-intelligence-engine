@@ -1,0 +1,64 @@
+NASA OSDR METADATA ENRICHMENT - VALIDATION REPORT
+Generated: 2026-03-17 13:08:27
+============================================================
+
+PIPELINE SUMMARY
+----------------------------------------
+Total rows processed: 302
+Rows enriched: 302
+Studies processed: 10
+Duration: 0.00 seconds
+
+PROVENANCE SUMMARY
+----------------------------------------
+
+Has_RNAseq: 302 enrichments
+  - from_osdr_metadata: 302
+
+age: 302 enrichments
+  - from_isa_characteristics: 293
+  - from_osdr_metadata: 9
+
+age_when_sent_to_space: 302 enrichments
+  - from_isa_characteristics: 302
+
+assay_on_organ: 302 enrichments
+  - from_osdr_metadata: 302
+
+mouse_genetic_variant: 93 enrichments
+  - from_isa_characteristics: 93
+
+mouse_id: 302 enrichments
+  - from_isa_characteristics: 302
+
+mouse_sex: 302 enrichments
+  - from_isa_characteristics: 302
+
+mouse_source: 302 enrichments
+  - from_isa_characteristics: 302
+
+mouse_strain: 302 enrichments
+  - from_isa_characteristics: 302
+
+n_RNAseq_mice: 172 enrichments
+  - from_osdr_metadata: 172
+
+n_mice_total: 302 enrichments
+  - from_osdr_metadata: 302
+
+organ_sampled: 302 enrichments
+  - from_isa_characteristics: 302
+
+space_or_ground: 302 enrichments
+  - from_isa_factor_values: 302
+
+study purpose: 302 enrichments
+  - from_osdr_metadata: 302
+
+CONFIDENCE BREAKDOWN
+----------------------------------------
+high: 3717
+low: 0
+medium: 172
+n/a: 0
+suggestion: 0
