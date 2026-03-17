@@ -3,4 +3,4 @@ add something that's like payload_id+source_name
 make the code check: when you pull the data, add a date, and then when you re-pull the data later in the future, it should check against the current output and add a new copy with the data that was missing last time 
 
 * consider ease for the consumer:
-* write code that will consume the data. (a guide on how to do it)
+* write code that will consume the data. (a guide on how to do it)... like a unit test
