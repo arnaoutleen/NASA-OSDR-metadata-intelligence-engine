@@ -37,6 +37,8 @@ class SampleRow:
     number_of_tech_replicates: str = ""
     part_of_a_longitudinal_sample_series: str = ""
     notes: str = ""
+    age: str = ""
+    habitat: str = ""
     RNA_seq_method: str = ""
     RNA_seq_paired: str = ""
     days_in_space_rr3: str = ""
@@ -190,7 +192,7 @@ SAMPLE_OUTPUT_COLUMNS = [
     "space_or_ground", "when_was_the_sample_collected", "mouse_sex",
     "mouse_strain", "mouse_genetic_variant", "mouse_source", "organ_sampled",
     "assay_on_organ", "number_of_tech_replicates", "part_of_a_longitudinal_sample_series",
-    "notes", "days_in_space_rr3",
+    "notes", "age", "habitat", "days_in_space_rr3",
     # RNA sequencing (targeted transcriptome sequencing)
     "RNA_seq_method", "RNA_seq_paired",
     "rnaseq_qa_instrument", "rnaseq_stranded", "rnaseq_spikein_mix", "rnaseq_spikein_qc",
@@ -568,6 +570,31 @@ class SampleExpander:
         # Extract spaceflight status from ALL factor values
         row.space_or_ground = self._determine_space_or_ground(sample)
         
+        # Age: Characteristics[Age] or Factor Value[Age]
+        row.age = (
+            self._get_characteristic(sample, "age")
+            or self._get_factor_value(sample, "age")
+        )
+
+        # Duration in space: Factor Value[duration] or Factor Value[Time in Space]
+        row.days_in_space_rr3 = (
+            self._get_factor_value(sample, "duration")
+            or self._get_factor_value(sample, "time in space")
+            or self._get_factor_value(sample, "days in orbit")
+        )
+
+        # Habitat: Comment[Habitat] or Characteristics[Animal Facility]
+        row.habitat = (
+            self._get_characteristic(sample, "habitat")
+            or self._get_characteristic(sample, "animal facility")
+        )
+        # Also check comment fields (stored as characteristics by parser)
+        if not row.habitat:
+            for char in sample.characteristics:
+                if "habitat" in char.category.lower() or "igloo" in char.value.lower() or "hut" in char.value.lower():
+                    row.habitat = char.value
+                    break
+
         # "After return" logic - only fill if spaceflight
         if row.space_or_ground == "spaceflight":
             row.when_was_the_sample_collected = "after return"
