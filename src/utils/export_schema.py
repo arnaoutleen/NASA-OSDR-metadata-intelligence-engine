@@ -3,7 +3,8 @@ from __future__ import annotations
 
 MOUSE_LEVEL_COLUMNS = [
     "osd_id",
-    "project",
+    "pulled_at",
+    "payload",
     "mission",
     "mouse_id",
     "source_name",
@@ -15,6 +16,10 @@ MOUSE_LEVEL_COLUMNS = [
     "spaceflight_status",
     "duration",
     "habitat",
+    "light_cycle",
+    "diet",
+    "feeding_schedule",
+    "euthanasia_method",
     "study_purpose",
     "n_samples_linked",
     "is_pooled_subject",
@@ -24,7 +29,8 @@ MOUSE_LEVEL_COLUMNS = [
 
 SAMPLE_LEVEL_COLUMNS = [
     "osd_id",
-    "project",
+    "pulled_at",
+    "payload",
     "mission",
     "sample_id",
     "mouse_id",
@@ -55,6 +61,8 @@ SAMPLE_LEVEL_COLUMNS = [
     "is_echocardiogram",
     "is_imaging",
     "is_western_blot",
+    "is_bone_microstructure",
+    "is_microarray",
     "assay_assignment_level",
     "provenance_source",
     "confidence",
@@ -62,7 +70,8 @@ SAMPLE_LEVEL_COLUMNS = [
 
 ASSAY_PARAMETER_COLUMNS = [
     "osd_id",
-    "project",
+    "pulled_at",
+    "payload",
     "mission",
     "sample_id",
     "mouse_id",

@@ -21,6 +21,7 @@ from src.core.isa_parser import ISAParser
 @dataclass
 class SampleRow:
     """A single output row representing one sample."""
+    payload: str = ""
     RR_mission: str = ""
     OSD_study: str = ""
     mouse_uid: str = ""
@@ -39,6 +40,10 @@ class SampleRow:
     notes: str = ""
     age: str = ""
     habitat: str = ""
+    light_cycle: str = ""
+    diet: str = ""
+    feeding_schedule: str = ""
+    euthanasia_method: str = ""
     RNA_seq_method: str = ""
     RNA_seq_paired: str = ""
     days_in_space_rr3: str = ""
@@ -53,6 +58,7 @@ class SampleRow:
     dnameth_library_layout: str = ""
     dnameth_library_type: str = ""
     # Protein profiling / mass spec (Orbitrap, phosphoprotein profiling)
+    assay_name: str = ""          # Assay Name from ISA-Tab (all assay types)
     ms_instrument: str = ""
     ms_chromatography: str = ""
     ms_dissociation: str = ""
@@ -179,6 +185,17 @@ class SampleRow:
     wb_imaging_substrate: str = ""
     wb_imaging_substrate_product: str = ""
     wb_imaging_method: str = ""
+    # Bone microstructure (micro-CT)
+    bone_voxel_size: str = ""
+    bone_voltage: str = ""
+    bone_current: str = ""
+    bone_rotation_step: str = ""
+    bone_frame_averaging: str = ""
+    bone_filter: str = ""
+    # Microarray
+    microarray_design: str = ""
+    microarray_label: str = ""
+    microarray_hybridization: str = ""
 
     def to_dict(self) -> Dict[str, str]:
         """Convert to dictionary for CSV output."""
@@ -188,11 +205,13 @@ class SampleRow:
 # Output column order
 SAMPLE_OUTPUT_COLUMNS = [
     # Core sample identity and study metadata
-    "RR_mission", "OSD_study", "mouse_uid", "sample_name", "extract_name",
+    "payload", "RR_mission", "OSD_study", "mouse_uid", "sample_name", "extract_name",
     "space_or_ground", "when_was_the_sample_collected", "mouse_sex",
     "mouse_strain", "mouse_genetic_variant", "mouse_source", "organ_sampled",
     "assay_on_organ", "number_of_tech_replicates", "part_of_a_longitudinal_sample_series",
-    "notes", "age", "habitat", "days_in_space_rr3",
+    "notes", "age", "habitat", "light_cycle", "diet", "feeding_schedule", "euthanasia_method", "days_in_space_rr3",
+    # Assay name (all assay types — Assay Name or MS Assay Name from ISA-Tab)
+    "assay_name",
     # RNA sequencing (targeted transcriptome sequencing)
     "RNA_seq_method", "RNA_seq_paired",
     "rnaseq_qa_instrument", "rnaseq_stranded", "rnaseq_spikein_mix", "rnaseq_spikein_qc",
@@ -251,6 +270,11 @@ SAMPLE_OUTPUT_COLUMNS = [
     "wb_wash_buffer", "wb_secondary_fluorophore", "wb_secondary_duration",
     "wb_secondary_temperature", "wb_imaging_substrate", "wb_imaging_substrate_product",
     "wb_imaging_method",
+    # Bone microstructure (micro-CT)
+    "bone_voxel_size", "bone_voltage", "bone_current", "bone_rotation_step",
+    "bone_frame_averaging", "bone_filter",
+    # Microarray
+    "microarray_design", "microarray_label", "microarray_hybridization",
 ]
 
 # Genetic variant normalizations
@@ -315,23 +339,35 @@ class SampleExpander:
         self,
         cache_dir: Optional[Path] = None,
         isa_tab_dir: Optional[Path] = None,
+        include_assays: Optional[List[str]] = None,
+        exclude_assays: Optional[List[str]] = None,
     ):
         """
         Initialize the sample expander.
-        
+
         Args:
-            cache_dir: Directory for caching API responses
-            isa_tab_dir: Directory for storing ISA-Tab archives
+            cache_dir:       Directory for caching API responses.
+            isa_tab_dir:     Directory for storing ISA-Tab archives.
+            include_assays:  Only parse assay files whose filename contains one of
+                             these strings (case-insensitive). None = parse all.
+                             Example: ["rna-seq", "mass-spec"]
+            exclude_assays:  Skip assay files whose filename contains any of these
+                             strings (case-insensitive). Useful for omitting large
+                             or unwanted assay types to reduce memory usage.
+                             Example: ["western-blot", "calcium-uptake"]
         """
-        self.cache_dir = cache_dir or Path("resources/osdr_api/raw")
+        self.cache_dir   = cache_dir   or Path("resources/osdr_api/raw")
         self.isa_tab_dir = isa_tab_dir or Path("resources/isa_tab")
-        
-        # Initialize OSDR client and ISA parser
+
         self.client = OSDRClient(
             cache_dir=self.cache_dir,
             isa_tab_dir=self.isa_tab_dir,
         )
-        self.parser = ISAParser(isa_tab_dir=self.isa_tab_dir)
+        self.parser = ISAParser(
+            isa_tab_dir=self.isa_tab_dir,
+            include_assays=include_assays,
+            exclude_assays=exclude_assays,
+        )
     
     def expand_osd_to_samples(
         self,
@@ -375,8 +411,16 @@ class SampleExpander:
                 rr_mission=rr_mission,
                 isa_metadata=isa_metadata,
             )
+            # If assay filters are active and this sample has no matched assay,
+            # it means all its assays were excluded — drop it rather than producing
+            # an 'unknown' row with no assay data.
+            if not row.assay_on_organ and not row.assay_name:
+                # Only drop if there are active assay filters; otherwise keep
+                # (a blank assay_on_organ without filters is a real data gap).
+                if self.parser._include is not None or self.parser._exclude:
+                    continue
             sample_rows.append(row)
-        
+
         return sample_rows
     
     def expand_multiple_osds(
@@ -447,8 +491,10 @@ class SampleExpander:
             return "behavior"
         elif "atpase" in filename_lower or "enzymatic" in filename_lower:
             return "atpase"
-        elif "calcium" in filename_lower:
+        elif "calcium" in filename_lower or "spectrofluorimetric" in filename_lower:
             return "calcium-uptake"
+        elif "bone" in filename_lower or "micro-computed" in filename_lower or "microct" in filename_lower or "micro_ct" in filename_lower:
+            return "bone-microstructure"
         elif "echocardio" in filename_lower or "ultrasound" in filename_lower:
             return "echocardiogram"
         elif "imaging" in filename_lower or "microscopy" in filename_lower or "histology" in filename_lower:
@@ -494,8 +540,12 @@ class SampleExpander:
             return "behavior"
         if "atpase" in combined or "enzymatic activity" in combined:
             return "atpase"
-        if "calcium" in combined:
+        if "calcium" in combined or "spectrofluorimetric" in combined:
             return "calcium_uptake"
+        if "bone" in combined and ("microstructure" in combined or "micro" in combined):
+            return "bone_microstructure"
+        if "micro-computed" in combined or "microct" in combined:
+            return "bone_microstructure"
         if "echocardio" in combined or "ultrasound" in combined:
             return "echocardiogram"
         if "imaging" in combined or "microscopy" in combined or "histology" in combined:
@@ -549,10 +599,20 @@ class SampleExpander:
         row = SampleRow()
         
         # Basic identifiers
+        # Payload = Comment[Mission Name] from investigation file (e.g. "SpaceX-4")
+        row.payload = isa_metadata.payload_name or ""
+
+        # Use project_identifier as mission if not supplied by caller
+        if not rr_mission and isa_metadata.project_identifier:
+            rr_mission = isa_metadata.project_identifier
+
         row.RR_mission = rr_mission
         row.OSD_study = osd_id
-        row.mouse_uid = sample.source_name or ""
-        row.sample_name = sample.sample_name or ""
+
+        # Prefix mouse and sample names with payload to ensure global uniqueness
+        _prefix = (row.payload + "_") if row.payload else ""
+        row.mouse_uid = _prefix + (sample.source_name or "")
+        row.sample_name = _prefix + (sample.sample_name or "")
         
         # Extract characteristics - try multiple source fields
         row.mouse_sex = self._extract_sex(sample)
@@ -570,30 +630,64 @@ class SampleExpander:
         # Extract spaceflight status from ALL factor values
         row.space_or_ground = self._determine_space_or_ground(sample)
         
-        # Age: Characteristics[Age] or Factor Value[Age]
+        # Age: Characteristics[Age at Launch] / Characteristics[Age] / Factor Value[Age]
+        # The ISA parser now appends the unit, so value is already "16 week".
         row.age = (
-            self._get_characteristic(sample, "age")
+            self._get_characteristic(sample, "age at launch")
+            or self._get_characteristic(sample, "age at liftoff")
+            or self._get_characteristic(sample, "age")
             or self._get_factor_value(sample, "age")
         )
 
-        # Duration in space: Factor Value[duration] or Factor Value[Time in Space]
-        row.days_in_space_rr3 = (
-            self._get_factor_value(sample, "duration")
+        # Duration in space: prefer Parameter Value[exposure duration] (the canonical ISA
+        # field for actual time in orbit) then Parameter Value[duration] as fallback.
+        # Both are now captured from the study file via study_parameter_values.
+        spv = getattr(sample, "study_parameter_values", {})
+        _duration_raw = (
+            spv.get("exposure duration", "")
+            or spv.get("Exposure Duration", "")
+            or spv.get("duration", "")
+            or spv.get("Duration", "")
+            or self._get_factor_value(sample, "duration")
             or self._get_factor_value(sample, "time in space")
             or self._get_factor_value(sample, "days in orbit")
         )
+        # Skip placeholder zeros used for ground/basal controls ("0 day", "0")
+        _dur_stripped = _duration_raw.strip()
+        row.days_in_space_rr3 = "" if _dur_stripped in ("0", "0 day", "0 days") else _duration_raw
 
-        # Habitat: Comment[Habitat] or Characteristics[Animal Facility]
+        # Housing / husbandry parameters — all live in study_parameter_values
+        def _spv(*keys: str) -> str:
+            for k in keys:
+                v = spv.get(k, "")
+                if v:
+                    return v
+            return ""
+
+        # Habitat (also check characteristics for older studies)
         row.habitat = (
-            self._get_characteristic(sample, "habitat")
+            _spv("habitat", "Habitat")
+            or self._get_characteristic(sample, "habitat")
             or self._get_characteristic(sample, "animal facility")
         )
-        # Also check comment fields (stored as characteristics by parser)
         if not row.habitat:
             for char in sample.characteristics:
-                if "habitat" in char.category.lower() or "igloo" in char.value.lower() or "hut" in char.value.lower():
+                cat_low = char.category.lower()
+                val_low = char.value.lower()
+                if "habitat" in cat_low or "igloo" in val_low or "hut" in val_low:
                     row.habitat = char.value
                     break
+
+        row.light_cycle = _spv("light cycle", "Light Cycle", "light_cycle")
+        row.diet = (
+            _spv("Diet", "diet")
+            or self._get_characteristic(sample, "diet")
+        )
+        row.feeding_schedule = (
+            _spv("Feeding Schedule", "feeding schedule", "feeding_schedule")
+            or self._get_characteristic(sample, "feeding schedule")
+        )
+        row.euthanasia_method = _spv("Euthanasia Method", "euthanasia method", "euthanasia")
 
         # "After return" logic - only fill if spaceflight
         if row.space_or_ground == "spaceflight":
@@ -778,6 +872,26 @@ class SampleExpander:
                 row.wb_imaging_substrate_product = pv.get(
                     "Imaging Substrate Company And Product Number", "")
                 row.wb_imaging_method = pv.get("Imaging Method", "")
+
+            elif category == "bone_microstructure":
+                row.bone_voxel_size      = pv.get("Voxel Size", "")
+                row.bone_voltage         = pv.get("Voltage", "")
+                row.bone_current         = pv.get("Current", "")
+                row.bone_rotation_step   = pv.get("Rotation Step", "")
+                row.bone_frame_averaging = pv.get("Frame Averaging", "")
+                row.bone_filter          = pv.get("Filter", "")
+
+            elif category == "microarray":
+                row.microarray_design       = pv.get("Array Design REF", "")
+                row.microarray_label        = pv.get("Label", "")
+                row.microarray_hybridization = pv.get("Hybridization", "")
+
+            # ── Universal assay_name: Assay Name takes priority over MS Assay Name ──
+            row.assay_name = (
+                assay_sample.assay_name
+                or assay_sample.ms_assay_name
+                or ""
+            )
 
         else:
             row.extract_name = sample.sample_name

@@ -1,676 +1,581 @@
-# USAGE — Detailed Reference Manual
+# NASA OSDR Metadata Intelligence Engine — User Guide
 
-NASA OSDR Metadata Intelligence Engine v2.0.0
+NOTE: Readme and the User Guide are Identical for now 
+last edit by leen 3/31/2026 10:35am
+
+## Table of Contents
+
+1. [What This Tool Does](#1-what-this-tool-does)
+2. [Setup](#2-setup)
+3. [Understanding the Data Sources](#3-understanding-the-data-sources)
+4. [Core Workflow: Pulling and Exporting Data](#4-core-workflow-pulling-and-exporting-data)
+5. [Output Files — What You Get](#5-output-files--what-you-get)
+6. [Re-running and Freshness Checking](#6-re-running-and-freshness-checking)
+7. [Exploring Assay Parameters](#7-exploring-assay-parameters)
+8. [Mouse Informativeness Ranking](#8-mouse-informativeness-ranking)
+9. [Directory Structure Reference](#9-directory-structure-reference)
+10. [Troubleshooting](#10-troubleshooting)
 
 ---
 
-## 1. Installation
+## 1. What This Tool Does
+
+This engine pulls metadata from NASA's Open Science Data Repository (OSDR) for spaceflight mouse studies and organises it into clean, analysis-ready tables. For each study you request it:
+
+- Downloads the ISA-Tab archive (the authoritative metadata format used by OSDR)
+- Parses mouse-level biology: strain, sex, age, spaceflight status, habitat, diet, light cycle, euthanasia method, duration in space
+- Parses sample-level data: which organ, which assay type, assay name (RNA-seq, mass spec, DNA methylation, etc.)
+- Parses assay-specific technical parameters per assay type
+- Ranks mice by how informationally rich they are (number of organs × assay types)
+- Tracks when data was pulled and detects if OSDR has updated a study since your last run
+
+The output is five CSV/JSON files per run that you can open directly in Excel or load into Python/R.
+
+---
+
+## 2. Setup
+
+### Requirements
+
+- Python **3.11 or higher** (3.12 recommended)
+- An internet connection to reach the NASA OSDR API
+
+### Install dependencies
+
+From the root of the repository:
 
 ```bash
-git clone https://github.com/yeshasvikamma/NASA-OSDR-metadata-intelligence-engine.git
-cd NASA-OSDR-metadata-intelligence-engine
-python -m venv venv
-source venv/bin/activate   # macOS/Linux
 pip install -r requirements.txt
 ```
 
-Verify the installation:
+`requirements.txt` contains:
+
+```
+requests>=2.28.0
+pandas>=1.5.0
+```
+
+### Verify the installation
 
 ```bash
-python -c "from src.core.data_retriever import DataRetriever; print('OK')"
+python -m cli.run_full_export --help
 ```
 
-**Network requirements:** The first run for any OSD study requires internet access to NASA OSDR APIs. Subsequent runs use locally cached data.
+You should see the full usage text. If you get a `ModuleNotFoundError`, make sure you are running from the repository root (the folder that contains `src/` and `cli/`).
 
 ---
 
-## 2. CLI Reference
+## 3. Understanding the Data Sources
 
-### 2.1 `cli/retrieve_data.py` — Data Retrieval
+Before running anything it helps to know what the tool fetches and where it stores things.
 
-Fetch unified sample records from NASA OSDR.
+**ISA-Tab archives** are the ground truth. Each OSD study on OSDR ships with a zip archive containing:
+
+| File | Contains |
+|------|----------|
+| `i_Investigation.txt` | Study-level metadata: payload (SpaceX-4), mission (RR-1), PI, dates |
+| `s_OSD-NNN.txt` | Sample sheet: one row per animal × organ. Contains strain, sex, age, habitat, diet, light cycle, euthanasia method, duration |
+| `a_OSD-NNN_<assay-type>_*.txt` | Assay file: one row per sample for that assay. Contains library layout, sequencing instrument, spike-in mix, MS analyzer, etc. |
+
+**Where files are cached locally:**
 
 ```
-python -m cli.retrieve_data [OSD_IDS ...] [--mission NAME] [--all] [-o PATH] [--format csv|json]
+resources/
+  isa_tab/          ← downloaded ISA-Tab archives, one folder per OSD study
+    OSD-48/
+      i_Investigation.txt
+      s_OSD-48.txt
+      a_OSD-48_transcription-profiling_rna-sequencing_Illumina.txt
+      ...
+  osdr_api/
+    raw/            ← cached API JSON responses, one file per OSD study
+      OSD-48.json
+      OSD-102.json
+      ...
 ```
 
-| Flag | Description | Default | Required |
-|---|---|---|---|
-| `OSD_IDS` | One or more OSD study IDs | — | One of OSD_IDS, --mission, or --all |
-| `--mission` | Retrieve all OSDs for a mission (e.g., `RR-3`) | — | |
-| `--all` | Retrieve all known studies | `false` | |
-| `-o`, `--output` | Output file path | `outputs/retrieval/<label>_data.<ext>` | No |
-| `--format` | Output format: `csv` or `json` | `csv` | No |
-| `--no-cache` | Skip local cache, fetch fresh | `false` | No |
-| `--clear-cache` | Clear all cached metadata first | `false` | No |
-| `-v`, `--verbose` | Verbose output | `false` | No |
-| `-q`, `--quiet` | Suppress all output except errors | `false` | No |
+The tool downloads ISA-Tab automatically on first run. Subsequent runs reuse the local cache unless you force a refresh.
 
-**Examples:**
+**Key concepts:**
+
+- **Payload** — the rocket/vehicle that carried the mice (e.g. `SpaceX-4`, `SpaceX-8`). Comes from `Comment[Mission Name]` in the investigation file.
+- **Mission** — the research project (e.g. `RR-1`, `RR-3`). Comes from `Comment[Project Identifier]`.
+- **OSD** — a single dataset within a mission. One mission typically has multiple OSDs (different organs or PIs).
+
+Mouse and sample IDs are prefixed with the payload name (`SpaceX-4_RR1_FLT_M23`) so IDs stay unique when you combine data across studies.
+
+---
+
+## 4. Core Workflow: Pulling and Exporting Data
+
+Everything runs through one command: `python -m cli.run_full_export`
+
+You must supply exactly one of `--osd`, `--mission`, or `--input`.
+
+### Option A — One or more specific studies
 
 ```bash
-# Retrieve specific studies
-python -m cli.retrieve_data OSD-242 OSD-379 OSD-102
-
-# Retrieve all studies in a mission
-python -m cli.retrieve_data --mission RR-3 -o outputs/retrieval/rr3_data.csv
-
-# Retrieve in JSON format
-python -m cli.retrieve_data OSD-242 --format json -o outputs/retrieval/osd242.json
+python -m cli.run_full_export --osd OSD-48 -o outputs/osd48
 ```
-
-**Output columns (CSV):** `osd`, `source_name`, `sample_name`, `organism`, `material_type`, `measurement_types`, `technology_types`, `device_platforms`, `data_files`
-
-List fields (`measurement_types`, `technology_types`, `device_platforms`, `data_files`) are pipe-separated in CSV and arrays in JSON.
-
----
-
-### 2.2 `cli/rank_samples.py` — Sample Informativeness (Table 1)
-
-Rank samples by data availability within each OSD.
-
-```
-python -m cli.rank_samples [OSD_IDS ...] [--mission NAME] [-o PATH] [--format csv|json]
-```
-
-| Flag | Description | Default | Required |
-|---|---|---|---|
-| `OSD_IDS` | One or more OSD study IDs | — | One of OSD_IDS or --mission |
-| `--mission` | Rank samples for all OSDs in a mission | — | |
-| `-o`, `--output` | Output file path | `outputs/rankings/sample_ranking_<label>.<ext>` | No |
-| `--format` | Output format: `csv` or `json` | `csv` | No |
-| `-v`, `--verbose` | Verbose output | `false` | No |
-| `-q`, `--quiet` | Suppress output except errors | `false` | No |
-
-**Examples:**
 
 ```bash
-# Single OSD
-python -m cli.rank_samples OSD-242 -o outputs/rankings/osd242_samples.csv
-
-# Entire mission
-python -m cli.rank_samples --mission RR-3
-
-# Multiple OSDs
-python -m cli.rank_samples OSD-102 OSD-242 OSD-379
+python -m cli.run_full_export --osd OSD-48 OSD-87 OSD-168 -o outputs/rr1_subset
 ```
 
-**Output columns:** `OSD`, `source_name`, `sample_name`, `organ`, `assay_types`, `num_assays`, `data_files_count`, `measurement_types`, `technology_types`, `device_platforms`, `informativeness_rank`
+Use this when you know which OSD numbers you want. The tool verifies each ID against the live API before expanding.
 
-Sorted by `num_assays` descending, then `data_files_count` descending. `informativeness_rank` is 1 for the most data-rich tier within each OSD.
-
----
-
-### 2.3 `cli/rank_mice.py` — Mouse Informativeness (Table 2)
-
-Rank mice across all OSDs in a mission by cross-organ data coverage.
-
-```
-python -m cli.rank_mice --mission NAME [-o PATH] [--format csv|json]
-```
-
-| Flag | Description | Default | Required |
-|---|---|---|---|
-| `--mission` | Mission name (e.g., `RR-3`, `RR-1`) | — | **Yes** |
-| `-o`, `--output` | Output file path | `outputs/rankings/mouse_ranking_<mission>.<ext>` | No |
-| `--format` | Output format: `csv` or `json` | `csv` | No |
-| `-v`, `--verbose` | Verbose output | `false` | No |
-| `-q`, `--quiet` | Suppress output except errors | `false` | No |
-
-**Examples:**
+### Option B — An entire mission
 
 ```bash
-python -m cli.rank_mice --mission RR-3 -o outputs/rankings/rr3_mice.csv
-python -m cli.rank_mice --mission RR-1 --format json
+python -m cli.run_full_export --mission RR-1 -o outputs/rr1
 ```
-
-**Output columns:** `mission`, `source_name`, `osds`, `num_organs`, `organs_list`, `num_total_assays`, `assays_per_organ`, `total_data_files`, `informativeness_score`
-
-Sorted by `informativeness_score` descending. The `assays_per_organ` column contains a JSON-encoded dictionary mapping each organ to its list of assay types.
-
----
-
-### 2.4 `cli/rank_all.py` — Combined Ranking (Both Tables)
-
-Generate both sample and mouse informativeness tables for a mission or all missions.
-
-```
-python -m cli.rank_all [--mission NAME] [--all] [-o DIR] [--format csv|json]
-```
-
-| Flag | Description | Default | Required |
-|---|---|---|---|
-| `--mission` | Mission name | — | One of --mission or --all |
-| `--all` | Generate tables for all 12 known missions | `false` | |
-| `-o`, `--output` | Output **directory** | `outputs/rankings/` | No |
-| `--format` | Output format: `csv` or `json` | `csv` | No |
-| `-v`, `--verbose` | Verbose output | `false` | No |
-| `-q`, `--quiet` | Suppress output except errors | `false` | No |
-
-**Examples:**
 
 ```bash
-# Single mission → creates sample_ranking_RR-3.csv and mouse_ranking_RR-3.csv
-python -m cli.rank_all --mission RR-3 -o outputs/rankings/
-
-# All missions
-python -m cli.rank_all --all -o outputs/rankings/
+python -m cli.run_full_export --mission RR-3 -o outputs/rr3
 ```
 
-**Output files:** For each mission, two files are created in the output directory:
-- `sample_ranking_<mission>.csv` — Table 1
-- `mouse_ranking_<mission>.csv` — Table 2
+The tool resolves the mission name to its constituent OSD IDs, verifies each one is reachable, then processes all of them. Known missions are listed in `src/core/constants.py` (`KNOWN_MISSIONS`). If a mission isn't there yet the tool falls back to scanning the full OSDR study list via the API, which is slower.
 
----
+Common mission names:
 
-### 2.5 `cli/expand_samples.py` — Sample Expansion
+| Mission | Studies |
+|---------|---------|
+| `RR-1`  | OSD-48, OSD-100–105, OSD-168, OSD-488, OSD-489 |
+| `RR-3`  | OSD-137, OSD-162, OSD-194 |
+| `RR-10` | OSD-462, OSD-466, OSD-563, OSD-564 |
 
-Expand a CSV of OSD IDs into sample-level rows with characteristics from ISA-Tab.
+### Option C — From a CSV file
 
-```
-python -m cli.expand_samples INPUT_CSV [-o PATH] [--osd-column NAME] [--mission-column NAME] [--no-grouping]
-```
-
-| Flag | Description | Default | Required |
-|---|---|---|---|
-| `INPUT_CSV` | Path to input CSV containing OSD IDs | — | **Yes** |
-| `-o`, `--output` | Output CSV path | `outputs/enriched_csv/<input>_samples.csv` | No |
-| `--osd-column` | Column name containing OSD IDs | `OSD_study` | No |
-| `--mission-column` | Column name containing mission names | `RR_mission` | No |
-| `--no-grouping` | Show mission/OSD on every row | `false` | No |
-| `-v`, `--verbose` | Verbose output | `false` | No |
-| `-q`, `--quiet` | Suppress output except errors | `false` | No |
-
-**Examples:**
+If you have a spreadsheet listing OSD IDs (the format used in the original metadata engine workflow):
 
 ```bash
-python -m cli.expand_samples resources/test_inputs/demo/realworld_study_summary.csv --osd-column osd_id -o outputs/expanded.csv
+python -m cli.run_full_export \
+  --input resources/test_inputs/demo/realworld_rodent_research.csv \
+  -o outputs/from_csv
 ```
 
-**Output columns:** `RR_mission`, `OSD_study`, `mouse_uid`, `sample_name`, `extract_name`, `space_or_ground`, `when_was_the_sample_collected`, `mouse_sex`, `mouse_strain`, `mouse_genetic_variant`, `mouse_source`, `organ_sampled`, `assay_on_organ`, `number_of_tech_replicates`, `part_of_a_longitudinal_sample_series`, `notes`, `RNA_seq_method`, `RNA_seq_paired`, `days_in_space_rr3`
+The CSV must have a column named `OSD_study`. A column named `RR_mission` is optional but used as the mission label if present. You can override the column names with `--osd-col` and `--mission-col`.
 
-**Note:** If your input CSV uses `osd_id` as the column name (instead of the default `OSD_study`), pass `--osd-column osd_id`.
+### EXTRA: excluding certain assays
 
----
-
-### 2.6 `cli/process_csv.py` — Metadata Enrichment
-
-Run the metadata enrichment pipeline on a researcher-provided CSV.
-
-```
-python -m cli.process_csv INPUT_CSV [-o PATH] [--validate] [--no-cache] [--clear-cache]
-```
-
-| Flag | Description | Default | Required |
-|---|---|---|---|
-| `INPUT_CSV` | Path to input CSV file | — | **Yes** |
-| `-o`, `--output` | Enriched CSV output path | `outputs/enriched_csv/<input>_enriched.csv` | No |
-| `--provenance` | Provenance log JSON path | `outputs/provenance_logs/<input>_provenance_<ts>.json` | No |
-| `--validation-report` | Validation report path | `outputs/validation_reports/<input>_validation_<ts>.txt` | No |
-| `--no-cache` | Bypass cached metadata | `false` | No |
-| `--clear-cache` | Clear all cached metadata first | `false` | No |
-| `--no-isa-tab` | Skip ISA-Tab downloads (faster, less complete) | `false` | No |
-| `--validate` | Generate a validation report | `false` | No |
-| `--osd-column` | OSD ID column name | `osd_id` | No |
-| `--sample-column` | Sample ID column name | `sample_id` | No |
-| `-v`, `--verbose` | Verbose output | `false` | No |
-| `-q`, `--quiet` | Suppress output except errors | `false` | No |
-
-**Examples:**
+Sometimes, running metadata pulls for huge assays like Calcium Uptake and Western Blot can overload the script and cause an OOM error. Therefore, you can exclude them using `--exclude-assay`. Simply do this:
 
 ```bash
-# Enrich with validation report
-python -m cli.process_csv resources/test_inputs/demo/realworld_rodent_research.csv --validate
-
-# Specify output path
-python -m cli.process_csv input.csv -o outputs/enriched_csv/enriched.csv
-
-# Fresh fetch (no cache)
-python -m cli.process_csv input.csv --no-cache
+python -m cli.run_full_export --mission RR-1 -o outputs/rr1 \
+--exclude-assay western-blot calcium-uptake
 ```
 
-**Outputs produced:**
-1. Enriched CSV — input rows with empty fields filled from OSDR/ISA-Tab data
-2. Provenance JSON — structured log of every enrichment with source and confidence
-3. Validation report (if `--validate`) — human-readable summary of enrichments and conflicts
-
-The pipeline uses a flexible loader that accepts CSV, TSV, and JSON inputs. Column names are automatically mapped from common aliases (e.g., `mouse_strain` → `strain`).
-
----
-
-### 2.7 `cli/process_osd_study.py` — Single Study Inspection
-
-Fetch and display metadata for a single OSD study.
-
-```
-python -m cli.process_osd_study OSD_ID [--samples] [--factors] [--export-json PATH] [--download-isa-tab]
-```
-
-| Flag | Description | Default | Required |
-|---|---|---|---|
-| `OSD_ID` | OSD study identifier (e.g., `OSD-242` or `242`) | — | **Yes** |
-| `--samples` | Show sample-level details | `false` | No |
-| `--factors` | Show factor values for each sample | `false` | No |
-| `--limit` | Max samples to display | `10` | No |
-| `--export-json` | Export metadata to JSON file | — | No |
-| `--download-isa-tab` | Download and extract ISA-Tab archive | `false` | No |
-| `--no-cache` | Bypass cached metadata | `false` | No |
-| `--clear-cache` | Clear cache for this study | `false` | No |
-
-**Examples:**
+And if you only want to include a very specific assay type, like RNA-seq only, you can specify it using `--include-assay`. Like this:
 
 ```bash
-python -m cli.process_osd_study OSD-242 --samples --factors
-python -m cli.process_osd_study OSD-102 --export-json study_102.json --download-isa-tab
+python -m cli.run_full_export --mission RR-1 -o outputs/rr1 \
+--include-assay rna-seq
 ```
+
+#### IMPORTANT NOTE:  `--include-assay` and `--exclude-assay` are mutually exclusive. Do NOT run them together. Run only one at a time.
+
+
+### What happens when you run it
+
+```
+Verifying OSD IDs via live API …
+  Verifying OSD-48 ... OK
+  Verifying OSD-102 ... OK
+
+  Expanding OSD-48 ... 32 samples  [NEW/UPDATED — 2025-06-01T14:22:00Z]
+  Expanding OSD-102 ... 16 samples  [unchanged — keeping 2025-01-15T10:30:00Z]
+
+Building export tables from 48 records …
+
+============================================================
+EXPORT COMPLETE
+============================================================
+  Mice:            47 rows  →  outputs/rr1/mouse_metadata.csv
+  Samples:         48 rows  →  outputs/rr1/sample_metadata.csv
+  Assay params:   216 rows  →  outputs/rr1/assay_parameters_long.csv
+  Assay wide:          →  outputs/rr1/assay_parameters_wide.csv
+  Mouse ranking:   30 mice  →  outputs/rr1/mouse_ranking.csv
+  Manifest:            →  outputs/rr1/data_manifest.json
+
+Data freshness:
+  OSD-48       UPDATED     pulled_at=2025-06-01T14:22:00Z
+  OSD-102      unchanged   pulled_at=2025-01-15T10:30:00Z
+
+Fill-rate (mouse_metadata):
+  strain                   : 47/47
+  sex                      : 47/47
+  age                      : 41/47
+  spaceflight_status       : 47/47
+  duration                 : 14/47
+  habitat                  : 47/47
+  animal_source            : 47/47
+  genotype                 : 0/47
+```
+
+`duration` is intentionally blank for ground/basal control animals — those rows have `spaceflight_status = ground` and a placeholder `0 day` is suppressed.
 
 ---
 
-### 2.8 `cli/init_cache.py` — Cache Initialization
+## 5. Output Files — What You Get
 
-Pre-download ISA-Tab archives so the pipeline works offline.
+All output files share the first four columns:
 
-```
-python -m cli.init_cache [--studies OSD_IDS ...] [-q]
-```
+| Column | Example | Meaning |
+|--------|---------|---------|
+| `osd_id` | `OSD-48` | OSDR accession number |
+| `pulled_at` | `2025-01-15T10:30:00Z` | When this study's data was fetched (UTC) |
+| `payload` | `SpaceX-4` | Rocket/vehicle that carried the mice |
+| `mission` | `RR-1` | Research project identifier |
 
-| Flag | Description | Default | Required |
-|---|---|---|---|
-| `--studies` | OSD IDs to cache | 8 demo studies (OSD-102, OSD-202, OSD-242, OSD-479, OSD-477, OSD-546, OSD-661, OSD-207) | No |
-| `-q`, `--quiet` | Suppress output | `false` | No |
+### `mouse_metadata.csv`
 
-**Examples:**
+One row per unique animal. This is your animal-level table.
 
-```bash
-# Cache default demo studies
-python -m cli.init_cache
+| Column | Example | Notes |
+|--------|---------|-------|
+| `mouse_id` | `SpaceX-4_RR1_FLT_M23` | Payload-prefixed, globally unique |
+| `source_name` | `RR1_FLT_M23` | Original ID from ISA-Tab |
+| `strain` | `C57BL/6J` | |
+| `animal_source` | `Jackson Laboratory` | Vendor |
+| `genotype` | `Wild` | Blank if wild-type was not stated |
+| `sex` | `Female` | |
+| `age` | `16 week` | Unit always appended |
+| `spaceflight_status` | `spaceflight` or `ground` | |
+| `duration` | `37 day` | Blank for ground controls |
+| `habitat` | `Rodent Habitat` or `Vivarium Cage` | |
+| `light_cycle` | `12 h light/dark cycle` | |
+| `diet` | `Nutrient Upgraded Rodent Food Bar (NuRFB)` | |
+| `feeding_schedule` | `ad libitum` | |
+| `euthanasia_method` | `Euthasol` | |
+| `n_samples_linked` | `3` | How many rows in sample_metadata link to this mouse |
 
-# Cache specific studies
-python -m cli.init_cache --studies OSD-102 OSD-242 OSD-379
-```
+### `sample_metadata.csv`
 
----
+One row per sample × assay type combination. A single mouse with liver (mass spec + RNA-seq) produces two rows.
 
-## 3. Input File Formats
+Key columns beyond the shared four:
 
-### For `process_csv` (metadata enrichment)
+| Column | Example | Notes |
+|--------|---------|-------|
+| `sample_id` | `SpaceX-4_Mmus_C57-6J_LVR_FLT_Rep1_M23` | Globally unique |
+| `mouse_id` | `SpaceX-4_RR1_FLT_M23` | Links to mouse_metadata |
+| `mouse_strain` | `C57BL/6J` | |
+| `mouse_sex` | `Female` | |
+| `age` | `16 week` | |
+| `space_or_ground` | `spaceflight` | |
+| `material_type` | `Left kidney` | Organ |
+| `assay_category` | `rna_sequencing` | Normalised category |
+| `assay_name` | `rna-seq` or `TMT 11-plex` | Exact name from ISA-Tab |
+| `is_rnaseq` | `True` / `False` | Boolean flag for each assay type |
+| `is_mass_spec` | `True` / `False` | |
+| `is_dna_methylation` | `True` / `False` | |
+| *(and 9 more `is_*` flags)* | | |
 
-The input CSV must contain at minimum an OSD ID column. The flexible loader recognizes these aliases:
+**Assay category values** you will see:
 
-| Canonical name | Accepted aliases |
-|---|---|
-| `osd_id` | `OSD_study`, `OSD`, `study_id`, `accession` |
-| `sample_id` | `Sample Name`, `sample_name`, `mouse_uid`, `source_name` |
-| `strain` | `mouse_strain` |
+| `assay_category` | What it means |
+|-----------------|---------------|
+| `rna_sequencing` | RNA-seq / targeted transcriptome sequencing |
+| `dna_methylation` | WGBS, RRBS |
+| `protein_mass_spec` | Orbitrap, TMT, phosphoproteomics |
+| `rna_methylation` | m6A, whole-transcriptome bisulfite |
+| `metabolite_profiling` | GC-MS, LC-MS/MS |
+| `chromatin_accessibility` | ATAC-seq |
+| `behavior` | Ethovision |
+| `echocardiogram` | Ultrasound cardiac imaging |
+| `molecular_cellular_imaging` | Microscopy, histology |
+| `protein_quantification` | Western blot |
+| `atpase_activity` | Spectrophotometry |
+| `calcium_uptake` | Fluorescence plate reader |
 
-Additional columns (e.g., `mouse_sex`, `organ_sampled`, `age`, `space_or_ground`) will be enriched if empty.
+### `assay_parameters_long.csv`
 
-### For `expand_samples`
+One row per sample × parameter. This is the detailed technical metadata table — see [Section 7](#7-exploring-assay-parameters) for how to navigate it.
 
-A CSV with at least one column containing OSD IDs. The default column name is `OSD_study`. Use `--osd-column` if your column has a different name.
+Key columns:
 
-### For `retrieve_data`, `rank_samples`, `rank_mice`, `rank_all`
+| Column | Example |
+|--------|---------|
+| `assay_category` | `rna_sequencing` |
+| `assay_name` | `rna-seq` |
+| `parameter_name` | `Parameter Value[Spike-in Mix Number]` |
+| `parameter_value` | `ERCC Mix 1` |
 
-No input file needed — OSD IDs and mission names are passed as command-line arguments.
+### `assay_parameters_wide.csv`
 
----
+The same data pivoted so each parameter becomes its own column and each row is one sample × assay category. Easier for Excel filtering; `assay_parameters_long.csv` is better for programmatic use.
 
-## 4. Output Files
+### `mouse_ranking.csv`
 
-### Retrieved Data (`retrieve_data`)
+One row per non-pooled mouse, ranked by informativeness within each study. See [Section 8](#8-mouse-informativeness-ranking).
 
-CSV with one row per sample. List fields are pipe-separated.
+### `data_manifest.json`
 
-```csv
-osd,source_name,sample_name,organism,material_type,measurement_types,technology_types,device_platforms,data_files
-OSD-242,B1,Mmus_C57-6J_LVR_BSL_C1_Rep1_B1,Mus musculus,Liver,RNA-Seq,Rna Sequencing (Rna Seq),Illumina NovaSeq 6000,GLDS-242_rna-seq_..._R1_raw.fastq.gz | GLDS-242_rna-seq_..._R2_raw.fastq.gz
-```
-
-### Sample Ranking (`rank_samples`)
-
-CSV with one row per sample, ranked by `num_assays` and `data_files_count`.
-
-```csv
-OSD,source_name,sample_name,organ,assay_types,num_assays,data_files_count,measurement_types,technology_types,device_platforms,informativeness_rank
-OSD-102,RR1_FLT_M23,Mmus_C57-6J_KDN_FLT_Rep1_M23,Left kidney,Dna Methylation Profiling | ... | RNA-Seq,4,3,...,1
-```
-
-### Mouse Ranking (`rank_mice`)
-
-CSV with one row per animal, ranked by `informativeness_score`.
-
-```csv
-mission,source_name,osds,num_organs,organs_list,num_total_assays,assays_per_organ,total_data_files,informativeness_score
-RR-3,RR3_BSL_B7,OSD-137 | OSD-162 | OSD-194,3,Eye | Left retina | Liver,4,"{""Eye"": [""RNA-Seq""], ...}",5,14.58
-```
-
-### Enriched CSV (`process_csv`)
-
-The original CSV with empty fields filled. New columns may be added (e.g., `Has_RNAseq`, `n_mice_total`, `study purpose`).
-
-### Provenance JSON (`process_csv`)
-
-Structured log with per-study, per-sample, per-field entries:
+Records the ISA-Tab file hash and pull timestamp for each study. Used automatically on the next run to detect whether data has changed. You don't need to edit this file.
 
 ```json
 {
-  "metadata": {
-    "generated_at": "2026-03-02T16:45:02",
-    "total_entries": 168,
-    "total_conflicts": 0
-  },
-  "provenance": {
-    "OSD-102": {
-      "Mmus_C57-6J_KDN_FLT_Rep1_M23": {
-        "mouse_strain": {
-          "value": "C57BL/6J",
-          "source": "from_isa_characteristics",
-          "confidence": "high"
-        }
-      }
-    }
-  },
-  "summary": { ... },
-  "confidence_stats": { "high": 154, "medium": 14, "low": 0 }
+  "OSD-48": {
+    "pulled_at": "2025-01-15T10:30:00Z",
+    "isa_hash": "f3266c9d481a...",
+    "n_samples": 32,
+    "changed": true
+  }
 }
 ```
 
-### Expanded CSV (`expand_samples`)
-
-One row per sample with 19 columns describing the animal, organ, assay, and sequencing details.
-
 ---
 
-## 5. Common Workflows
+## 6. Re-running and Freshness Checking
 
-### Workflow 1: "What data is available for my mission?"
+When you run the tool a second time pointing at the same output directory, it automatically checks whether the OSDR data has changed since your last pull.
 
 ```bash
-python -m cli.retrieve_data --mission RR-1 -o outputs/retrieval/rr1_data.csv
-python -m cli.rank_all --mission RR-1 -o outputs/rankings/
+# First run
+python -m cli.run_full_export --mission RR-1 -o outputs/rr1
+
+# Second run, weeks later
+python -m cli.run_full_export --mission RR-1 -o outputs/rr1
 ```
 
-This fetches all sample records across RR-1's 10 OSDs, then generates both the sample ranking table and the mouse ranking table.
+On the second run you will see one of two messages per study:
 
-### Workflow 2: "Which mice in RR-3 have the most multi-organ data?"
+```
+  Expanding OSD-48 ... 32 samples  [unchanged — keeping 2025-01-15T10:30:00Z]
+  Expanding OSD-102 ... 16 samples  [NEW/UPDATED — 2026-03-01T09:15:00Z]
+```
+
+**How it works:** the tool computes a SHA-256 hash of all ISA-Tab files for each study and compares it against `data_manifest.json`. If the hash matches, the original `pulled_at` timestamp is preserved in all output tables. If anything changed, the study is re-expanded and the timestamp is updated.
+
+This means your `pulled_at` column tells you the true date of the data you analysed, not just when you last ran the script.
+
+---
+
+## 7. Exploring Assay Parameters
+
+The `assay_parameters_long.csv` file contains detailed technical metadata for every assay. Use `query_assays.py` to navigate it without opening Excel.
+
+### Step 1 — See what assay types are in your file
 
 ```bash
-python -m cli.rank_mice --mission RR-3 -o outputs/rankings/rr3_mice.csv
+python -m cli.query_assays \
+  --file outputs/rr1/assay_parameters_long.csv \
+  --list-types
 ```
 
-Open the CSV and look at the top rows. Mice with `num_organs >= 3` and high `informativeness_score` are the best candidates for integrative multi-omics analysis.
+Output:
 
-### Workflow 3: "I have a list of OSD IDs and need enriched metadata"
+```
+ASSAY CATEGORY                       PARAMS   SAMPLES  EXAMPLE PARAMETERS
+----------------------------------------------------------------------------------------------------
+  protein_mass_spec                        4       24  MS Assay Name | Parameter Value[Analyzer] | ...
+  rna_methylation                          8       12  Assay Name | Comment[Extraction Method] | ...
+  rna_sequencing                           3       12  Parameter Value[Library Layout] | ...
+```
+
+### Step 2 — See all parameters for one assay type
 
 ```bash
-python -m cli.process_csv my_studies.csv --validate -o outputs/enriched_csv/my_studies_enriched.csv
+python -m cli.query_assays \
+  --file outputs/rr1/assay_parameters_long.csv \
+  --assay rna_sequencing \
+  --list-params
 ```
 
-The pipeline fills empty fields (strain, sex, age, organ, assay type, etc.) from OSDR APIs and ISA-Tab, then writes a provenance log showing where every value came from.
+Output:
 
-### Workflow 4: "Expand a study list into sample-level rows"
+```
+Parameters for assay category: 'rna_sequencing'
+PARAMETER NAME                                              VALUES   SAMPLES  EXAMPLE VALUES
+-----------------------------------------------------------------------------------------------------------------
+  Parameter Value[Library Layout]                               12        12  PAIRED
+  Parameter Value[Library Selection]                            12        12  polyA enrichment | ribo-depletion
+  Parameter Value[Spike-in Mix Number]                          12        12  ERCC Mix 1 | ERCC Mix 2
+```
+
+### Step 3 — Query a specific parameter
 
 ```bash
-python -m cli.expand_samples my_study_list.csv --osd-column osd_id -o outputs/expanded.csv
+python -m cli.query_assays \
+  --file outputs/rr1/assay_parameters_long.csv \
+  --assay rna_sequencing \
+  --param "Spike-in Mix Number"
 ```
 
-Each OSD ID becomes multiple rows — one per sample — with characteristics extracted from ISA-Tab.
+This is especially useful for detecting confounds — if `ERCC Mix 1` perfectly correlates with spaceflight and `ERCC Mix 2` with ground controls, that's a technical confound that will invalidate differential expression results.
 
-### Workflow 5: "Build a complete dataset for all known missions"
+### Step 4 — Filter to one study
 
 ```bash
-python -m cli.rank_all --all -o outputs/rankings/
+python -m cli.query_assays \
+  --file outputs/rr1/assay_parameters_long.csv \
+  --assay protein_mass_spec \
+  --osd OSD-48
 ```
 
-This iterates over all 12 known missions and generates `sample_ranking_<mission>.csv` and `mouse_ranking_<mission>.csv` for each one.
-
----
-
-## 6. Understanding Provenance
-
-Every value filled by the enrichment pipeline has a provenance source:
-
-| Source code | Meaning | Confidence |
-|---|---|---|
-| `from_osdr_metadata` | Direct extraction from OSDR API JSON | High |
-| `from_isa_characteristics` | From ISA-Tab `Characteristics[...]` column | High |
-| `from_isa_factor_values` | From ISA-Tab `Factor Value[...]` column | High |
-| `from_isa_study_file` | From ISA-Tab Study file (s_*.txt) | High |
-| `from_isa_assay_file` | From ISA-Tab Assay file (a_*.txt) | High |
-| `from_study_description` | Parsed from study description text | Medium |
-| `from_mission_metadata` | From mission-level metadata | High |
-| `inferred_from_sample_name_structure` | Pattern matched from sample name (e.g., `_M23` → mouse 23) | Medium |
-| `inferred_from_cross_sample_linking` | Derived by linking across samples | Medium |
-| `inferred_from_biological_rule` | Applied biological knowledge rule | Medium |
-| `not_applicable` | Field doesn't apply (e.g., mouse strain for cell line study) | N/A |
-
-### Confidence levels
-
-| Level | Meaning |
-|---|---|
-| `high` | Direct extraction from a structured field |
-| `medium` | Pattern-based inference with clear conventions |
-| `low` | Grouping-based or uncertain inference |
-| `suggestion` | AI-generated suggestion requiring human review |
-| `n/a` | Not applicable to this study type |
-
----
-
-## 7. Understanding Informativeness Scores
-
-### Formula
-
-```
-score = num_organs × num_distinct_assay_types + log₂(1 + total_data_files)
-```
-
-### Why this formula
-
-- **`num_organs × num_assays`** — a multiplicative term that rewards breadth. A mouse with 3 organs and 4 assay types scores 12, while a mouse with 1 organ and 4 assay types scores 4. This captures the value of multi-organ, multi-omics data.
-- **`log₂(1 + total_data_files)`** — a logarithmic term that provides a small bonus for data volume. A mouse with 5 files gets +2.58, while one with 100 files gets +6.66. The log prevents file count from dominating the score.
-
-### Worked example
-
-Mouse `RR3_BSL_B7` in mission RR-3:
-
-```
-Organs:   Eye, Left retina, Liver         → num_organs = 3
-Assays:   DNA Methylation, Imaging,
-          Proteomics, RNA-Seq              → num_distinct_assay_types = 4
-Files:    5 total                          → log₂(6) = 2.58
-
-Score = 3 × 4 + 2.58 = 14.58
-```
-
-### When to use which table
-
-- **Table 1 (Sample Ranking):** "Which samples in this OSD have the most assay types?" Use when deciding which samples to prioritize within a single study.
-- **Table 2 (Mouse Ranking):** "Which animals across this mission have the most multi-organ coverage?" Use when planning integrative analyses that require data from multiple organs.
-
----
-
-## 8. Mission Resolution
-
-### How missions map to OSDs
-
-The `MissionResolver` uses a three-tier strategy:
-
-1. **Seed registry** — 12 manually curated missions in `src/core/constants.py` (`KNOWN_MISSIONS`)
-2. **Cache** — persistent `mission_registry.json` in the cache directory
-3. **Dynamic discovery** — parses mission names from ISA-Tab investigation titles and OSDR Developer API study descriptions
-
-### Adding a new mission
-
-To add a new mission to the seed registry, edit `KNOWN_MISSIONS` in `src/core/constants.py`:
-
-```python
-KNOWN_MISSIONS: Dict[str, Tuple[str, ...]] = {
-    ...
-    "RR-99": ("OSD-999", "OSD-1000"),
-}
-```
-
-Add aliases in `MISSION_ALIASES`:
-
-```python
-MISSION_ALIASES: Dict[str, str] = {
-    ...
-    "rr99": "RR-99", "rr-99": "RR-99",
-}
-```
-
-The resolver also discovers missions dynamically: if a study's ISA-Tab title contains "Rodent Research 99", it will be automatically linked.
-
----
-
-## 9. Troubleshooting
-
-### "No OSDs found for mission X"
-
-The mission name may not be in the seed registry or cache. Check:
-1. Spelling — use the canonical form (e.g., `RR-3`, not `RR3` or `Rodent Research-3`)
-2. `python -c "from src.core.constants import KNOWN_MISSIONS; print(list(KNOWN_MISSIONS.keys()))"` to list known missions
-3. Add the mission to `KNOWN_MISSIONS` if it's new
-
-### Empty `data_files` for some samples
-
-Some ISA-Tab assay files have empty "Raw Data File" or "Derived Data File" columns. This is an upstream data completeness issue in the ISA-Tab archive, not a bug. The engine reports only what exists in the source data.
-
-### "No OSD IDs found in column 'OSD_study'"
-
-Your input CSV uses a different column name. Pass the correct name:
+### Step 5 — Get a wide table (one column per parameter)
 
 ```bash
-python -m cli.expand_samples input.csv --osd-column osd_id
+python -m cli.query_assays \
+  --file outputs/rr1/assay_parameters_long.csv \
+  --assay rna_sequencing \
+  --wide \
+  -o outputs/rr1/rnaseq_params_wide.csv
 ```
 
-### API timeouts or connection errors
+Output columns look like:
 
-- Retry — transient network issues are common
-- The engine caches all successful fetches, so a second run will be faster
-- Use `--no-cache` to force a fresh fetch if you suspect stale data
+```
+osd_id | pulled_at | payload | mission | sample_id | mouse_id | assay_category | assay_name
+| Parameter Value[Library Layout] | Parameter Value[Spike-in Mix Number] | ...
+```
 
-### Forcing fresh data
+### Step 6 — Interactive mode (no flags needed)
+
+If you are not sure what to filter on, use interactive mode:
 
 ```bash
-# Bypass cache for this run
-python -m cli.retrieve_data OSD-242 --no-cache
+python -m cli.query_assays \
+  --file outputs/rr1/assay_parameters_long.csv \
+  --interactive
+```
 
-# Clear all cached data and start fresh
-python -m cli.retrieve_data OSD-242 --clear-cache
+It will prompt you step by step: choose an assay category, then a parameter, then optionally a study, then choose long or wide output.
+
+### Combining filters
+
+All filters can be combined freely. Partial string matching is used for `--assay` and `--param`:
+
+```bash
+# "rna" matches both rna_sequencing and rna_methylation
+python -m cli.query_assays \
+  --file outputs/rr1/assay_parameters_long.csv \
+  --assay rna \
+  --param "Library" \
+  --osd OSD-102 \
+  -o outputs/rr1/rna_library_osd102.csv
 ```
 
 ---
 
-## 10. Programmatic Usage
+## 8. Mouse Informativeness Ranking
 
-### Using DataRetriever
+`mouse_ranking.csv` is produced automatically every time you run `run_full_export`. It tells you which mice have the richest data coverage.
 
-```python
-from pathlib import Path
-from src.core.osdr_client import OSDRClient
-from src.core.isa_parser import ISAParser
-from src.core.mission_resolver import MissionResolver
-from src.core.data_retriever import DataRetriever
+### How the score is calculated
 
-client = OSDRClient(
-    cache_dir=Path("resources/osdr_api/raw"),
-    isa_tab_dir=Path("resources/isa_tab"),
-)
-parser = ISAParser(isa_tab_dir=Path("resources/isa_tab"))
-resolver = MissionResolver(client=client, cache_dir=Path("resources/osdr_api/raw"))
-retriever = DataRetriever(client=client, parser=parser, resolver=resolver)
+For each non-pooled mouse:
 
-# Single OSD
-records = retriever.retrieve_osd("OSD-242")
-
-# Entire mission
-records = retriever.retrieve_mission("RR-3")
-
-# All known studies
-records = retriever.retrieve_all()
+```
+score = (number of distinct organs) × (number of distinct assay types)
+        + log₂(1 + number of sample rows)
 ```
 
-### Using MissionResolver
+A mouse with liver + kidney measured by RNA-seq + mass spec scores much higher than a mouse with only liver measured by mass spec alone. The log term gives a small bonus for additional replicates without letting outliers dominate.
 
-```python
-# Resolve mission to OSDs
-osds = resolver.resolve_mission("RR-3")
-# ['OSD-137', 'OSD-162', 'OSD-194']
+### Reading the ranking file
 
-# Reverse lookup
-mission = resolver.get_mission_for_osd("OSD-242")
-# 'RR-9'
+| Column | Example | Meaning |
+|--------|---------|---------|
+| `mouse_id` | `SpaceX-4_RR1_FLT_M25` | |
+| `osd_id` | `OSD-48` | |
+| `mission` | `RR-1` | |
+| `n_organs` | `2` | Distinct tissues sampled |
+| `organs` | `Left kidney \| Liver` | |
+| `n_assay_types` | `2` | Distinct assay categories |
+| `assay_types` | `rna_methylation \| rna_sequencing` | |
+| `assay_names` | `RNA-Bisulfite-Seq \| rna-seq` | |
+| `n_sample_rows` | `2` | Rows in sample_metadata for this mouse |
+| `informativeness_score` | `5.585` | Higher = more informative |
+| `informativeness_rank` | `1` | 1 = most informative within (payload, mission, osd_id) |
 
-# List all known missions
-missions = resolver.list_known_missions()
-# ['BION-M1', 'MHU-2', 'RR-1', 'RR-10', ...]
-```
+Ranks are computed **within each study group** (`payload + mission + osd_id`), so mice from different missions are not compared against each other directly.
 
-### Using the Scorers
+Pooled samples (e.g. `Pool of all FLT samples`) are excluded from ranking automatically.
 
-```python
-from src.core.informativeness_scorer import SampleInformativenessScorer, MouseInformativenessScorer
+### Practical use
 
-# Table 1
-sample_scorer = SampleInformativenessScorer()
-df = sample_scorer.score(records)  # returns pandas DataFrame
-
-# Table 2
-mouse_scorer = MouseInformativenessScorer()
-df = mouse_scorer.score(records, "RR-3")  # returns pandas DataFrame
-```
-
-### Using the Enrichment Pipeline
-
-```python
-from pathlib import Path
-from src.core.pipeline import Pipeline, PipelineConfig
-
-config = PipelineConfig(
-    input_csv_path=Path("input.csv"),
-    output_csv_path=Path("output.csv"),
-    provenance_log_path=Path("provenance.json"),
-    validation_report_path=Path("validation.txt"),
-    use_cache=True,
-)
-pipeline = Pipeline(config)
-result = pipeline.run()
-
-print(f"Enriched {result.enriched_rows}/{result.total_rows} rows")
-print(f"Duration: {result.duration_seconds:.1f}s")
-```
+The ranking is most useful when selecting mice for downstream multi-omics analysis. Mice ranked 1 have data across the most organs and assay types, making them the best candidates for integration analyses (e.g. MOFA+, multi-omics correlation).
 
 ---
 
-## 11. Environment Variables
+## 9. Directory Structure Reference
 
-| Variable | Description | Default |
-|---|---|---|
-| `OSDR_PROJECT_ROOT` | Override project root directory | Auto-detected |
-| `OSDR_INPUT_CSV` | Default input CSV path | `resources/study_overview_examples/Yeshasvi_2_enriched.csv` |
-| `OSDR_OUTPUT_DIR` | Output directory | `outputs/` |
-| `OSDR_CACHE_DIR` | API cache directory | `resources/osdr_api/raw/` |
-| `OSDR_USE_CACHE` | Enable/disable caching (`true`/`false`) | `true` |
+```
+NASA-OSDR-metadata-intelligence-engine/
+│
+├── cli/
+│   ├── run_full_export.py     ← main entry point (use this)
+│   ├── query_assays.py        ← assay parameter browser
+│   ├── init_cache.py          ← pre-download ISA-Tab for demo studies
+│   └── ...                    ← other utilities (see below)
+│
+├── src/
+│   ├── core/
+│   │   ├── sample_expander.py       ← ISA-Tab → SampleRow objects
+│   │   ├── isa_parser.py            ← parses i_*.txt, s_*.txt, a_*.txt
+│   │   ├── export_tables.py         ← builds the three output DataFrames
+│   │   ├── informativeness_scorer.py← mouse ranking logic
+│   │   ├── mission_resolver.py      ← mission name → OSD IDs
+│   │   └── osdr_client.py           ← API calls + caching
+│   └── utils/
+│       └── export_schema.py         ← column name definitions
+│
+├── resources/
+│   ├── isa_tab/               ← downloaded ISA-Tab archives (auto-created)
+│   └── osdr_api/raw/          ← cached API JSON (auto-created)
+│
+└── outputs/                   ← your output goes here (auto-created)
+    └── rr1/
+        ├── mouse_metadata.csv
+        ├── sample_metadata.csv
+        ├── assay_parameters_long.csv
+        ├── assay_parameters_wide.csv
+        ├── mouse_ranking.csv
+        └── data_manifest.json
+```
+
+### Other CLI tools
+
+These are available but not part of the main workflow:
+
+| Script | Purpose |
+|--------|---------|
+| `python -m cli.init_cache` | Pre-download ISA-Tab for a set of demo studies so the first export run is fast |
+| `python -m cli.process_osd_study OSD-48` | Inspect a single study's metadata in the terminal |
+| `python -m cli.retrieve_data OSD-48` | Lower-level data retrieval (produces raw CSV, not the cleaned export tables) |
 
 ---
 
-## 12. Caching and Performance
+## 10. Troubleshooting
 
-### Cache locations
+### "NOT FOUND — OSD-NNN does not exist or is not reachable"
 
-| Directory | Contents | Cleared by |
-|---|---|---|
-| `resources/osdr_api/raw/` | API JSON responses (`OSD-*.json`) + `mission_registry.json` | `--clear-cache` |
-| `resources/isa_tab/` | Extracted ISA-Tab archives (`OSD-*/i_*.txt`, `s_*.txt`, `a_*.txt`) | Manual deletion |
+The tool verified the OSD ID against the live OSDR API and got no result. Check:
+- The OSD number is correct (visit `https://osdr.nasa.gov` and search)
+- Your internet connection can reach `osdr.nasa.gov` and `visualization.osdr.nasa.gov`
+- The study is publicly released (some studies are embargoed)
 
-### First run vs subsequent runs
+### "Mission 'RR-X' not in local registry — scanning live API"
 
-- **First run** for a study: 1-3 seconds (API fetch + ISA-Tab download)
-- **Subsequent runs**: < 100ms (reads from local cache)
-- **RR-3 (3 OSDs, 53 samples)**: ~2 seconds first run, ~0.7 seconds cached
-- **RR-1 (10 OSDs, 302 samples)**: ~15 seconds first run, ~2 seconds cached
+The mission name isn't in the hardcoded `KNOWN_MISSIONS` list in `src/core/constants.py`. The tool will scan all OSDR studies to find matching ones, which can take a few minutes. If you run this mission frequently, add it to `KNOWN_MISSIONS` to make subsequent runs instant.
 
-### Rate limiting
+### `pulled_at` is not updating even though data changed
 
-The NASA APIs have no documented rate limits, but the engine makes at most 4 requests per OSD study (dataset, samples, assays, files list). All responses are cached after the first successful fetch.
+The freshness check compares a hash of the **locally cached ISA-Tab files**, not the live API. If you want to force a fresh download of ISA-Tab for a study, delete its folder from `resources/isa_tab/OSD-NNN/` and re-run.
+
+### Many fields are blank in `mouse_metadata.csv`
+
+The fill rate depends entirely on what the study deposited in its ISA-Tab. Fields like `genotype` are blank in most RR studies because all animals are wild-type and it wasn't stated explicitly. `duration` is intentionally blank for ground/basal controls.
+
+### `assay_parameters_long.csv` is empty for a study
+
+Some assay types have no technical parameters recorded in the ISA-Tab assay file. This is common for histology and some behavioural assays. The tool only captures what OSDR actually deposited.
+
+### "cannot insert pulled_at, already exists" error
+
+Update `cli/run_full_export.py` to the latest version — this was a bug fixed in a prior session.
+
+### Memory or performance issues with large missions
+
+For missions with 10+ studies (e.g. RR-10), the full export can take 5–10 minutes on first run while ISA-Tab archives are downloaded. Subsequent runs reuse the local cache and are much faster. If you only need a subset of studies, use `--osd` instead of `--mission`.

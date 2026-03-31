@@ -196,3 +196,114 @@ class MouseInformativenessScorer:
         )
 
         return df
+
+
+class MouseRankerFromExport:
+    """
+    Rank mice directly from the sample_metadata DataFrame produced by run_full_export.
+
+    This is the preferred scorer when the new export pipeline has been run,
+    because sample_df already has per-row assay_category and material_type
+    with pooled samples labelled. The old MouseInformativenessScorer works
+    on raw SampleRecord objects from DataRetriever and is kept for compatibility.
+
+    Scoring formula (same logic as MouseInformativenessScorer):
+        score = n_organs * n_distinct_assay_types + log2(1 + n_sample_rows)
+
+    A mouse with kidney + liver × RNA-seq + mass-spec scores higher than one
+    with only liver × mass-spec.  Pooled samples are excluded.
+    """
+
+    # Values in material_type that mean "no real organ"
+    _SKIP_ORGANS = {"not applicable", "n/a", "na", "", "nan"}
+
+    @staticmethod
+    def _is_pooled(mouse_id: str) -> bool:
+        t = str(mouse_id).lower()
+        return any(m in t for m in ["pool", "pooled", "not appl", "empty"])
+
+    def score(self, sample_df: "pd.DataFrame") -> "pd.DataFrame":
+        """
+        Parameters
+        ----------
+        sample_df : pd.DataFrame
+            The sample_metadata.csv DataFrame from run_full_export.
+
+        Returns
+        -------
+        pd.DataFrame
+            One row per mouse, sorted by informativeness_rank (1 = most informative).
+            Columns:
+                osd_id, payload, mission, mouse_id,
+                n_organs, organs,
+                n_assay_types, assay_types, assay_names,
+                n_sample_rows,
+                informativeness_score, informativeness_rank
+        """
+        import math
+        import pandas as pd
+
+        required = {"mouse_id", "material_type", "assay_category"}
+        missing = required - set(sample_df.columns)
+        if missing:
+            raise ValueError(f"sample_df missing columns: {missing}")
+
+        # Drop pooled rows
+        mask = ~sample_df["mouse_id"].apply(self._is_pooled)
+        df = sample_df[mask].copy()
+
+        if df.empty:
+            return pd.DataFrame(columns=[
+                "osd_id", "pulled_at", "payload", "mission", "mouse_id",
+                "n_organs", "organs", "n_assay_types", "assay_types", "assay_names",
+                "n_sample_rows", "informativeness_score", "informativeness_rank",
+            ])
+
+        # Clean material_type
+        df["_organ"] = df["material_type"].fillna("").str.strip()
+        df["_organ_valid"] = ~df["_organ"].str.lower().isin(self._SKIP_ORGANS)
+
+        rows = []
+        for mouse_id, grp in df.groupby("mouse_id"):
+            valid_organs = grp.loc[grp["_organ_valid"], "_organ"].unique()
+            assay_cats   = grp["assay_category"].dropna().unique()
+            assay_names  = grp["assay_name"].dropna().unique() if "assay_name" in grp else []
+
+            n_organs     = len(valid_organs)
+            n_assay_types = len(assay_cats)
+            n_rows       = len(grp)
+            score        = n_organs * n_assay_types + math.log2(1 + n_rows)
+
+            rows.append({
+                "osd_id":       grp["osd_id"].iloc[0] if "osd_id" in grp else "",
+                "pulled_at":    grp["pulled_at"].iloc[0] if "pulled_at" in grp else "",
+                "payload":      grp["payload"].iloc[0] if "payload" in grp else "",
+                "mission":      grp["mission"].iloc[0] if "mission" in grp else "",
+                "mouse_id":     mouse_id,
+                "n_organs":     n_organs,
+                "organs":       " | ".join(sorted(valid_organs)),
+                "n_assay_types": n_assay_types,
+                "assay_types":  " | ".join(sorted(assay_cats)),
+                "assay_names":  " | ".join(sorted(str(a) for a in assay_names if a)),
+                "n_sample_rows": n_rows,
+                "informativeness_score": round(score, 3),
+            })
+
+        out = pd.DataFrame(rows)
+        if out.empty:
+            return out
+
+        # Rank within (payload, mission, osd_id) group — ties get same rank
+        out = out.sort_values(
+            by=["payload", "mission", "osd_id", "informativeness_score",
+                "n_organs", "n_assay_types", "mouse_id"],
+            ascending=[True, True, True, False, False, False, True],
+        ).reset_index(drop=True)
+
+        out["informativeness_rank"] = (
+            out.groupby(["payload", "mission", "osd_id"])["informativeness_score"]
+            .rank(method="dense", ascending=False)
+            .astype(int)
+        )
+
+        return out

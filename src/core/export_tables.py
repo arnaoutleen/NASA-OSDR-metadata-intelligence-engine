@@ -42,6 +42,16 @@ ASSAY_CATEGORY_MAP = {
     "western-blot": "protein_quantification",
     "atpase": "atpase_activity",
     "calcium_uptake": "calcium_uptake",
+    # Hyphenated forms returned by _extract_assay_type
+    "calcium-uptake": "calcium_uptake",
+    # Assay types not previously covered
+    "microarray": "microarray",
+    "bone-microstructure": "bone_microstructure",
+    "micro-computed-tomography": "bone_microstructure",
+    "bone microstructure": "bone_microstructure",
+    "micro computed tomography": "bone_microstructure",
+    "spectrofluorimetric": "calcium_uptake",
+    "spectrofluorimetric-assay": "calcium_uptake",
 }
 
 # Maps canonical ISA parameter name -> SampleRow flat field name, per assay category.
@@ -173,6 +183,20 @@ _SAMPLEROW_FALLBACKS: Dict[str, Dict[str, str]] = {
     "molecular_cellular_imaging": {
         "Parameter Value[Section Thickness]": "microscopy_section_thickness",
     },
+    "bone_microstructure": {
+        # micro-CT parameters vary by study; capture any that appear
+        "Parameter Value[Voxel Size]":        "bone_voxel_size",
+        "Parameter Value[Voltage]":           "bone_voltage",
+        "Parameter Value[Current]":           "bone_current",
+        "Parameter Value[Rotation Step]":     "bone_rotation_step",
+        "Parameter Value[Frame Averaging]":   "bone_frame_averaging",
+        "Parameter Value[Filter]":            "bone_filter",
+    },
+    "microarray": {
+        "Parameter Value[Array Design REF]":  "microarray_design",
+        "Parameter Value[Label]":             "microarray_label",
+        "Parameter Value[Hybridization]":     "microarray_hybridization",
+    },
     "protein_quantification": {
         "Parameter Value[Amount Of Protein Loaded]":  "wb_protein_amount",
         "Parameter Value[Type Of Gel]":               "wb_gel_type",
@@ -250,15 +274,22 @@ def classify_assay(record: Dict[str, Any]) -> Tuple[str, str]:
     return "unknown", "unknown"
 
 
-def _project(record: Dict[str, Any]) -> Any:
-    return _safe_get(record, "project", "mission", "RR_mission", "OSD_study", default="")
+def _payload(record: Dict[str, Any]) -> Any:
+    """Return the payload (rocket/vehicle) name, e.g. 'SpaceX-4'."""
+    return _safe_get(record, "payload", default="")
+
+
+def _mission(record: Dict[str, Any]) -> Any:
+    """Return the project/mission identifier, e.g. 'RR-1'."""
+    return _safe_get(record, "mission", "RR_mission", default="")
 
 
 def extract_mouse_metadata(record: Dict[str, Any]) -> Dict[str, Any]:
     row = {
         "osd_id":            _safe_get(record, "osd_id", "OSD_study"),
-        "project":           _project(record),
-        "mission":           _safe_get(record, "mission", "RR_mission"),
+        "pulled_at":         _safe_get(record, "pulled_at", default=""),
+        "payload":           _payload(record),
+        "mission":           _mission(record),
         "mouse_id":          _safe_get(record, "mouse_id", "mouse_uid"),
         "source_name":       _safe_get(record, "source_name", "mouse_uid"),
         "strain":            _safe_get(record, "mouse_strain", "Characteristics[Strain]", "strain"),
@@ -272,6 +303,10 @@ def extract_mouse_metadata(record: Dict[str, Any]) -> Dict[str, Any]:
         "duration":          _safe_get(record, "days_in_space_rr3", "duration",
                                        "Parameter Value[duration]"),
         "habitat":           _safe_get(record, "habitat", "mouse_habitat"),
+        "light_cycle":       _safe_get(record, "light_cycle"),
+        "diet":              _safe_get(record, "diet"),
+        "feeding_schedule":  _safe_get(record, "feeding_schedule"),
+        "euthanasia_method": _safe_get(record, "euthanasia_method"),
         "study_purpose":     _safe_get(record, "study_purpose", "study purpose"),
         "n_samples_linked":  None,
         "is_pooled_subject": _safe_get(record, "is_pooled_sample", default=False),
@@ -285,8 +320,9 @@ def extract_sample_metadata(record: Dict[str, Any]) -> Dict[str, Any]:
     assay_category, assay_subtype = classify_assay(record)
     row = {
         "osd_id":            _safe_get(record, "osd_id", "OSD_study"),
-        "project":           _project(record),
-        "mission":           _safe_get(record, "mission", "RR_mission"),
+        "pulled_at":         _safe_get(record, "pulled_at", default=""),
+        "payload":           _payload(record),
+        "mission":           _mission(record),
         "sample_id":         _safe_get(record, "sample_id", "sample_name"),
         "mouse_id":          _safe_get(record, "mouse_id", "mouse_uid"),
         "source_name":       _safe_get(record, "source_name", "mouse_uid"),
@@ -302,8 +338,13 @@ def extract_sample_metadata(record: Dict[str, Any]) -> Dict[str, Any]:
         "device_platforms":  _as_text(_safe_get(record, "device_platforms")),
         "assay_category":    assay_category,
         "assay_subtype":     assay_subtype,
-        "assay_name":        _safe_get(record, "Assay Name", "assay_name", "MS Assay Name",
-                                       "ms_assay_name", "assay_names"),
+        # assay_name: flat SampleRow field (set for ALL assay types) takes priority,
+        # then ms_assay_name for mass spec, then the aggregated assay_names list.
+        "assay_name":        (
+                                _safe_get(record, "assay_name")
+                                or _safe_get(record, "ms_assay_name")
+                                or _safe_get(record, "assay_names")
+                             ),
         "raw_data_file":     _safe_get(record, "Raw Data File", "raw_data_file", "data_files"),
         "is_rnaseq":         assay_category == "rna_sequencing",
         "is_dna_methylation": assay_category == "dna_methylation",
@@ -317,6 +358,8 @@ def extract_sample_metadata(record: Dict[str, Any]) -> Dict[str, Any]:
         "is_echocardiogram": assay_category == "echocardiogram",
         "is_imaging":        assay_category == "molecular_cellular_imaging",
         "is_western_blot":   assay_category == "protein_quantification",
+        "is_bone_microstructure": assay_category == "bone_microstructure",
+        "is_microarray":     assay_category == "microarray",
         "assay_assignment_level": _safe_get(record, "assay_assignment_level", default="sample"),
         "provenance_source": _safe_get(record, "provenance_source", default="isa_tab"),
         "confidence":        _safe_get(record, "confidence"),
@@ -332,14 +375,20 @@ def extract_assay_parameters(record: Dict[str, Any]) -> List[Dict[str, Any]]:
     rows: List[Dict[str, Any]] = []
     base = {
         "osd_id":            _safe_get(record, "osd_id", "OSD_study"),
-        "project":           _project(record),
-        "mission":           _safe_get(record, "mission", "RR_mission"),
+        "pulled_at":         _safe_get(record, "pulled_at", default=""),
+        "payload":           _payload(record),
+        "mission":           _mission(record),
         "sample_id":         _safe_get(record, "sample_id", "sample_name"),
         "mouse_id":          _safe_get(record, "mouse_id", "mouse_uid"),
         "assay_category":    assay_category,
         "assay_subtype":     assay_subtype,
-        "assay_name":        _safe_get(record, "Assay Name", "assay_name", "MS Assay Name",
-                                       "ms_assay_name", "assay_names"),
+        # assay_name: flat SampleRow field (set for ALL assay types) takes priority,
+        # then ms_assay_name for mass spec, then the aggregated assay_names list.
+        "assay_name":        (
+                                _safe_get(record, "assay_name")
+                                or _safe_get(record, "ms_assay_name")
+                                or _safe_get(record, "assay_names")
+                             ),
         "measurement_types": _as_text(_safe_get(record, "measurement_types")),
         "technology_types":  _as_text(_safe_get(record, "technology_types")),
         "device_platforms":  _as_text(_safe_get(record, "device_platforms")),
