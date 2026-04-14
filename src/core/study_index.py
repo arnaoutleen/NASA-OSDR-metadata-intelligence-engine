@@ -1,233 +1,243 @@
 """
-Study index cache for fast organ/assay-first discovery.
+NASA OSDR Metadata Intelligence Engine - Lightweight Study Index
 
-This module builds and queries a lightweight study-level JSON cache so that
-organ- and assay-based discovery does not need to hit OSDR on every query.
-The cache is used only as a discovery layer; downstream ranking still relies
-on full live/cached retrieval through DataRetriever.
+Builds and queries a cached study-level JSON index that supports fast
+organ-first and assay-first discovery without repeatedly scanning the live
+OSDR catalog for every downstream question.
+
+This index is intentionally lightweight and is only meant for discovery.
+Final rankings should still be computed from fully retrieved sample records.
 """
 
 from __future__ import annotations
 
-from dataclasses import dataclass
-from datetime import datetime, timedelta, timezone
 import json
+from dataclasses import dataclass
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional
 
 from src.core.constants import CONTROLLED_ASSAY_TYPES, CONTROLLED_TISSUES
+from src.core.data_retriever import DataRetriever, SampleRecord
 from src.core.mission_resolver import MissionResolver
 from src.core.osdr_client import OSDRClient
+from src.utils.config import get_default_paths
 
-
-def _utc_now_iso() -> str:
-    return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
-
-
-def _parse_iso8601(value: str) -> Optional[datetime]:
-    if not value:
-        return None
-    try:
-        if value.endswith("Z"):
-            value = value[:-1] + "+00:00"
-        return datetime.fromisoformat(value)
-    except Exception:
-        return None
-
-
-def _normalize_organ(value: str) -> str:
-    text = str(value or "").strip()
-    if not text:
-        return ""
-    return CONTROLLED_TISSUES.get(text.lower(), text)
-
-
-_ASSAY_ALIASES = {
-    **CONTROLLED_ASSAY_TYPES,
-    "rna sequencing": "RNA-Seq",
-    "transcription profiling": "RNA-Seq",
-    "proteome profiling": "Proteomics",
-}
-
-
-def _normalize_assay(value: str) -> str:
-    text = str(value or "").strip()
-    if not text:
-        return ""
-    return _ASSAY_ALIASES.get(text.lower(), text)
+INDEX_VERSION = 1
+INDEX_FILENAME = "study_index.json"
 
 
 @dataclass
-class StudyIndexCache:
-    client: OSDRClient
-    resolver: MissionResolver
-    index_path: Path
+class StudyIndexConfig:
+    path: Path
+    max_age_days: int = 7
 
-    def load(self) -> Dict[str, Any]:
-        if not self.index_path.exists():
-            return self.empty_index()
-        try:
-            with open(self.index_path, "r", encoding="utf-8") as f:
-                data = json.load(f)
-            if isinstance(data, dict) and isinstance(data.get("studies", []), list):
-                return data
-        except Exception:
-            pass
-        return self.empty_index()
 
-    @staticmethod
-    def empty_index() -> Dict[str, Any]:
-        return {
-            "generated_at": "",
-            "source": "osdr_studies_index",
-            "version": 1,
-            "study_count": 0,
-            "studies": [],
-        }
+def _utc_now_iso() -> str:
+    return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
 
-    def save(self, index: Dict[str, Any]) -> None:
-        self.index_path.parent.mkdir(parents=True, exist_ok=True)
-        with open(self.index_path, "w", encoding="utf-8") as f:
-            json.dump(index, f, indent=2)
 
-    def is_stale(self, index: Dict[str, Any], max_age_days: int = 7) -> bool:
-        generated = _parse_iso8601(index.get("generated_at", ""))
-        if not generated:
-            return True
-        return datetime.now(timezone.utc) - generated > timedelta(days=max_age_days)
+def default_index_path() -> Path:
+    defaults = get_default_paths()
+    return defaults["cache_dir"].parent / INDEX_FILENAME
 
-    def refresh_if_needed(self, max_age_days: int = 7, force: bool = False, verbose: bool = False) -> Dict[str, Any]:
-        index = self.load()
-        if force or self.is_stale(index, max_age_days=max_age_days):
-            if verbose:
-                reason = "forced refresh" if force else f"cache older than {max_age_days} day(s)"
-                print(f"Refreshing study index ({reason})...")
-            index = self.build(verbose=verbose)
-            self.save(index)
-        return index
 
-    def build(self, verbose: bool = False) -> Dict[str, Any]:
-        osd_ids = self.client.list_all_study_ids()
-        studies: List[Dict[str, Any]] = []
+def normalize_assay(name: str) -> str:
+    if not name:
+        return ""
+    lookup = str(name).strip().lower()
+    return CONTROLLED_ASSAY_TYPES.get(lookup, str(name).strip())
 
-        for i, osd_id in enumerate(osd_ids, 1):
-            if verbose and i % 25 == 1:
-                print(f"  indexing {i}/{len(osd_ids)}: {osd_id}")
-            entry = self._build_entry(osd_id)
-            if entry:
-                studies.append(entry)
 
-        studies.sort(key=lambda x: int(str(x["osd_id"]).replace("OSD-", "")))
-        return {
-            "generated_at": _utc_now_iso(),
-            "source": "osdr_studies_index",
-            "version": 1,
-            "study_count": len(studies),
-            "studies": studies,
-        }
+def normalize_organ(name: str) -> str:
+    if not name:
+        return ""
+    lookup = str(name).strip().lower()
+    return CONTROLLED_TISSUES.get(lookup, str(name).strip())
 
-    def _build_entry(self, osd_id: str) -> Optional[Dict[str, Any]]:
-        osd_id = self.client.normalize_osd_id(osd_id)
-        try:
-            study_json = self.client.fetch_study_json(osd_id, use_cache=True) or {}
-        except Exception:
-            study_json = {}
 
-        samples = study_json.get("samples", []) or []
-        assays = study_json.get("assays", []) or []
+def normalize_token(text: str) -> str:
+    return " ".join(str(text).strip().lower().replace("_", " ").replace("-", " ").split())
 
-        organs = set()
-        organisms = set()
-        assay_types = set()
-        mouse_names = set()
 
-        for sample in samples:
-            if not isinstance(sample, dict):
+def matches_token(value: str, query: str) -> bool:
+    left = normalize_token(value)
+    right = normalize_token(query)
+    if not left or not right:
+        return False
+    return left == right or right in left or left in right
+
+
+def build_study_summary(
+    osd_id: str,
+    records: List[SampleRecord],
+    resolver: MissionResolver,
+) -> Dict[str, Any]:
+    organs = sorted({normalize_organ(r.material_type) for r in records if r.material_type})
+    assays = sorted({normalize_assay(a) for r in records for a in r.measurement_types if a})
+    sources = {r.source_name for r in records if str(r.source_name).strip()}
+    assay_to_organs: Dict[str, set[str]] = {}
+    organ_to_assays: Dict[str, set[str]] = {}
+    total_data_files = 0
+
+    for record in records:
+        organ = normalize_organ(record.material_type)
+        total_data_files += len(record.data_files)
+        for assay in record.measurement_types:
+            assay_norm = normalize_assay(assay)
+            if not assay_norm:
                 continue
-            organ = _normalize_organ(sample.get("material_type", ""))
+            assay_to_organs.setdefault(assay_norm, set())
             if organ:
-                organs.add(organ)
-            organism = str(sample.get("organism", "")).strip()
-            if organism:
-                organisms.add(organism)
-            source_name = str(sample.get("source_name", "")).strip()
-            if source_name:
-                mouse_names.add(source_name)
-            # Biodata API sample entries may expose measurement/factor info directly.
-            for m in sample.get("measurement_types", []) or []:
-                assay = _normalize_assay(m)
-                if assay:
-                    assay_types.add(assay)
+                assay_to_organs[assay_norm].add(organ)
+            if organ:
+                organ_to_assays.setdefault(organ, set()).add(assay_norm)
 
-        for assay in assays:
-            if not isinstance(assay, dict):
-                continue
-            assay_type = _normalize_assay(assay.get("type", ""))
-            if assay_type:
-                assay_types.add(assay_type)
+    return {
+        "osd_id": OSDRClient.normalize_osd_id(osd_id),
+        "mission": resolver.get_mission_for_osd(osd_id) or "Unknown",
+        "organs": organs,
+        "assays": assays,
+        "assay_to_organs": {k: sorted(v) for k, v in sorted(assay_to_organs.items())},
+        "organ_to_assays": {k: sorted(v) for k, v in sorted(organ_to_assays.items())},
+        "sample_count": len(records),
+        "mouse_count": len(sources),
+        "total_data_files": total_data_files,
+        "retrievable": True,
+        "last_seen": _utc_now_iso(),
+    }
 
-        assay_types_string = str(study_json.get("assay_types", "")).strip()
-        if assay_types_string:
-            for raw in assay_types_string.replace("     ", "|").split("|"):
-                assay = _normalize_assay(raw)
-                if assay:
-                    assay_types.add(assay)
 
-        title = str(study_json.get("title", "")).strip()
-        description = str(study_json.get("description", "")).strip()
+def build_study_index(
+    client: OSDRClient,
+    resolver: MissionResolver,
+    retriever: DataRetriever,
+    output_path: Optional[Path] = None,
+    osd_ids: Optional[Iterable[str]] = None,
+    quiet: bool = False,
+) -> Dict[str, Any]:
+    output_path = output_path or default_index_path()
+    output_path.parent.mkdir(parents=True, exist_ok=True)
 
+    if osd_ids is None:
+        osd_ids = client.list_all_study_ids()
+    osd_ids = [OSDRClient.normalize_osd_id(osd) for osd in osd_ids]
+
+    studies: List[Dict[str, Any]] = []
+    failed: List[Dict[str, str]] = []
+
+    total = len(osd_ids)
+    for i, osd_id in enumerate(osd_ids, 1):
+        if not quiet:
+            print(f"[{i}/{total}] Indexing {osd_id}...", flush=True)
         try:
-            mission = self.resolver.get_mission_for_osd(osd_id) or ""
-        except Exception:
-            mission = ""
-
-        return {
-            "osd_id": osd_id,
-            "mission": mission,
-            "title": title,
-            "description": description,
-            "organisms": sorted(organisms),
-            "organs": sorted(organs),
-            "assays": sorted(assay_types),
-            "sample_count": len(samples),
-            "mouse_count": len(mouse_names),
-            "retrievable": bool(samples),
-            "last_seen": _utc_now_iso(),
-        }
-
-    def query(
-        self,
-        organ: Optional[str] = None,
-        assay: Optional[str] = None,
-        mission: Optional[str] = None,
-        retrievable_only: bool = True,
-    ) -> List[Dict[str, Any]]:
-        index = self.load()
-        studies = index.get("studies", []) or []
-
-        organ_norm = _normalize_organ(organ) if organ else None
-        assay_norm = _normalize_assay(assay) if assay else None
-        mission_norm = mission.strip() if mission else None
-
-        results = []
-        for study in studies:
-            if retrievable_only and not study.get("retrievable", False):
+            records = retriever.retrieve_osd(osd_id)
+            if not records:
+                failed.append({"osd_id": osd_id, "reason": "No retrievable records"})
                 continue
-            if mission_norm and study.get("mission") != mission_norm:
-                continue
-            if organ_norm and organ_norm not in set(study.get("organs", [])):
-                continue
-            if assay_norm and assay_norm not in set(study.get("assays", [])):
-                continue
-            results.append(study)
-        return results
+            studies.append(build_study_summary(osd_id, records, resolver))
+        except Exception as exc:
+            failed.append({"osd_id": osd_id, "reason": str(exc)})
 
-    def list_organs(self, mission: Optional[str] = None) -> List[str]:
-        studies = self.query(mission=mission, retrievable_only=True)
-        organs = sorted({organ for study in studies for organ in study.get("organs", []) if organ})
-        return organs
+    payload = {
+        "generated_at": _utc_now_iso(),
+        "version": INDEX_VERSION,
+        "source": "osdr_study_index",
+        "study_count": len(studies),
+        "failed_count": len(failed),
+        "studies": sorted(studies, key=lambda row: row["osd_id"]),
+        "failed": failed,
+    }
 
-    def list_assays(self, mission: Optional[str] = None) -> List[str]:
-        studies = self.query(mission=mission, retrievable_only=True)
-        assays = sorted({assay for study in studies for assay in study.get("assays", []) if assay})
-        return assays
+    with open(output_path, "w", encoding="utf-8") as fh:
+        json.dump(payload, fh, indent=2)
+
+    return payload
+
+
+def load_study_index(index_path: Optional[Path] = None) -> Dict[str, Any]:
+    index_path = index_path or default_index_path()
+    with open(index_path, "r", encoding="utf-8") as fh:
+        return json.load(fh)
+
+
+def index_is_stale(index_path: Optional[Path] = None, max_age_days: int = 7) -> bool:
+    index_path = index_path or default_index_path()
+    if not index_path.exists():
+        return True
+    try:
+        payload = load_study_index(index_path)
+        generated_at = payload.get("generated_at")
+        if not generated_at:
+            return True
+        generated_dt = datetime.fromisoformat(generated_at.replace("Z", "+00:00"))
+        return datetime.now(timezone.utc) - generated_dt > timedelta(days=max_age_days)
+    except Exception:
+        return True
+
+
+def refresh_study_index_if_needed(
+    client: OSDRClient,
+    resolver: MissionResolver,
+    retriever: DataRetriever,
+    index_path: Optional[Path] = None,
+    max_age_days: int = 7,
+    force: bool = False,
+    quiet: bool = False,
+) -> Dict[str, Any]:
+    index_path = index_path or default_index_path()
+    if force or index_is_stale(index_path, max_age_days=max_age_days):
+        return build_study_index(
+            client=client,
+            resolver=resolver,
+            retriever=retriever,
+            output_path=index_path,
+            quiet=quiet,
+        )
+    return load_study_index(index_path)
+
+
+def query_study_index(
+    payload: Dict[str, Any],
+    assays: Optional[Iterable[str]] = None,
+    mission: Optional[str] = None,
+    organ: Optional[str] = None,
+    match: str = "all",
+) -> List[Dict[str, Any]]:
+    studies = payload.get("studies", [])
+    requested_assays = [normalize_assay(a) for a in (assays or []) if str(a).strip()]
+    requested_assays = [a for a in requested_assays if a]
+
+    results: List[Dict[str, Any]] = []
+    for study in studies:
+        if mission and str(study.get("mission", "")).strip().lower() != str(mission).strip().lower():
+            continue
+
+        study_assays = study.get("assays", []) or []
+        study_organs = study.get("organs", []) or []
+        assay_to_organs = study.get("assay_to_organs", {}) or {}
+
+        if requested_assays:
+            if match == "all":
+                if not all(any(matches_token(sa, ra) for sa in study_assays) for ra in requested_assays):
+                    continue
+            else:
+                if not any(any(matches_token(sa, ra) for sa in study_assays) for ra in requested_assays):
+                    continue
+
+        if organ:
+            organ_match = any(matches_token(o, organ) for o in study_organs)
+            if not organ_match:
+                continue
+            if requested_assays:
+                organ_norm = normalize_organ(organ)
+                if match == "all":
+                    if not all(any(matches_token(o, organ_norm) for o in assay_to_organs.get(ra, [])) for ra in requested_assays):
+                        continue
+                else:
+                    if not any(any(matches_token(o, organ_norm) for o in assay_to_organs.get(ra, [])) for ra in requested_assays):
+                        continue
+
+        results.append(study)
+
+    return sorted(results, key=lambda row: (row.get("mission", ""), row.get("osd_id", "")))
