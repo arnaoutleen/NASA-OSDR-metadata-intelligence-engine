@@ -254,7 +254,7 @@ def main() -> int:
 
     sample_df = SampleInformativenessScorer().score(matched_records)
     mission_label = args.mission if args.mission else f"assay_query:{' + '.join(requested_assays)}"
-    mouse_df = MouseInformativenessScorer().score(matched_records, mission=mission_label)
+    mouse_df = MouseInformativenessScorer().score(matched_records, project=mission_label)
 
     mouse_output = args.mouse_output or rankings_dir / f"mouse_ranking_assay_{label}.csv"
     sample_output = args.sample_output or rankings_dir / f"sample_ranking_assay_{label}.csv"

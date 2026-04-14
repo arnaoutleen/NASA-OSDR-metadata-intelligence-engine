@@ -1,12 +1,11 @@
-march 31: last thing to do is remove pooled samples! 
+# This is a test run of the code. We are going to run the pipeline from beginning to end on RR-1. We will:
 
-add something that's like payload_id+source_name
+# STEP 1: Metadata Pull
+# Download the metadata for all assays EXCEPT western blot and calcium uptake (they're huge and can cause an OOM error if you're running it on your local machine, as opposed to an HPC).
 
-make the code check: when you pull the data, add a date, and then when you re-pull the data later in the future, it should check against the current output and add a new copy with the data that was missing last time 
+python -m cli.run_full_export --mission RR-1 -o outputs/test_rr1_new --exclude-assay western-blot calcium-uptake
 
-* consider ease for the consumer:
-* write code that will consume the data. (a guide on how to do it)... like a unit test
-
+# STEP 2: Assay Query and Exploration
 # What assay types are in this file?
 python -m cli.query_assays --file outputs/test_rr1_new/assay_parameters_long.csv --list-types
 

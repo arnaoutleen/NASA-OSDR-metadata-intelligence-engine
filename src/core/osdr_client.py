@@ -131,19 +131,23 @@ class OSDRClient:
         try:
             with open(cache_path, "r", encoding="utf-8") as f:
                 data = json.load(f)
-                
+
             # Validate cache has samples
             if data.get("samples") and len(data.get("samples", [])) > 0:
                 return data
-            
+
             return None  # Cache exists but has no samples - refetch
             
         except (json.JSONDecodeError, IOError):
             return None
     
     def _save_to_cache(self, osd_id: str, data: Dict[str, Any]) -> None:
-        """Save API response to cache."""
+        """Save API response to cache, stamping pulled_at if not already set."""
+        from datetime import datetime, timezone
         cache_path = self._get_cache_path(osd_id)
+        # Preserve existing pulled_at if the caller already set one
+        if "pulled_at" not in data:
+            data["pulled_at"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
         with open(cache_path, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2)
     
@@ -403,65 +407,108 @@ class OSDRClient:
     # Backward-compatible alias
     _fetch_files_list = fetch_files_list
     
+    def _get_isa_url_cache_path(self, osd_id: str) -> Path:
+        """Return path to the cached ISA zip URL file for a study."""
+        return self.cache_dir / f"{osd_id}_isa_url.txt"
+
     def download_isa_tab(self, osd_id: str) -> Optional[Path]:
         """
         Download and extract ISA-Tab archive for a study.
-        
+
         The ISA-Tab archive contains:
         - i_*.txt: Investigation file
         - s_*.txt: Study file (sample characteristics)
         - a_*.txt: Assay file(s)
-        
+
+        The ISA zip URL is cached to disk after the first lookup so that
+        subsequent runs do not need to re-fetch the full study files list.
+
         Args:
             osd_id: The OSD identifier
-            
+
         Returns:
             Path to extracted ISA-Tab directory, or None on failure
         """
         osd_id = self.normalize_osd_id(osd_id)
         extract_dir = self.isa_tab_dir / osd_id
-        
-        # Check if already downloaded
+
+        # Already extracted — nothing to do
         if extract_dir.exists() and any(extract_dir.glob("s_*.txt")):
             return extract_dir
-        
-        # Get files list
-        files_list = self._fetch_files_list(osd_id)
-        if not files_list:
-            return None
-        
-        # Find ISA zip file
-        isa_file = None
-        for f in files_list:
-            fname = f.get("file_name", "")
-            if "ISA.zip" in fname and fname.endswith(".zip"):
-                isa_file = f
-                break
-        
-        if not isa_file:
-            return None
-        
-        try:
-            # Download the ISA zip
+
+        # Try to get the ISA zip URL from the small on-disk cache first,
+        # so we avoid re-fetching the full (potentially large) files list.
+        url_cache = self._get_isa_url_cache_path(osd_id)
+        download_url: Optional[str] = None
+
+        if url_cache.exists():
+            cached_url = url_cache.read_text(encoding="utf-8").strip()
+            if cached_url:
+                download_url = cached_url
+
+        if not download_url:
+            # Fetch the study files list and find the ISA.zip entry
+            files_list = self._fetch_files_list(osd_id)
+            if not files_list:
+                return None
+
+            isa_file = None
+            for f in files_list:
+                fname = f.get("file_name", "")
+                if "ISA.zip" in fname and fname.endswith(".zip"):
+                    isa_file = f
+                    break
+
+            # Explicitly release the files list — it can be large
+            del files_list
+
+            if not isa_file:
+                return None
+
             remote_url = isa_file.get("remote_url", "")
             if remote_url.startswith("/"):
                 download_url = f"{self.config.osdr_download_base}{remote_url}"
             else:
                 download_url = remote_url
-            
-            response = requests.get(download_url, timeout=self.config.request_timeout)
-            if response.status_code != 200:
-                return None
-            
-            # Extract the zip
+
+            # Cache the URL to disk for future runs
+            try:
+                url_cache.write_text(download_url, encoding="utf-8")
+            except IOError:
+                pass
+
+        if not download_url:
+            return None
+        
+        try:
+            # Download the ISA zip — stream directly to a temp file to avoid
+            # holding the entire zip in RAM (some studies have large archives).
+
+            import tempfile
             extract_dir.mkdir(parents=True, exist_ok=True)
-            zip_buffer = io.BytesIO(response.content)
-            
-            with zipfile.ZipFile(zip_buffer, "r") as zf:
-                zf.extractall(extract_dir)
-            
+
+            with requests.get(download_url, stream=True,
+                              timeout=self.config.request_timeout) as response:
+                if response.status_code != 200:
+                    return None
+
+                # Write to a temp file in the extract dir so we never hold
+                # more than one chunk in RAM at once.
+                tmp_zip = extract_dir / "_isa_download.zip"
+                try:
+                    with open(tmp_zip, "wb") as fh:
+                        for chunk in response.iter_content(chunk_size=256 * 1024):
+                            if chunk:
+                                fh.write(chunk)
+
+                    with zipfile.ZipFile(tmp_zip, "r") as zf:
+                        zf.extractall(extract_dir)
+                finally:
+                    if tmp_zip.exists():
+                        tmp_zip.unlink()
+
             return extract_dir
-            
+
         except Exception:
             return None
     

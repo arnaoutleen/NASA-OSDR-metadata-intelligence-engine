@@ -1,18 +1,7 @@
 #!/usr/bin/env python3
-"""
-NASA OSDR Metadata Intelligence Engine - Sample Ranking CLI
-
-Generate the Sample Informativeness table (Table 1) that ranks samples
-by data availability within each OSD study.
-
-Usage:
-    python -m cli.rank_samples OSD-242
-    python -m cli.rank_samples OSD-242 OSD-379 -o outputs/rankings/sample_ranking.csv
-    python -m cli.rank_samples --mission RR-3
-"""
+from __future__ import annotations
 
 import argparse
-import json
 import sys
 from pathlib import Path
 
@@ -28,45 +17,22 @@ from src.utils.config import get_default_paths
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description="NASA OSDR Sample Ranking - Rank samples by data availability",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""\
-Examples:
-    python -m cli.rank_samples OSD-242
-    python -m cli.rank_samples --mission RR-1 -o outputs/rankings/rr1_samples.csv
-    python -m cli.rank_samples OSD-102 --format json
-""",
-    )
-
-    parser.add_argument(
-        "osd_ids", nargs="*", default=[],
-        help="OSD study IDs to rank (e.g., OSD-242 OSD-379)",
-    )
-    parser.add_argument(
-        "--mission", type=str, default=None,
-        help="Rank samples for all OSDs in a mission",
-    )
-    parser.add_argument(
-        "-o", "--output", type=Path, dest="output_path",
-        help="Output file path",
-    )
-    parser.add_argument(
-        "--format", choices=["csv", "json"], default="csv",
-        help="Output format (default: csv)",
-    )
-    parser.add_argument("-v", "--verbose", action="store_true")
+    parser = argparse.ArgumentParser(description="Rank sample rows by data availability")
+    parser.add_argument("osd_ids", nargs="*", default=[])
+    parser.add_argument("--project", type=str, default=None)
+    parser.add_argument("--mission", type=str, default=None, help="Alias for --project")
+    parser.add_argument("-o", "--output", type=Path, dest="output_path")
+    parser.add_argument("--format", choices=["csv", "json"], default="csv")
     parser.add_argument("-q", "--quiet", action="store_true")
-
-    return parser.parse_args()
+    args = parser.parse_args()
+    if not args.osd_ids and not args.project and not args.mission:
+        parser.error("Provide OSD IDs or --project (or --mission)")
+    return args
 
 
 def main() -> int:
     args = parse_args()
-
-    if not args.osd_ids and not args.mission:
-        print("Error: Provide OSD IDs or --mission", file=sys.stderr)
-        return 1
+    project = args.project or args.mission
 
     defaults = get_default_paths()
     client = OSDRClient(cache_dir=defaults["cache_dir"], isa_tab_dir=defaults["isa_tab_dir"])
@@ -75,51 +41,37 @@ def main() -> int:
     retriever = DataRetriever(client=client, parser=parser, resolver=resolver)
 
     records = []
-    if args.mission:
-        osds = resolver.resolve_mission(args.mission)
+    if project:
+        osds = resolver.resolve_mission(project)
         if not osds:
-            print(f"Error: No OSDs found for mission '{args.mission}'", file=sys.stderr)
+            print(f"Error: No OSDs found for project '{project}'", file=sys.stderr)
             return 1
-        if not args.quiet:
-            print(f"Mission {args.mission}: {len(osds)} OSDs")
-        for i, osd in enumerate(osds, 1):
-            if not args.quiet:
-                print(f"  [{i}/{len(osds)}] {osd}...", end=" ", flush=True)
-            try:
-                recs = retriever.retrieve_osd(osd)
-                records.extend(recs)
-                if not args.quiet:
-                    print(f"({len(recs)} samples)")
-            except Exception as e:
-                if not args.quiet:
-                    print(f"(error: {e})")
-        label = args.mission.replace(" ", "_")
+        label = project.replace(" ", "_")
     else:
-        for i, osd in enumerate(args.osd_ids, 1):
-            if not args.quiet:
-                print(f"  [{i}/{len(args.osd_ids)}] {osd}...", end=" ", flush=True)
-            try:
-                recs = retriever.retrieve_osd(osd)
-                records.extend(recs)
-                if not args.quiet:
-                    print(f"({len(recs)} samples)")
-            except Exception as e:
-                if not args.quiet:
-                    print(f"(error: {e})")
+        osds = args.osd_ids
         label = "_".join(args.osd_ids) if len(args.osd_ids) <= 3 else "multi"
+
+    for i, osd in enumerate(osds, 1):
+        if not args.quiet:
+            print(f"  [{i}/{len(osds)}] {osd}...", end=" ", flush=True)
+        try:
+            recs = retriever.retrieve_osd(osd)
+            records.extend(recs)
+            if not args.quiet:
+                print(f"({len(recs)} samples)")
+        except Exception as e:
+            if not args.quiet:
+                print(f"(error: {e})")
 
     if not records:
         print("Error: No sample records retrieved", file=sys.stderr)
         return 1
 
     scorer = SampleInformativenessScorer()
-    df = scorer.score(records)
+    df = scorer.score(records, project=project)
 
     ext = "json" if args.format == "json" else "csv"
-    if args.output_path:
-        output_path = args.output_path
-    else:
-        output_path = defaults["output_dir"] / "rankings" / f"sample_ranking_{label}.{ext}"
+    output_path = args.output_path or (defaults["output_dir"] / "rankings" / f"sample_ranking_{label}.{ext}")
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     if args.format == "json":
@@ -128,9 +80,7 @@ def main() -> int:
         df.to_csv(output_path, index=False)
 
     if not args.quiet:
-        print(f"\nSample ranking table: {len(df)} rows")
         print(f"Output written to: {output_path}")
-
     return 0
 
 

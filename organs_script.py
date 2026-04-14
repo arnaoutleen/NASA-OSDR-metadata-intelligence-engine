@@ -151,7 +151,7 @@ def rank_matching_records(records: List[SampleRecord], organ_label: str) -> pd.D
     """Generate the same ranking columns as cli/rank_mice.py."""
     scorer = MouseInformativenessScorer()
     # Keep the column name as 'mission' to preserve the same schema as rank_mice.py.
-    return scorer.score(records, mission=f"organ_query:{organ_label}")
+    return scorer.score(records, project=f"organ_query:{organ_label}")
 
 
 # ---------------------------------------------------------------------------

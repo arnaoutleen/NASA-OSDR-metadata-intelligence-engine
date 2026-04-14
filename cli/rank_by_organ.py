@@ -124,7 +124,7 @@ def find_matching_records(
 
 def rank_matching_records(records: List[SampleRecord], organ_label: str) -> pd.DataFrame:
     scorer = MouseInformativenessScorer()
-    return scorer.score(records, mission=f"organ_query:{organ_label}")
+    return scorer.score(records, project=f"organ_query:{organ_label}")
 
 
 def choose_organ_interactively(available_organs: List[str]) -> str:

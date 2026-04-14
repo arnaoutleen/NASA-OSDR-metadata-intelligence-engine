@@ -16,7 +16,7 @@ import csv
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
 
 
 @dataclass
@@ -90,9 +90,12 @@ class ISAAssaySample:
     extract_name: str = ""
     library_selection: str = ""  # polyA enrichment, ribo-depletion
     library_layout: str = ""     # PAIRED, SINGLE
+    assay_name: str = ""
+    ms_assay_name: str = ""
     parameter_values: Dict[str, str] = field(default_factory=dict)
+    comment_values: Dict[str, str] = field(default_factory=dict)
     data_files: List[str] = field(default_factory=list)
-    
+
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for JSON serialization."""
         return {
@@ -100,7 +103,10 @@ class ISAAssaySample:
             "extract_name": self.extract_name,
             "library_selection": self.library_selection,
             "library_layout": self.library_layout,
+            "assay_name": self.assay_name,
+            "ms_assay_name": self.ms_assay_name,
             "parameter_values": self.parameter_values,
+            "comment_values": self.comment_values,
             "data_files": self.data_files,
         }
 
@@ -142,6 +148,8 @@ class ISAStudyMetadata:
     investigation_description: str = ""
     study_title: str = ""
     study_description: str = ""
+    payload_name: str = ""        # Comment[Mission Name]  e.g. "SpaceX-4"
+    project_identifier: str = ""  # Comment[Project Identifier] e.g. "RR-1"
     samples: List[ISASample] = field(default_factory=list)
     assays: List[ISAAssay] = field(default_factory=list)
     factors: List[str] = field(default_factory=list)
@@ -184,14 +192,46 @@ class ISAParser:
     structured metadata with characteristics and factor values.
     """
     
-    def __init__(self, isa_tab_dir: Path):
+    # Canonical assay category names that map to the assay type labels
+    # returned by _extract_assay_type / _detect_assay_category.
+    KNOWN_ASSAY_TYPES: frozenset = frozenset([
+        "rna-seq", "dna-methylation", "rna-methylation", "mass-spec",
+        "metabolomics", "atac-seq", "behavior", "atpase", "calcium-uptake",
+        "echocardiogram", "microscopy", "western-blot", "bone-microstructure",
+        "microarray",
+    ])
+
+    def __init__(
+        self,
+        isa_tab_dir: Path,
+        include_assays: Optional[List[str]] = None,
+        exclude_assays: Optional[List[str]] = None,
+    ):
         """
         Initialize ISA-Tab parser.
-        
+
         Args:
-            isa_tab_dir: Path to directory containing ISA-Tab files
+            isa_tab_dir:     Path to directory containing ISA-Tab files.
+            include_assays:  If set, only parse assay files whose type matches
+                             one of these strings (case-insensitive substring match
+                             against the assay filename).
+                             Example: ["rna-seq", "mass-spec"]
+            exclude_assays:  If set, skip assay files whose type matches any of
+                             these strings (case-insensitive substring match).
+                             Example: ["western-blot", "calcium-uptake"]
         """
         self.isa_tab_dir = isa_tab_dir
+        self._include = [s.lower() for s in include_assays] if include_assays else None
+        self._exclude = [s.lower() for s in exclude_assays] if exclude_assays else []
+
+    def _assay_file_allowed(self, filename: str) -> bool:
+        """Return True if this assay file should be parsed given include/exclude rules."""
+        fname = filename.lower()
+        if self._exclude and any(ex in fname for ex in self._exclude):
+            return False
+        if self._include is not None and not any(inc in fname for inc in self._include):
+            return False
+        return True
     
     def parse(self, osd_id: str) -> Optional[ISAStudyMetadata]:
         """
@@ -220,10 +260,16 @@ class ISAParser:
         for study_file in study_files:
             self._parse_study_file(study_file, metadata)
         
-        # Parse Assay file(s)
+        # Parse Assay file(s) — respect include/exclude filters
         assay_files = list(study_dir.glob("a_*.txt"))
+        skipped = []
         for assay_file in assay_files:
+            if not self._assay_file_allowed(assay_file.name):
+                skipped.append(assay_file.name)
+                continue
             self._parse_assay_file(assay_file, metadata)
+        if skipped:
+            pass  # silently skip — callers can log if needed
         
         return metadata if metadata.samples else None
     
@@ -267,7 +313,20 @@ class ISAParser:
                 factors_str = match.group(1)
                 factors = [f.strip().strip('"') for f in factors_str.split("\t") if f.strip()]
                 metadata.factors = factors
-                
+
+            # Extract payload name: Comment[Mission Name] e.g. "SpaceX-4"
+            match = re.search(r'Comment\[Mission Name\]\t"?([^"\n]+)"?', content)
+            if match:
+                # May be comma-separated for multi-mission studies; take first
+                raw = match.group(1).strip()
+                metadata.payload_name = raw.split(",")[0].strip()
+
+            # Extract project identifier: Comment[Project Identifier] e.g. "RR-1"
+            match = re.search(r'Comment\[Project Identifier\]\t"?([^"\n]+)"?', content)
+            if match:
+                raw = match.group(1).strip()
+                metadata.project_identifier = raw.split(",")[0].strip()
+
         except Exception:
             pass
     
@@ -333,65 +392,123 @@ class ISAParser:
         col_map: Dict[str, int],
         headers: List[str],
     ) -> Optional[ISASample]:
-        """Parse a single row from Study file."""
+        """Parse a single row from Study file.
+
+        Captures:
+        - Characteristics[*]  with the Unit column that immediately follows
+        - Factor Value[*]     with the Unit column that immediately follows
+        - Parameter Value[*]  (husbandry fields: habitat, diet, light cycle,
+                               feeding schedule, euthanasia, duration, exposure duration)
+        - Comment[*]          for selected keywords including feeding schedule
+        Unit values are appended directly to the value string so the result is
+        self-contained, e.g. "16 week" instead of "16".
+        """
         # Get sample name
         sample_name = ""
         if "sample_name" in col_map and col_map["sample_name"] < len(row):
             sample_name = row[col_map["sample_name"]].strip()
-        
+
         if not sample_name:
             return None
-        
+
         # Get source name
         source_name = ""
         if "source_name" in col_map and col_map["source_name"] < len(row):
             source_name = row[col_map["source_name"]].strip()
-        
+
         sample = ISASample(
             sample_name=sample_name,
             source_name=source_name,
         )
-        
-        # Extract characteristics and factor values from headers
+
+        # study_parameter_values holds Parameter Value[*] columns from the study
+        # file (habitat, diet, light cycle, duration, etc.)
+        sample.study_parameter_values: Dict[str, str] = {}  # type: ignore[attr-defined]
+
+        # Trackers for attaching Unit to the most recently parsed value
+        last_char: Optional[ISACharacteristic] = None
+        last_fv: Optional[ISAFactorValue] = None
+        last_pv_name: Optional[str] = None
+
+        _SKIP_UNITS = {"not applicable", "n/a", "na", ""}
+
         for i, header in enumerate(headers):
             if i >= len(row):
                 continue
-            
+
             value = row[i].strip()
-            if not value:
+            h_lower = header.lower().strip()
+
+            # ── Unit column: attach to whichever field was parsed just before ─
+            if h_lower == "unit":
+                unit_val = value
+                if unit_val.lower() not in _SKIP_UNITS:
+                    if last_char is not None:
+                        last_char.unit = unit_val
+                        last_char.value = f"{last_char.value} {unit_val}"
+                    elif last_fv is not None:
+                        last_fv.unit = unit_val
+                        last_fv.value = f"{last_fv.value} {unit_val}"
+                    elif last_pv_name and last_pv_name in sample.study_parameter_values:
+                        sample.study_parameter_values[last_pv_name] = (
+                            f"{sample.study_parameter_values[last_pv_name]} {unit_val}"
+                        )
+                last_char = last_fv = None
+                last_pv_name = None
                 continue
-            
-            # Parse Characteristics[*]
+
+            if not value:
+                last_char = last_fv = None
+                last_pv_name = None
+                continue
+
+            # ── Characteristics[*] ─────────────────────────────────────────
             char_match = re.match(r"Characteristics\[([^\]]+)\]", header, re.IGNORECASE)
             if char_match:
-                category = char_match.group(1)
-                sample.characteristics.append(ISACharacteristic(
-                    category=category,
-                    value=value,
-                ))
+                char = ISACharacteristic(category=char_match.group(1), value=value)
+                sample.characteristics.append(char)
+                last_char = char
+                last_fv = None
+                last_pv_name = None
                 continue
-            
-            # Parse Comment[*] - treat as additional characteristics
+
+            # ── Comment[*] ─────────────────────────────────────────────────
             comment_match = re.match(r"Comment\[([^\]]+)\]", header, re.IGNORECASE)
             if comment_match:
                 category = comment_match.group(1)
-                # Store useful comments as characteristics
-                if any(kw in category.lower() for kw in ["animal source", "organism source", "sample name"]):
+                kept = ["animal source", "organism source", "sample name",
+                        "habitat", "feeding schedule"]
+                if any(kw in category.lower() for kw in kept):
                     sample.characteristics.append(ISACharacteristic(
-                        category=category,
-                        value=value,
+                        category=category, value=value,
                     ))
+                last_char = last_fv = None
+                last_pv_name = None
                 continue
-            
-            # Parse Factor Value[*]
+
+            # ── Factor Value[*] ────────────────────────────────────────────
             factor_match = re.match(r"Factor Value\[([^\]]+)\]", header, re.IGNORECASE)
             if factor_match:
-                factor_name = factor_match.group(1)
-                sample.factor_values.append(ISAFactorValue(
-                    factor_name=factor_name,
-                    value=value,
-                ))
-        
+                fv = ISAFactorValue(factor_name=factor_match.group(1), value=value)
+                sample.factor_values.append(fv)
+                last_fv = fv
+                last_char = None
+                last_pv_name = None
+                continue
+
+            # ── Parameter Value[*] in the study file (husbandry / duration) ─
+            param_match = re.match(r"Parameter Value\[([^\]]+)\]", header, re.IGNORECASE)
+            if param_match:
+                pname = param_match.group(1)
+                sample.study_parameter_values[pname] = value  # type: ignore[attr-defined]
+                last_pv_name = pname
+                last_char = last_fv = None
+                continue
+
+            # Any other column resets trackers
+            last_char = last_fv = None
+            last_pv_name = None
+
         return sample
     
     def _parse_assay_file(
@@ -489,10 +606,10 @@ class ISAParser:
         """Build a map of assay column types to indices."""
         col_indices: Dict[str, Any] = {}
         data_file_columns: List[int] = []
-        
+
         for i, h in enumerate(headers):
             h_lower = h.lower().strip()
-            
+
             if h_lower == "sample name":
                 col_indices["sample_name"] = i
             elif h_lower == "extract name":
@@ -503,9 +620,13 @@ class ISAParser:
             elif "parameter value[library layout]" in h_lower or \
                  "library layout" in h_lower:
                 col_indices["library_layout"] = i
+            elif h_lower == "assay name":
+                col_indices["assay_name"] = i
+            elif h_lower == "ms assay name":
+                col_indices["ms_assay_name"] = i
             elif h_lower in self._DATA_FILE_COLUMN_PATTERNS:
                 data_file_columns.append(i)
-        
+
         col_indices["data_file_columns"] = data_file_columns
         return col_indices
     
@@ -538,20 +659,29 @@ class ISAParser:
         if "library_layout" in col_indices and col_indices["library_layout"] < len(row):
             assay_sample.library_layout = row[col_indices["library_layout"]].strip()
         
-        # Extract all Parameter Value columns
+        # Extract assay name / ms assay name
+        if "assay_name" in col_indices and col_indices["assay_name"] < len(row):
+            assay_sample.assay_name = row[col_indices["assay_name"]].strip()
+        if "ms_assay_name" in col_indices and col_indices["ms_assay_name"] < len(row):
+            assay_sample.ms_assay_name = row[col_indices["ms_assay_name"]].strip()
+
+        # Extract all Parameter Value[*] and Comment[*] columns
         for i, header in enumerate(headers):
             if i >= len(row):
                 continue
-            
+
             value = row[i].strip()
             if not value:
                 continue
-            
-            # Parse Parameter Value[*]
+
             param_match = re.match(r"Parameter Value\[([^\]]+)\]", header, re.IGNORECASE)
             if param_match:
-                param_name = param_match.group(1)
-                assay_sample.parameter_values[param_name] = value
+                assay_sample.parameter_values[param_match.group(1)] = value
+                continue
+
+            comment_match = re.match(r"Comment\[([^\]]+)\]", header, re.IGNORECASE)
+            if comment_match:
+                assay_sample.comment_values[comment_match.group(1)] = value
         
         # Extract data file references from detected data file columns
         # Cells may contain comma-separated lists of filenames
