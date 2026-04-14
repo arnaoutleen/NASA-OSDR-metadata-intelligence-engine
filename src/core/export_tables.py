@@ -274,13 +274,13 @@ def classify_assay(record: Dict[str, Any]) -> Tuple[str, str]:
     return "unknown", "unknown"
 
 
-def _payload(record: Dict[str, Any]) -> Any:
-    """Return the payload (rocket/vehicle) name, e.g. 'SpaceX-4'."""
+def _mission(record: Dict[str, Any]) -> Any:
+    """Return the rocket/vehicle name (SpaceX-4 etc.), exported as 'mission' column."""
     return _safe_get(record, "payload", default="")
 
 
-def _mission(record: Dict[str, Any]) -> Any:
-    """Return the project/mission identifier, e.g. 'RR-1'."""
+def _project(record: Dict[str, Any]) -> Any:
+    """Return the research project (RR-1 etc.), exported as 'project' column."""
     return _safe_get(record, "mission", "RR_mission", default="")
 
 
@@ -288,8 +288,8 @@ def extract_mouse_metadata(record: Dict[str, Any]) -> Dict[str, Any]:
     row = {
         "osd_id":            _safe_get(record, "osd_id", "OSD_study"),
         "pulled_at":         _safe_get(record, "pulled_at", default=""),
-        "payload":           _payload(record),
         "mission":           _mission(record),
+        "project":           _project(record),
         "mouse_id":          _safe_get(record, "mouse_id", "mouse_uid"),
         "source_name":       _safe_get(record, "source_name", "mouse_uid"),
         "strain":            _safe_get(record, "mouse_strain", "Characteristics[Strain]", "strain"),
@@ -321,8 +321,8 @@ def extract_sample_metadata(record: Dict[str, Any]) -> Dict[str, Any]:
     row = {
         "osd_id":            _safe_get(record, "osd_id", "OSD_study"),
         "pulled_at":         _safe_get(record, "pulled_at", default=""),
-        "payload":           _payload(record),
         "mission":           _mission(record),
+        "project":           _project(record),
         "sample_id":         _safe_get(record, "sample_id", "sample_name"),
         "mouse_id":          _safe_get(record, "mouse_id", "mouse_uid"),
         "source_name":       _safe_get(record, "source_name", "mouse_uid"),
@@ -376,8 +376,8 @@ def extract_assay_parameters(record: Dict[str, Any]) -> List[Dict[str, Any]]:
     base = {
         "osd_id":            _safe_get(record, "osd_id", "OSD_study"),
         "pulled_at":         _safe_get(record, "pulled_at", default=""),
-        "payload":           _payload(record),
         "mission":           _mission(record),
+        "project":           _project(record),
         "sample_id":         _safe_get(record, "sample_id", "sample_name"),
         "mouse_id":          _safe_get(record, "mouse_id", "mouse_uid"),
         "assay_category":    assay_category,
@@ -413,16 +413,22 @@ def extract_assay_parameters(record: Dict[str, Any]) -> List[Dict[str, Any]]:
 def build_export_tables(
     records: List[Dict[str, Any]],
 ) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-    mouse_rows: List[Dict[str, Any]] = []
+    """
+    Build sample_metadata and assay_parameters tables from per-record dicts.
+
+    mouse_metadata is no longer produced here — it is built by
+    MouseRankerFromExport.score(sample_df) in run_full_export, which
+    aggregates across OSDs (one row per mouse) and adds the cross-study
+    inventory columns.  An empty DataFrame is returned as the first element
+    for backward compatibility.
+    """
     sample_rows: List[Dict[str, Any]] = []
     assay_rows: List[Dict[str, Any]] = []
 
     for rec in records:
-        mouse_rows.append(extract_mouse_metadata(rec))
         sample_rows.append(extract_sample_metadata(rec))
         assay_rows.extend(extract_assay_parameters(rec))
 
-    mouse_df = pd.DataFrame(mouse_rows)
     sample_df = pd.DataFrame(sample_rows)
     assay_df = pd.DataFrame(assay_rows)
 
@@ -431,24 +437,7 @@ def build_export_tables(
             subset=["osd_id", "sample_id", "assay_category", "assay_name"]
         ).reset_index(drop=True)
 
-    if not mouse_df.empty:
-        counts = (
-            sample_df.groupby(["osd_id", "mouse_id"], dropna=False)["sample_id"]
-            .count()
-            .reset_index(name="n_samples_linked")
-        )
-        mouse_df = mouse_df.merge(
-            counts, on=["osd_id", "mouse_id"], how="left", suffixes=("", "_calc")
-        )
-        if "n_samples_linked_calc" in mouse_df.columns:
-            mouse_df["n_samples_linked"] = mouse_df["n_samples_linked_calc"].fillna(
-                mouse_df["n_samples_linked"]
-            )
-            mouse_df = mouse_df.drop(columns=["n_samples_linked_calc"])
-        mouse_df = mouse_df.drop_duplicates(subset=["osd_id", "mouse_id"]).reset_index(drop=True)
-
-    mouse_df = mouse_df.reindex(columns=MOUSE_LEVEL_COLUMNS)
     sample_df = sample_df.reindex(columns=SAMPLE_LEVEL_COLUMNS)
-    assay_df = assay_df.reindex(columns=ASSAY_PARAMETER_COLUMNS)
+    assay_df  = assay_df.reindex(columns=ASSAY_PARAMETER_COLUMNS)
 
-    return mouse_df, sample_df, assay_df
+    return pd.DataFrame(), sample_df, assay_df

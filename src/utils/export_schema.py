@@ -2,10 +2,10 @@
 from __future__ import annotations
 
 MOUSE_LEVEL_COLUMNS = [
-    "osd_id",
+    "osd_ids",           # list of all OSDs this mouse appears in  e.g. "OSD-48 | OSD-168"
     "pulled_at",
-    "payload",
-    "mission",
+    "mission",           # payload / rocket  e.g. "SpaceX-4"  (was called payload)
+    "project",           # research project  e.g. "RR-1"       (was called mission)
     "mouse_id",
     "source_name",
     "strain",
@@ -25,13 +25,18 @@ MOUSE_LEVEL_COLUMNS = [
     "is_pooled_subject",
     "provenance_source",
     "confidence",
+    # Cross-study inventory columns
+    "sample_inventory",        # JSON list: [{sample_id, osd_id, material_type, assay_category}]
+    "organ_assay_inventory",   # JSON list: [{organ, assays, osd_id}] — one entry per organ×OSD
+    "informativeness_score",
+    "informativeness_rank",
 ]
 
 SAMPLE_LEVEL_COLUMNS = [
     "osd_id",
     "pulled_at",
-    "payload",
-    "mission",
+    "mission",           # payload / rocket  e.g. "SpaceX-4"
+    "project",           # research project  e.g. "RR-1"
     "sample_id",
     "mouse_id",
     "source_name",
@@ -71,8 +76,8 @@ SAMPLE_LEVEL_COLUMNS = [
 ASSAY_PARAMETER_COLUMNS = [
     "osd_id",
     "pulled_at",
-    "payload",
-    "mission",
+    "mission",           # payload / rocket  e.g. "SpaceX-4"
+    "project",           # research project  e.g. "RR-1"
     "sample_id",
     "mouse_id",
     "assay_category",

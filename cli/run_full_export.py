@@ -250,9 +250,10 @@ def _samplerow_to_record(row_dict: dict, osd_id: str, mission: str, pulled_at: s
     """
     Add canonical key aliases that export_tables expects, plus the pull timestamp.
 
-    payload  = Comment[Mission Name] from ISA-Tab (e.g. "SpaceX-4"),
-               already set on row_dict["payload"] by SampleExpander.
-    mission  = RR project identifier (e.g. "RR-1"), from caller or SampleExpander.
+    payload  (internal key) = Comment[Mission Name], e.g. "SpaceX-4"
+               → exported as "mission" column (rocket/vehicle name).
+    mission  (internal key) = RR project identifier, e.g. "RR-1"
+               → exported as "project" column.
     pulled_at = UTC timestamp of when this study's data was fetched from OSDR.
     """
     row_dict.setdefault("osd_id", osd_id)
@@ -341,20 +342,15 @@ def run_export(
         return
 
     print(f"\nBuilding export tables from {len(records)} records …")
-    mouse_df, sample_df, assay_long_df = build_export_tables(records)
+    _placeholder_mouse_df, sample_df, assay_long_df = build_export_tables(records)
 
-    # pulled_at is already in every row dict and flows through build_export_tables
-    # via extract_mouse/sample/assay_parameters → _safe_get(record, "pulled_at").
-    # Nothing extra needed here.
-
-    # ── Write output files ───────────────────────────────────────────────────
+    # ── Mouse metadata = ranker output (one row per mouse, cross-OSD) ────────
     out_dir.mkdir(parents=True, exist_ok=True)
     mouse_path      = out_dir / "mouse_metadata.csv"
     sample_path     = out_dir / "sample_metadata.csv"
     assay_long_path = out_dir / "assay_parameters_long.csv"
     assay_wide_path = out_dir / "assay_parameters_wide.csv"
 
-    mouse_df.to_csv(mouse_path, index=False)
     sample_df.to_csv(sample_path, index=False)
     assay_long_df.to_csv(assay_long_path, index=False)
 
@@ -370,27 +366,25 @@ def run_export(
     # ── Save manifest ────────────────────────────────────────────────────────
     _save_manifest(out_dir, updated_manifest)
 
-    # ── Mouse ranking ────────────────────────────────────────────────────────
-    ranking_path = out_dir / "mouse_ranking.csv"
+    # ── Mouse metadata = ranker output ───────────────────────────────────────
+    # One row per mouse, aggregated across all OSDs.
     try:
         ranker = MouseRankerFromExport()
         ranking_df = ranker.score(sample_df)
-        ranking_df.to_csv(ranking_path, index=False)
+        ranking_df.to_csv(mouse_path, index=False)
     except Exception as exc:
-        print(f"  Warning: ranking failed — {exc}")
+        print(f"  Warning: mouse ranking failed — {exc}")
         ranking_df = pd.DataFrame()
 
     # ── Summary ──────────────────────────────────────────────────────────────
     print("\n" + "=" * 60)
     print("EXPORT COMPLETE")
     print("=" * 60)
-    print(f"  Mice:          {len(mouse_df):>4} rows  →  {mouse_path}")
+    print(f"  Mice:          {len(ranking_df):>4} rows  →  {mouse_path}")
     print(f"  Samples:       {len(sample_df):>4} rows  →  {sample_path}")
     print(f"  Assay params:  {len(assay_long_df):>4} rows  →  {assay_long_path}")
     if not assay_long_df.empty:
         print(f"  Assay wide:         →  {assay_wide_path}")
-    if not ranking_df.empty:
-        print(f"  Mouse ranking: {len(ranking_df):>4} mice  →  {ranking_path}")
     print(f"  Manifest:           →  {out_dir / MANIFEST_FILE}")
 
     print()
@@ -400,12 +394,12 @@ def run_export(
         print(f"  {osd_id:12s}  {status:10s}  pulled_at={pulled_at}")
 
     print()
-    print("Fill-rate (mouse_metadata):")
-    for col in ["strain", "sex", "age", "spaceflight_status", "duration",
-                "habitat", "animal_source", "genotype"]:
-        if col in mouse_df.columns:
-            n = (mouse_df[col].notna() & (mouse_df[col] != "")).sum()
-            print(f"  {col:25s}: {n}/{len(mouse_df)}")
+    print("Fill-rate / coverage (mouse_metadata):")
+    for col in ["osd_ids", "n_organs", "n_assay_types",
+                "informativeness_score", "informativeness_rank"]:
+        if col in ranking_df.columns:
+            n = (ranking_df[col].notna() & (ranking_df[col].astype(str) != "")).sum()
+            print(f"  {col:25s}: {n}/{len(ranking_df)}")
 
     print()
     print("Fill-rate (sample_metadata):")
